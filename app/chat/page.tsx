@@ -1,13 +1,12 @@
 import Navbar from "@/components/layout/navbar";
 import Footer from "@/components/layout/footer";
 import BottomNavigation from "@/components/layout/bottomNavBar";
-import Home from "@/components/modules/home/home";
 
-export default function HomePage() {
+export default function ChatPage() {
   return (
     <div>
       <Navbar />
-      <Home />
+      chat
       <Footer />
       <BottomNavigation />
     </div>
