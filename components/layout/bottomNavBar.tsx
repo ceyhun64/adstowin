@@ -7,6 +7,11 @@ import {
   Crown,
   Gift,
   LucideIcon,
+  LoaderPinwheel,
+  Megaphone,
+  RotateCw,
+  Coins,
+  MessageCircle,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -22,10 +27,10 @@ export default function BottomNavigation() {
   const pathname = usePathname();
 
   const navItems: NavItem[] = [
-    { id: "home", icon: Home, label: "Reklamlar", link: "/" },
-    { id: "wheel", icon: Gift, label: "Çark", link: "/wheel" },
-    { id: "extra", icon: Zap, label: "Ek Kazanç", link: "/extra" },
-    { id: "chat", icon: MessageSquare, label: "Chat", link: "/chat" },
+    { id: "home", icon: Megaphone, label: "Reklamlar", link: "/" },
+    { id: "wheel", icon: LoaderPinwheel, label: "Çark", link: "/wheel" },
+    { id: "extra", icon: Coins, label: "Ek Kazanç", link: "/extra" },
+    { id: "chat", icon: MessageCircle, label: "Chat", link: "/chat" },
     { id: "premium", icon: Crown, label: "Premium", link: "/premium" },
   ];
 

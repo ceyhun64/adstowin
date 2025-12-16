@@ -33,7 +33,7 @@ export default function Navbar() {
           <div className="hidden sm:block">
             <Link href="/">
               <h1 className="font-bold text-lg text-gray-900 dark:text-white">
-                AdsTown
+                AdsToWin
               </h1>
               <p className="text-xs text-gray-500 dark:text-gray-400">
                 Reklam Ver - Para Kazan

@@ -36,7 +36,7 @@ export default function HamburgerMenu({ isMenuOpen, onClose }: HamburgerMenuProp
 
   return (
     // Menü, Navbar'ın altında görünecek şekilde konumlandırıldı.
-    <div className="absolute right-0 top-full w-80 bg-white dark:bg-gray-800 border-l border-b border-gray-200 dark:border-gray-700 shadow-xl max-h-[80vh] overflow-y-auto z-40">
+    <div className="absolute right-0 top-full w-80 z-9999 bg-white dark:bg-gray-800 border-l border-b border-gray-200 dark:border-gray-700 shadow-xl max-h-[80vh] overflow-y-auto ">
       {/* 1 - KULLANICI YÖNETİMİ VE DESTEK */}
       <div className="p-4 border-b border-gray-200 dark:border-gray-700">
         <h3 className="font-bold text-sm mb-3 opacity-70">
