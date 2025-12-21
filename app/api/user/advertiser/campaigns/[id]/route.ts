@@ -7,9 +7,12 @@ import { getServerSession } from "next-auth";
 // GET - Get single campaign details
 export async function GET(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    // ✅ Await params (Next.js 15+ requirement)
+    const { id } = await params;
+
     const session = await getServerSession(authOptions);
 
     if (!session?.user?.id) {
@@ -17,7 +20,7 @@ export async function GET(
     }
 
     const userId = parseInt(session.user.id);
-    const campaignId = parseInt(params.id);
+    const campaignId = parseInt(id);
 
     if (isNaN(campaignId)) {
       return NextResponse.json(
@@ -95,8 +98,8 @@ export async function GET(
         clickRate:
           viewCount > 0 ? ((clickCount / viewCount) * 100).toFixed(2) : "0.00",
         remainingBudget:
-          (campaign.remainingImpressions *
-            parseFloat(campaign.costPerClick.toString())),
+          campaign.remainingImpressions *
+          parseFloat(campaign.costPerClick.toString()),
       },
     });
   } catch (error) {
@@ -111,9 +114,12 @@ export async function GET(
 // PATCH - Update campaign (pause/resume, update details)
 export async function PATCH(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    // ✅ Await params
+    const { id } = await params;
+
     const session = await getServerSession(authOptions);
 
     if (!session?.user?.id) {
@@ -121,7 +127,7 @@ export async function PATCH(
     }
 
     const userId = parseInt(session.user.id);
-    const campaignId = parseInt(params.id);
+    const campaignId = parseInt(id);
 
     if (isNaN(campaignId)) {
       return NextResponse.json(
@@ -209,9 +215,12 @@ export async function PATCH(
 // DELETE - Delete campaign (soft delete by deactivating)
 export async function DELETE(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    // ✅ Await params
+    const { id } = await params;
+
     const session = await getServerSession(authOptions);
 
     if (!session?.user?.id) {
@@ -219,7 +228,7 @@ export async function DELETE(
     }
 
     const userId = parseInt(session.user.id);
-    const campaignId = parseInt(params.id);
+    const campaignId = parseInt(id);
 
     if (isNaN(campaignId)) {
       return NextResponse.json(
