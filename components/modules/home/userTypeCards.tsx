@@ -1,429 +1,237 @@
 "use client";
+import React from "react";
 import {
-  Play,
-  Target,
-  DollarSign,
-  Crown,
-  Gift,
-  Star,
-  Zap,
   ArrowRight,
-  Eye,
+  ShieldCheck,
+  Target,
+  Zap,
   CheckCircle2,
-  TrendingUp,
+  MousePointer2,
   Sparkles,
-  Users,
-  Clock,
+  BarChart3,
+  Globe,
+  TrendingUp,
+  Award,
 } from "lucide-react";
+import { motion } from "framer-motion";
 
-interface UserTypeCardsProps {
-  userType: "earner" | "business";
-  setUserType: (value: "earner" | "business") => void;
-}
-
-export default function UserTypeCards({
-  userType,
-  setUserType,
-}: UserTypeCardsProps) {
+export default function UserTypeCards() {
   return (
-    <div className="max-w-5xl mx-auto mb-16 px-2">
-      {/* Tabs */}
-      <div className="max-w-md mx-auto mb-12">
-        <p className="text-center text-white/70 text-sm mb-4">
-          Please select your user type to continue.
-        </p>
+    <div className="relative min-h-screen flex items-center justify-center overflow-hidden py-20 bg-slate-50 dark:bg-slate-950 transition-colors duration-500">
+      {/* --- ARKA PLAN KATMANLARI --- */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        {/* Işık Süzmeleri (Glow Effects) */}
+        <div className="absolute top-[-15%] right-[-10%] w-[600px] h-[600px] bg-indigo-500/10 dark:bg-indigo-600/15 rounded-full blur-[120px] animate-pulse" />
+        <div className="absolute bottom-[-15%] left-[-10%] w-[600px] h-[600px] bg-emerald-500/10 dark:bg-emerald-600/15 rounded-full blur-[120px] animate-pulse" />
 
-        <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-2 border border-white/10">
-          <div className="grid grid-cols-2 gap-2">
-            {/* EARNER */}
-            <button
-              onClick={() => setUserType("earner")}
-              className={`relative py-4 px-6 rounded-xl font-semibold transition-all duration-300 ${
-                userType === "earner"
-                  ? "bg-gradient-to-r from-amber-300 to-amber-500 text-white shadow-md scale-[1.02]"
-                  : "text-white/60 hover:text-white bg-white/5"
-              }`}
-            >
-              <div className="relative flex items-center justify-center gap-2 text-sm">
-                <Play className="w-5 h-5" />
-                <span>Reward User</span>{" "}
-                {/* Değişiklik: Earner -> Reward User */}
-              </div>
-            </button>
+        {/* Modern Noktalı Grid */}
+        <div
+          className="absolute inset-0 opacity-[0.08] dark:opacity-[0.12] text-slate-500 dark:text-slate-400"
+          style={{
+            backgroundImage: `radial-gradient(currentColor 1px, transparent 1px)`,
+            backgroundSize: "40px 40px",
+          }}
+        />
 
-            {/* BUSINESS (SAFE MODE) */}
-            <button
-              onClick={() => setUserType("business")}
-              className={`relative py-4 px-6 rounded-xl font-semibold transition-all duration-300 ${
-                userType === "business"
-                  ? "bg-gradient-to-r from-sky-300 to-indigo-400 text-white shadow-md scale-[1.02]"
-                  : "text-white/60 hover:text-white bg-white/5"
-              }`}
-            >
-              <div className="relative flex items-center justify-center gap-2 text-sm">
-                <Target className="w-5 h-5" />
-                <span>Business</span>
-              </div>
-            </button>
-          </div>
-        </div>
+        {/* Yumuşak Geçiş Katmanı */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-slate-50/30 dark:to-slate-950/30" />
       </div>
 
-      {/* Content Box */}
-      <div className="relative">
-        {/* Soft Background */}
-        <div
-          className={`absolute inset-0 rounded-3xl blur-[55px] opacity-20 
-          ${
-            userType === "earner"
-              ? "from-amber-200 via-amber-300 to-amber-400 bg-[conic-gradient(at_top,_var(--tw-gradient-stops))]"
-              : "from-sky-200 via-indigo-200 to-indigo-300 bg-[conic-gradient(at_top,_var(--tw-gradient-stops))]"
-          }`}
-        ></div>
+      <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6">
+        {/* Üst Logo ve Başlık */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center mb-20 space-y-6"
+        >
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-400 text-xs font-black uppercase tracking-[0.3em] shadow-sm">
+            <Globe
+              size={14}
+              className="text-indigo-600 dark:text-indigo-500 animate-pulse"
+            />
+            Next-Gen Digital Interaction Network
+          </div>
 
-        <div className="relative bg-white/5 backdrop-blur-xl rounded-3xl px-4 py-8 md:p-12 border border-white/10 shadow-xl">
-          {userType === "earner" ? (
-            <div className="space-y-8">
-              {/* HEADER */}
-              <div className="text-center">
-                <div className="inline-flex items-center justify-center w-20 h-20 bg-amber-300/20 rounded-2xl mb-4 border border-amber-300/30">
-                  <Star className="w-10 h-10 text-amber-400" />{" "}
-                  {/* DollarSign -> Star yapıldı */}
+          <h1 className="text-5xl md:text-7xl font-black text-slate-900 dark:text-white tracking-tighter leading-none">
+            ADS
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-500 dark:to-purple-500 font-light italic">
+              TOWIN
+            </span>
+          </h1>
+
+          <p className="text-slate-600 dark:text-slate-400 text-lg max-w-2xl mx-auto font-medium">
+            İki farklı ekosistem, tek platform. Markanızı büyütün veya dijital
+            etkileşimlerinizden kazanç elde edin.
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-stretch">
+          {/* --- SOL TARAF: ADVERTISERS (Brands) --- */}
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="group relative flex flex-col justify-between p-10 md:p-12 rounded-[2.5rem] bg-white/80 dark:bg-white/[0.03] backdrop-blur-sm border-2 border-slate-200 dark:border-white/10 hover:border-indigo-500/40 dark:hover:border-indigo-500/30 transition-all duration-500 shadow-xl shadow-slate-200/50 dark:shadow-indigo-500/5 hover:shadow-2xl hover:shadow-indigo-500/10 hover:-translate-y-1"
+          >
+            {/* Arka plan gradient efekti */}
+            <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-transparent dark:from-indigo-500/10 rounded-[2.5rem] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+            <div className="relative space-y-8">
+              <div className="flex items-center justify-between">
+                <div className="w-16 h-16 rounded-2xl bg-indigo-500/10 dark:bg-indigo-500/20 flex items-center justify-center text-indigo-600 dark:text-indigo-400 border border-indigo-500/20 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-lg shadow-indigo-500/10">
+                  <Target size={32} />
                 </div>
-                <h2 className="text-2xl md:text-4xl font-extrabold text-white mb-3">
-                  For Reward Users{" "}
-                  {/* Değişiklik: For Earners -> For Reward Users */}
+                <div className="text-[10px] font-bold text-indigo-600 dark:text-indigo-500 uppercase tracking-widest bg-indigo-500/10 dark:bg-indigo-500/20 px-4 py-2 rounded-full border border-indigo-500/20">
+                  B2B Solution
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
+                  Growth For <br />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-indigo-500 dark:from-indigo-500 dark:to-indigo-400 italic">
+                    Brands.
+                  </span>
                 </h2>
-                <p className="text-white/70 text-md">
-                  The modern way to earn digital rewards.{" "}
-                  {/* Değişiklik: digital income -> digital rewards */}
+                <p className="text-slate-600 dark:text-slate-400 font-medium leading-relaxed max-w-md text-base">
+                  Connect your brand with real and verified audiences. Manage
+                  your budget efficiently with transparent analytics and
+                  anti-bot protection.
                 </p>
               </div>
 
-              <div className="grid md:grid-cols-3 gap-6">
-                {/* CARD 1 */}
-                <div className="bg-white/5 rounded-2xl p-6 border border-amber-300/30 transition-all duration-300 hover:scale-[1.02] hover:border-amber-400/60">
-                  <div className="w-14 h-14 bg-amber-300/20 rounded-xl flex items-center justify-center mb-4 border border-amber-300/30">
-                    <Eye className="w-7 h-7 text-amber-400" />
+              <div className="grid grid-cols-2 gap-4">
+                {[
+                  { icon: TrendingUp, text: "Targeted Traffic" },
+                  { icon: ShieldCheck, text: "Zero Bot Policy" },
+                  { icon: Zap, text: "API Integration" },
+                  { icon: BarChart3, text: "Real-time Stats" },
+                ].map((item, idx) => (
+                  <div
+                    key={idx}
+                    className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 font-semibold group/item hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+                  >
+                    <item.icon
+                      size={16}
+                      className="text-indigo-600 dark:text-indigo-500"
+                    />
+                    {item.text}
                   </div>
-
-                  {/* IMPORTANT SAFE TEXT */}
-                  <h3 className="text-white font-bold text-lg mb-2">
-                    Watch Spots & Get Rewarded{" "}
-                    {/* Değişiklik: Watch Spots & Earn -> Watch Spots & Get Rewarded */}
-                  </h3>
-
-                  <p className="text-white/60 text-sm mb-3">
-                    Instant points up to 10 points.{" "}
-                    {/* Değişiklik: Instant rewards up to $0.01. -> Instant points up to 10 points. */}
-                  </p>
-                  <div className="flex items-center gap-2 text-amber-400 text-xs font-semibold">
-                    <ArrowRight className="w-4 h-4" />
-                    Start Now
-                  </div>
-                  {/* SAFE PRE-REG INFO - EARNER */}
-                </div>
-
-                {/* CARD 2 */}
-                <div className="bg-white/5 rounded-2xl p-6 border border-yellow-300/30 transition-all duration-300 hover:scale-[1.02] hover:border-yellow-400/60">
-                  <div className="w-14 h-14 bg-yellow-300/20 rounded-xl flex items-center justify-center mb-4 border border-yellow-300/30">
-                    <Crown className="w-7 h-7 text-yellow-400" />
-                  </div>
-
-                  <h3 className="text-white font-bold text-lg mb-2">
-                    Wheel of Fortune
-                  </h3>
-
-                  <div className="text-white/60 text-sm mb-3 space-y-2">
-                    <p>
-                      Normal Ticket Draw{" "}
-                      <span className="text-amber-300 font-semibold">
-                        (Random prize)
-                      </span>
-                    </p>
-
-                    <p>
-                      Premium Ticket Draw{" "}
-                      <span className="text-yellow-300 font-semibold">
-                        (Higher chance)
-                      </span>
-                    </p>
-
-                    <p>
-                      Instant Win:{" "}
-                      <span className="text-green-300 font-semibold">
-                        100 Points {/* Değişiklik: $0.10 -> 100 Points */}
-                      </span>
-                    </p>
-
-                    <p>
-                      Instant Win:{" "}
-                      <span className="text-emerald-300 font-semibold">
-                        1000 Points {/* Değişiklik: $1.00 -> 1000 Points */}
-                      </span>
-                    </p>
-                  </div>
-
-                  <div className="flex items-center gap-2 text-yellow-400 text-xs font-semibold mb-4">
-                    <Star className="w-4 h-4" />4 Reward Types
-                  </div>
-
-                  {/* MONTHLY WHEEL REWARDS */}
-                  <div className="bg-yellow-300/10 rounded-xl p-4 border border-yellow-300/30">
-                    <h4 className="text-white font-semibold text-sm mb-2 flex items-center gap-2">
-                      <Crown className="w-4 h-4 text-yellow-400" />
-                      Monthly Wheel Rewards
-                    </h4>
-
-                    <ul className="text-white/70 text-xs space-y-1">
-                      <li>
-                        <span className="text-yellow-300 font-semibold">
-                          1st Place:
-                        </span>{" "}
-                        10000 Points + 10 T-Crypto{" "}
-                        {/* Değişiklik: $10 -> 10000 Points */}
-                      </li>
-
-                      <li>
-                        <span className="text-yellow-300 font-semibold">
-                          2nd Place:
-                        </span>{" "}
-                        7000 Points + 7 T-Crypto{" "}
-                        {/* Değişiklik: $7 -> 7000 Points */}
-                      </li>
-
-                      <li>
-                        <span className="text-yellow-300 font-semibold">
-                          3rd Place:
-                        </span>{" "}
-                        5000 Points + 5 T-Crypto{" "}
-                        {/* Değişiklik: $5 -> 5000 Points */}
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-
-                {/* CARD 3 */}
-                <div className="bg-white/5 rounded-2xl p-6 border border-purple-300/30 transition-all duration-300 hover:scale-[1.02] hover:border-purple-400/60">
-                  <div className="w-14 h-14 bg-purple-300/20 rounded-xl flex items-center justify-center mb-4 border border-purple-300/30">
-                    <Gift className="w-7 h-7 text-purple-400" />
-                  </div>
-                  <h3 className="text-white font-bold text-lg mb-2">
-                    Extra Reward Methods{" "}
-                    {/* Değişiklik: Extra Earning Methods -> Extra Reward Methods */}
-                  </h3>
-                  <p className="text-white/60 text-sm mb-3">
-                    Installing Applications & Tasks.{" "}
-                    {/* Açıklama netleştirildi */}
-                  </p>
-                  <div className="flex items-center gap-2 text-purple-400 text-xs font-semibold">
-                    <Zap className="w-4 h-4" />
-                    VIP Benefits
-                  </div>
-                </div>
-              </div>
-
-              {/* INFO */}
-              <div className="bg-amber-300/10 rounded-xl p-4 border border-amber-300/30">
-                <div className="flex items-center gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-amber-400" />
-                  <p className="text-white/90 text-sm">
-                    <span className="font-semibold">
-                      First 10,000 users receive 1000 Points + crypto bonus.{" "}
-                      {/* Değişiklik: $1 -> 1000 Points */}
-                    </span>
-                  </p>
-                </div>
-              </div>
-              <div className="bg-white/5 rounded-xl p-4 border border-white/10 space-y-3 mt-4">
-                {/* Block 1 */}
-                <div className="flex items-center gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-white/70" />
-                  <p className="text-white/80 text-sm">
-                    <span className="font-semibold">
-                      Safe Pre-Registration:
-                    </span>
-                    Your email is never shared with third parties and no spam is
-                    sent.
-                  </p>
-                </div>
-
-                {/* Block 2 */}
-                <div className="flex items-center gap-3">
-                  <Clock className="w-5 h-5 text-white/70" />
-                  <p className="text-white/80 text-sm">
-                    <span className="font-semibold">
-                      Limited Pre-Registration:
-                    </span>
-                    Gifts close when the quota is full.
-                  </p>
-                </div>
+                ))}
               </div>
             </div>
-          ) : (
-            <div className="space-y-8">
-              {/* HEADER */}
-              <div className="text-center">
-                <div className="inline-flex items-center justify-center w-20 h-20 bg-sky-300/20 rounded-2xl mb-4 border border-sky-300/30">
-                  <Target className="w-10 h-10 text-sky-400" />
+
+            <button className="relative mt-12 flex items-center justify-center gap-3 w-full py-4 bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-700 hover:to-indigo-600 text-white font-bold rounded-2xl transition-all shadow-lg shadow-indigo-500/30 hover:shadow-xl hover:shadow-indigo-500/50 active:scale-95 group/btn overflow-hidden">
+              <span className="relative z-10">Launch Campaign</span>
+              <BarChart3
+                className="relative z-10 group-hover/btn:rotate-12 transition-transform"
+                size={18}
+              />
+
+              {/* Button hover effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-indigo-400 opacity-0 group-hover/btn:opacity-100 transition-opacity" />
+            </button>
+
+            {/* Köşe süsü */}
+            <div className="absolute top-6 right-6 w-20 h-20 border-2 border-indigo-500/10 dark:border-indigo-500/20 rounded-full blur-sm opacity-0 group-hover:opacity-100 transition-opacity" />
+          </motion.div>
+
+          {/* --- SAĞ TARAF: PUBLISHERS (Users) --- */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="group relative flex flex-col justify-between p-10 md:p-12 rounded-[2.5rem] bg-white/80 dark:bg-white/[0.03] backdrop-blur-sm border-2 border-slate-200 dark:border-white/10 hover:border-emerald-500/40 dark:hover:border-emerald-500/30 transition-all duration-500 shadow-xl shadow-slate-200/50 dark:shadow-emerald-500/5 hover:shadow-2xl hover:shadow-emerald-500/10 hover:-translate-y-1"
+          >
+            {/* Arka plan gradient efekti */}
+            <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent dark:from-emerald-500/10 rounded-[2.5rem] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+            <div className="relative space-y-8">
+              <div className="flex items-center justify-between">
+                <div className="w-16 h-16 rounded-2xl bg-emerald-500/10 dark:bg-emerald-500/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-lg shadow-emerald-500/10">
+                  <MousePointer2 size={32} />
                 </div>
+                <div className="text-[10px] font-bold text-emerald-600 dark:text-emerald-500 uppercase tracking-widest bg-emerald-500/10 dark:bg-emerald-500/20 px-4 py-2 rounded-full border border-emerald-500/20">
+                  Community Ecosystem
+                </div>
+              </div>
 
-                {/* SAFE TITLE */}
-                <h2 className="text-2xl md:text-4xl font-extrabold text-white mb-3">
-                  For Business Partners
+              <div className="space-y-4">
+                <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
+                  Value For <br />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-emerald-500 dark:from-emerald-500 dark:to-emerald-400 italic">
+                    Users.
+                  </span>
                 </h2>
-
-                <p className="text-white/70 text-md">
-                  Grow with modern engagement tools.
+                <p className="text-slate-600 dark:text-slate-400 font-medium leading-relaxed max-w-md text-base">
+                  Add value to digital interaction. Discover new brands,
+                  complete tasks, and earn points by contributing to the growth
+                  of the ecosystem.
                 </p>
               </div>
 
-              <div className="grid md:grid-cols-3 gap-6">
-                {/* CARD 1 (Business - Standard) */}
-                <div className="bg-white/5 rounded-2xl p-6 border border-sky-300/30 transition-all duration-300 hover:scale-[1.02] hover:border-sky-400/60">
-                  <div className="w-14 h-14 bg-sky-300/20 rounded-xl flex items-center justify-center mb-4 border border-sky-300/30">
-                    <TrendingUp className="w-7 h-7 text-sky-400" />
+              <div className="grid grid-cols-2 gap-4">
+                {[
+                  { icon: CheckCircle2, text: "Verified Earnings" },
+                  { icon: Sparkles, text: "Daily Challenges" },
+                  { icon: Zap, text: "Instant Access" },
+                  { icon: Award, text: "VIP Tiers" },
+                ].map((item, idx) => (
+                  <div
+                    key={idx}
+                    className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 font-semibold group/item hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+                  >
+                    <item.icon
+                      size={16}
+                      className="text-emerald-600 dark:text-emerald-400"
+                    />
+                    {item.text}
                   </div>
-
-                  {/* SAFE TEXT */}
-                  <h3 className="text-white font-bold text-lg mb-2">
-                    Standard Spots
-                  </h3>
-
-                  <p className="text-white/60 text-sm mb-3">
-                    In-content or interactive spot options.
-                  </p>
-                  <div className="flex items-center gap-2 text-sky-400 text-xs font-semibold">
-                    <ArrowRight className="w-4 h-4" />
-                    Launch Campaign
-                  </div>
-                </div>
-
-                {/* CARD 2 (Business - Premium) */}
-                <div className="bg-white/5 rounded-2xl p-6 border border-indigo-300/30 transition-all duration-300 hover:scale-[1.02] hover:border-indigo-400/60">
-                  <div className="w-14 h-14 bg-indigo-300/20 rounded-xl flex items-center justify-center mb-4 border border-indigo-300/30">
-                    <Sparkles className="w-7 h-7 text-indigo-300" />
-                  </div>
-
-                  {/* SAFE TEXT */}
-                  <h3 className="text-white font-bold text-lg mb-2">
-                    Premium Spots
-                  </h3>
-
-                  <p className="text-white/60 text-sm mb-3">
-                    100% guaranteed visibility.
-                  </p>
-                  <div className="flex items-center gap-2 text-indigo-300 text-xs font-semibold">
-                    <Star className="w-4 h-4" />
-                    High Engagement
-                  </div>
-                </div>
-
-                {/* CARD 3 (Business - Smart Start) */}
-                <div className="bg-white/5 rounded-2xl p-6 border border-emerald-300/30 transition-all duration-300 hover:scale-[1.02] hover:border-emerald-400/60">
-                  <div className="w-14 h-14 bg-emerald-300/20 rounded-xl flex items-center justify-center mb-4 border border-emerald-300/30">
-                    <Users className="w-7 h-7 text-emerald-300" />
-                  </div>
-
-                  {/* SAFE TEXT */}
-                  <h3 className="text-white font-bold text-lg mb-2">
-                    Smart Start
-                  </h3>
-
-                  <p className="text-white/60 text-sm mb-3">
-                    Begin with a minimum $5 budget.
-                  </p>
-                  <div className="flex items-center gap-2 text-emerald-300 text-xs font-semibold">
-                    <Zap className="w-4 h-4" />
-                    Precise Targeting
-                  </div>
-                </div>
-              </div>
-
-              {/* INFO */}
-              <div className="bg-sky-300/10 rounded-xl p-4 border border-sky-300/30">
-                {/* EXTRA BUSINESS INFO BLOCKS */}
-                <div className="space-y-4">
-                  {/* BLOCK 1 */}
-                  <div className="bg-sky-300/10 rounded-xl p-4 border border-sky-300/30">
-                    <div className="flex items-center gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-sky-400" />
-                      <p className="text-white/90 text-sm">
-                        <span className="font-semibold">
-                          Guaranteed real user views
-                        </span>{" "}
-                        and a unique display system ensures each ad is viewed
-                        only 1 time.
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* BLOCK 2 */}
-                  <div className="bg-indigo-300/10 rounded-xl p-4 border border-indigo-300/30">
-                    <div className="flex items-center gap-3">
-                      <TrendingUp className="w-5 h-5 text-indigo-300" />
-                      <p className="text-white/90 text-sm">
-                        High engagement via Wheel & App Install. Payments are
-                        securely made with Payoneer, LTC, and Credit Card.
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* BLOCK 3 */}
-                  <div className="bg-emerald-300/10 rounded-xl p-4 border border-emerald-300/30">
-                    <div className="flex items-center gap-3">
-                      <Sparkles className="w-5 h-5 text-emerald-300" />
-                      <p className="text-white/90 text-sm">
-                        Minimum risk of fake clicks.{" "}
-                        <span className="font-semibold">
-                          Adstowin – Reward platform.{" "}
-                          {/* Değişiklik: earnings -> reward */}
-                        </span>
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* CTA */}
-                  <button className="w-full mt-2 mb-4 px-4 bg-gradient-to-r from-sky-400 to-indigo-500 text-white font-semibold py-3 rounded-xl flex items-center justify-center gap-2 hover:scale-[1.02] transition-all">
-                    Launch Ad Now – Catch the Pre-Registration Opportunity
-                  </button>
-                </div>
-
-                {/* SAFE PRE-REG INFO - BUSINESS */}
-                <div className="bg-white/5 rounded-xl p-4 border border-white/10 space-y-3 mt-4 mb-4">
-                  {/* Block 1 */}
-                  <div className="flex items-center gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-white/70" />
-                    <p className="text-white/80 text-sm">
-                      <span className="font-semibold">
-                        Safe Pre-Registration:
-                      </span>
-                      Your email is never shared with third parties and no spam
-                      is sent.
-                    </p>
-                  </div>
-
-                  {/* Block 2 */}
-                  <div className="flex items-center gap-3">
-                    <Clock className="w-5 h-5 text-white/70" />
-                    <p className="text-white/80 text-sm">
-                      <span className="font-semibold">
-                        Limited Pre-Registration:
-                      </span>
-                      Gifts close when the quota is full.
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Eye className="w-5 h-5 text-sky-400" />
-                  <p className="text-white/90 text-sm">
-                    20% extra visibility on your first spot.
-                  </p>
-                </div>
+                ))}
               </div>
             </div>
-          )}
+
+            <button className="relative mt-12 flex items-center justify-center gap-3 w-full py-4 bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-700 hover:to-emerald-600 text-white font-bold rounded-2xl transition-all shadow-lg shadow-emerald-500/30 hover:shadow-xl hover:shadow-emerald-500/50 active:scale-95 group/btn overflow-hidden">
+              <span className="relative z-10">Start Exploring</span>
+              <ArrowRight
+                className="relative z-10 group-hover/btn:translate-x-1 transition-transform"
+                size={18}
+              />
+
+              {/* Button hover effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-emerald-400 opacity-0 group-hover/btn:opacity-100 transition-opacity" />
+            </button>
+
+            {/* Köşe süsü */}
+            <div className="absolute top-6 right-6 w-20 h-20 border-2 border-emerald-500/10 dark:border-emerald-500/20 rounded-full blur-sm opacity-0 group-hover:opacity-100 transition-opacity" />
+          </motion.div>
         </div>
+
+        {/* --- ALT TRUST BAR --- */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="mt-20 pt-10 border-t border-slate-200 dark:border-white/5 flex flex-wrap justify-center gap-12 text-slate-500 dark:text-slate-600 font-semibold uppercase tracking-[0.2em] text-[10px]"
+        >
+          <div className="flex items-center gap-2 hover:text-slate-700 dark:hover:text-slate-400 transition-colors">
+            <ShieldCheck
+              size={14}
+              className="text-indigo-600 dark:text-indigo-500"
+            />
+            Secured by SSL
+          </div>
+          <div className="flex items-center gap-2 hover:text-slate-700 dark:hover:text-slate-400 transition-colors">
+            <Zap size={14} className="text-amber-500" />
+            Low Latency
+          </div>
+          <div className="flex items-center gap-2 hover:text-slate-700 dark:hover:text-slate-400 transition-colors">
+            <Sparkles size={14} className="text-blue-500" />
+            AI-Powered Anti-Bot
+          </div>
+        </motion.div>
       </div>
     </div>
   );

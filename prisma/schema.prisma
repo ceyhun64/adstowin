@@ -1,0 +1,250 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id                Int                @id @default(autoincrement())
+  email             String             @unique
+  name              String
+  surname           String
+  password          String
+  role              UserRole           @default(USER)
+  membershipType    MembershipType     @default(FREE)
+  payoneerId        String?
+  balance           Decimal            @default(0) @db.Decimal(10, 4)
+  tkriptoBalance    Decimal            @default(0) @db.Decimal(18, 8)
+  spinCount         Int                @default(0)
+  monthlySpinCount  Int                @default(0)
+  premiumTickets    Int                @default(0)
+  normalTickets     Int                @default(0)
+  lastSpinAt        DateTime?
+  adsRemoved        Boolean            @default(false)
+  premiumStartDate  DateTime?
+  premiumEndDate    DateTime?
+  twoFactorEnabled  Boolean            @default(false)
+  twoFactorSecret   String?
+  resetToken        String?
+  resetTokenExpires DateTime?
+  language          LanguageCode       @default(EN)
+  darkMode          Boolean            @default(false)
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  adClicks          AdClick[]
+  adViews           AdView[]
+  advertiserProfile AdvertiserProfile?
+  chatMessages      ChatMessage[]
+  supportTickets    SupportTicket[]
+  tickets           Ticket[]
+  transactions      Transaction[]
+  wheelSpins        WheelSpin[]
+}
+
+model AdvertiserProfile {
+  id        Int          @id @default(autoincrement())
+  userId    Int          @unique
+  balance   Decimal      @default(0) @db.Decimal(10, 4)
+  createdAt DateTime     @default(now())
+  campaigns AdCampaign[]
+  user      User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model AdCampaign {
+  id                   Int               @id @default(autoincrement())
+  userId               Int
+  title                String
+  description          String?
+  targetUrl            String
+  imageUrl             String?
+  adType               AdType
+  totalImpressions     Int
+  remainingImpressions Int
+  costPerClick         Decimal           @db.Decimal(10, 4)
+  totalClicks          Int               @default(0)
+  isActive             Boolean           @default(true)
+  startDate            DateTime          @default(now())
+  endDate              DateTime?
+  createdAt            DateTime          @default(now())
+  updatedAt            DateTime          @updatedAt
+  advertiser           AdvertiserProfile @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  adClicks             AdClick[]
+  adViews              AdView[]
+
+  @@index([adType, isActive])
+  @@index([remainingImpressions])
+}
+
+model AdView {
+  id         Int        @id @default(autoincrement())
+  userId     Int
+  campaignId Int
+  createdAt  DateTime   @default(now())
+  campaign   AdCampaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, campaignId])
+}
+
+model AdClick {
+  id                Int        @id @default(autoincrement())
+  userId            Int
+  campaignId        Int
+  earnedAmount      Decimal    @db.Decimal(10, 4)
+  verificationCode  Int?
+  verifiedCorrectly Boolean    @default(false)
+  ip                String
+  userAgent         String
+  createdAt         DateTime   @default(now())
+  campaign          AdCampaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  user              User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, campaignId])
+  @@index([createdAt])
+}
+
+model WheelSpin {
+  id          Int            @id @default(autoincrement())
+  userId      Int
+  prizeType   WheelPrizeType
+  prizeAmount Decimal?       @db.Decimal(10, 4)
+  createdAt   DateTime       @default(now())
+  user        User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([createdAt])
+}
+
+model Ticket {
+  id         Int        @id @default(autoincrement())
+  userId     Int
+  ticketType TicketType
+  isUsed     Boolean    @default(false)
+  wonAmount  Decimal?   @db.Decimal(10, 4)
+  wonTkripto Decimal?   @db.Decimal(18, 8)
+  drawDate   DateTime?
+  createdAt  DateTime   @default(now())
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([ticketType, isUsed])
+}
+
+model ChatMessage {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  message   String
+  isDeleted Boolean  @default(false)
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([createdAt])
+}
+
+model SupportTicket {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  subject    String
+  message    String
+  status     String   @default("OPEN")
+  adminReply String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([status])
+}
+
+model Transaction {
+  id            Int               @id @default(autoincrement())
+  userId        Int
+  type          TransactionType
+  status        TransactionStatus @default(PENDING)
+  amount        Decimal           @db.Decimal(10, 4)
+  tkriptoAmount Decimal?          @db.Decimal(18, 8)
+  paymentMethod String?
+  description   String?
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+  user          User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([type])
+  @@index([status])
+}
+
+model MonthlyLeaderboard {
+  id           Int      @id @default(autoincrement())
+  userId       Int
+  userName     String
+  month        Int
+  year         Int
+  spinCount    Int
+  rank         Int
+  prizeAmount  Decimal? @db.Decimal(10, 4)
+  prizeTkripto Decimal? @db.Decimal(18, 8)
+  createdAt    DateTime @default(now())
+
+  @@unique([userId, month, year])
+  @@index([month, year, spinCount])
+}
+
+model SystemSettings {
+  id        Int      @id @default(autoincrement())
+  key       String   @unique
+  value     String
+  updatedAt DateTime @updatedAt
+}
+
+enum UserRole {
+  ADMIN
+  USER
+  ADVERTISER
+}
+
+enum MembershipType {
+  FREE
+  PREMIUM
+}
+
+enum AdType {
+  NORMAL
+  PREMIUM
+}
+
+enum TicketType {
+  NORMAL
+  PREMIUM
+}
+
+enum LanguageCode {
+  EN
+  PT
+  TR
+}
+
+enum WheelPrizeType {
+  NORMAL_TICKET
+  PREMIUM_TICKET
+  CASH_010
+  CASH_030
+  EMPTY
+}
+
+enum TransactionType {
+  DEPOSIT
+  WITHDRAWAL
+  AD_EARNING
+  WHEEL_PRIZE
+  PREMIUM_PURCHASE
+}
+
+enum TransactionStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}

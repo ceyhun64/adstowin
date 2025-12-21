@@ -1,5 +1,10 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
+import ReactDOM from "react-dom";
+import Link from "next/link";
 import {
+  X,
   User,
   Shield,
   HelpCircle,
@@ -8,176 +13,367 @@ import {
   ChevronRight,
   Moon,
   Sun,
+  Info,
+  ShieldAlert,
 } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useTheme } from "next-themes";
+
+/* -------------------------------------------------- */
+/* TYPES */
+/* -------------------------------------------------- */
 interface HamburgerMenuProps {
   isMenuOpen: boolean;
   onClose: () => void;
 }
 
-// PropTypes olarak isMenuOpen ve onClose eklendi
-export default function HamburgerMenu({ isMenuOpen, onClose }: HamburgerMenuProps) {
-  // Bu state artık Navbar tarafından yönetileceği için kaldırıldı.
-  // const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [currentPage, setCurrentPage] = React.useState("home");
+interface SessionUser {
+  name?: string;
+  surname?: string;
+  email?: string;
+}
 
-  // Theme toggle fonksiyonu
+/* -------------------------------------------------- */
+/* COMPONENT */
+/* -------------------------------------------------- */
+export default function HamburgerMenu({
+  isMenuOpen,
+  onClose,
+}: HamburgerMenuProps) {
+  const [mounted, setMounted] = useState(false);
+  const [user, setUser] = useState<SessionUser | null>(null);
+  const { theme, setTheme } = useTheme();
+  const [language, setLanguage] = useState<"tr" | "en" | "pt">("tr");
+
+  /* Statik değerler (şimdilik) */
+  const payoneerId = "PY-88231";
+  const wheelSpins = 12;
+
+  /* -------------------------------------------------- */
+  /* MOUNT GUARD (hydration safe) */
+  /* -------------------------------------------------- */
+  useEffect(() => {
+    setMounted(true);
+    return () => setMounted(false);
+  }, []);
+
+  /* -------------------------------------------------- */
+  /* BODY SCROLL LOCK */
+  /* -------------------------------------------------- */
+  useEffect(() => {
+    document.body.style.overflow = isMenuOpen ? "hidden" : "";
+  }, [isMenuOpen]);
+
+  /* -------------------------------------------------- */
+  /* FETCH SESSION USER */
+  /* -------------------------------------------------- */
+  useEffect(() => {
+    if (!mounted) return;
+
+    const fetchUser = async () => {
+      try {
+        const res = await fetch("/api/account/check", {
+          credentials: "include",
+        });
+        const data = await res.json();
+        setUser(data.user);
+      } catch {
+        setUser(null);
+      }
+    };
+
+    fetchUser();
+  }, [mounted]);
+  console.log(user);
+
+  /* -------------------------------------------------- */
+  /* ACTIONS */
+  /* -------------------------------------------------- */
   const toggleTheme = () => {
-    document.documentElement.classList.toggle("dark");
+    setTheme(theme === "dark" ? "light" : "dark");
   };
 
-  // Menü kapalıysa null döndür.
-  if (!isMenuOpen) return null;
-
-  // Menü içindeki bir öğeye tıklandığında hem sayfayı ayarlar hem de menüyü kapatır.
-  const handleMenuItemClick = (page: string) => {
-    setCurrentPage(page);
-    onClose(); // Menüyü kapatmak için dışarıdan gelen işlevi çağır
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/auth/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+      onClose();
+      window.location.href = "/";
+    } catch (err) {
+      console.error("Logout error:", err);
+    }
   };
 
-  return (
-    // Menü, Navbar'ın altında görünecek şekilde konumlandırıldı.
-    <div className="absolute right-0 top-full w-80 z-9999 bg-white dark:bg-gray-800 border-l border-b border-gray-200 dark:border-gray-700 shadow-xl max-h-[80vh] overflow-y-auto ">
-      {/* 1 - KULLANICI YÖNETİMİ VE DESTEK */}
-      <div className="p-4 border-b border-gray-200 dark:border-gray-700">
-        <h3 className="font-bold text-sm mb-3 opacity-70">
-          Kullanıcı Yönetimi ve Destek
-        </h3>
+  if (!mounted) return null;
 
-        {/* A - Profil Hesap Bilgileri */}
-        <button
-          onClick={() => handleMenuItemClick("profile")}
-          className="w-full flex items-center justify-between p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition mb-2"
-        >
-          <div className="flex items-center space-x-3">
-            <User size={20} />
-            <span>Profil</span>
-          </div>
-          <ChevronRight size={16} />
-        </button>
+  return ReactDOM.createPortal(
+    <AnimatePresence>
+      {isMenuOpen && (
+        <>
+          {/* OVERLAY */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[9998]"
+          />
 
-        {/* B - Güvenlik Ayarları */}
-        <button
-          onClick={() => handleMenuItemClick("security")}
-          className="w-full flex items-center justify-between p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition mb-2"
-        >
-          <div className="flex items-center space-x-3">
-            <Shield size={20} />
-            <span>Güvenlik Ayarları</span>
-          </div>
-          <ChevronRight size={16} />
-        </button>
-
-        {/* C - Yardım & SSS */}
-        <button
-          onClick={() => handleMenuItemClick("help")}
-          className="w-full flex items-center justify-between p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition mb-2"
-        >
-          <div className="flex items-center space-x-3">
-            <HelpCircle size={20} />
-            <span>Yardım & SSS</span>
-          </div>
-          <ChevronRight size={16} />
-        </button>
-
-        {/* D - Destek Ticket */}
-        <button
-          onClick={() => handleMenuItemClick("support")}
-          className="w-full flex items-center justify-between p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition mb-2"
-        >
-          <div className="flex items-center space-x-3">
-            <FileText size={20} />
-            <span>Destek Ticket</span>
-          </div>
-          <ChevronRight size={16} />
-        </button>
-
-        {/* E - Güvenli Çıkış */}
-        <button
-          onClick={() => {
-            alert("Güvenli çıkış yapılıyor...");
-            onClose(); // Çıkış yapıldıktan sonra menüyü kapat
-          }}
-          className="w-full flex items-center justify-between p-3 rounded-lg bg-red-500 hover:bg-red-600 text-white transition"
-        >
-          <div className="flex items-center space-x-3">
-            <LogOut size={20} />
-            <span>Güvenli Çıkış</span>
-          </div>
-        </button>
-      </div>
-
-      {/* 2 - YASAL VE KURUMSAL BİLGİLER (Diğer butonlar aynı mantıkla handleMenuItemClick ile güncellenmelidir.) */}
-      <div className="p-4 border-b border-gray-200 dark:border-gray-700">
-        <h3 className="font-bold text-sm mb-3 opacity-70">
-          Yasal ve Kurumsal Bilgiler
-        </h3>
-
-        <button
-          onClick={() => handleMenuItemClick("terms")}
-          className="w-full text-left p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition mb-2"
-        >
-          Kullanım Koşulları
-        </button>
-        <button
-          onClick={() => handleMenuItemClick("privacy")}
-          className="w-full text-left p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition mb-2"
-        >
-          Gizlilik Politikası
-        </button>
-        <button
-          onClick={() => handleMenuItemClick("anticheat")}
-          className="w-full text-left p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition mb-2"
-        >
-          Hile Karşıtı Politika
-        </button>
-        <button
-          onClick={() => handleMenuItemClick("cookies")}
-          className="w-full text-left p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition mb-2"
-        >
-          Çerez Politikası
-        </button>
-        <button
-          onClick={() => handleMenuItemClick("about")}
-          className="w-full text-left p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition"
-        >
-          Hakkımızda
-        </button>
-      </div>
-
-      {/* 3 - EK SEÇENEKLER (DİL VE TEMA) */}
-      <div className="p-4">
-        <h3 className="font-bold text-sm mb-3 opacity-70">Ek Seçenekler</h3>
-
-        {/* A - Dil Seçenekleri (Şimdilik çalışmıyor) */}
-        <div className="mb-3">
-          <label className="block text-sm mb-2">Dil Seçenekleri</label>
-          <div className="flex space-x-2">
-            <button className="px-4 py-2 rounded-lg flex-1 bg-gray-100 dark:bg-gray-700">
-              🇹🇷 TR
-            </button>
-            <button className="px-4 py-2 rounded-lg flex-1 bg-gray-100 dark:bg-gray-700">
-              🇬🇧 EN
-            </button>
-            <button className="px-4 py-2 rounded-lg flex-1 bg-gray-100 dark:bg-gray-700">
-              🇵🇹 PT
-            </button>
-          </div>
-        </div>
-
-        {/* B - Karanlık Mod / Tema */}
-        <div>
-          <label className="block text-sm mb-2">Tema</label>
-          <button
-            onClick={toggleTheme}
-            className="w-full flex items-center justify-between p-3 rounded-lg bg-gray-100 dark:bg-gray-700"
+          {/* MENU */}
+          <motion.aside
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ type: "spring", stiffness: 220, damping: 28 }}
+            className="fixed right-0 top-0 z-[9999] h-full w-full max-w-sm bg-white dark:bg-[#0F0F0F] shadow-2xl overflow-y-auto"
           >
-            <span className="dark:hidden">Aydınlık Mod</span>
-            <span className="hidden dark:inline">Karanlık Mod</span>
-            <Sun size={20} className="dark:hidden" />
-            <Moon size={20} className="hidden dark:inline" />
-          </button>
-        </div>
-      </div>
+            <div className="p-6">
+              {/* HEADER */}
+              <div className="flex items-center justify-between mb-8">
+                <div>
+                  <h2 className="text-xl font-black italic tracking-tighter">
+                    MENÜ
+                  </h2>
+                  <div className="h-1 w-8 bg-indigo-500 rounded-full mt-1" />
+                </div>
+                <button
+                  onClick={onClose}
+                  className="p-2.5 rounded-xl bg-black/5 dark:bg-white/10 hover:rotate-90 transition-all"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+
+              {/* USER CARD */}
+              <div className="p-4 rounded-2xl bg-slate-50 dark:bg-white/5 border border-black/5 dark:border-white/5 mb-8">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center text-white font-bold">
+                    {user?.name
+                      ? user.name
+                          .split(" ")
+                          .map((n) => n[0])
+                          .join("")
+                      : "?"}
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-sm dark:text-white">
+                      {user
+                        ? `${user.name ?? ""} ${user.surname ?? ""}`.trim()
+                        : "Misafir"}
+                    </h3>
+
+                    <p className="text-xs text-slate-500 mt-1">
+                      {user?.email ?? "Giriş yapılmadı"}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-2 text-[11px]">
+                  <InfoBox label="Payoneer ID" value={payoneerId} />
+                  <InfoBox label="Çark Hakkı" value={wheelSpins} highlight />
+                </div>
+              </div>
+
+              {/* ACCOUNT */}
+              <Section title="Hesap & Destek">
+                <MenuLink
+                  icon={User}
+                  label="Profil"
+                  href="/profile"
+                  onClick={onClose}
+                />
+                <MenuLink
+                  icon={Shield}
+                  label="Güvenlik Ayarları"
+                  href="/account/security_settings"
+                  onClick={onClose}
+                />
+                <MenuLink
+                  icon={HelpCircle}
+                  label="Yardım & SSS"
+                  href="/account/help_faq"
+                  onClick={onClose}
+                />
+                <MenuLink
+                  icon={FileText}
+                  label="Destek Talep"
+                  href="/account/support_requests"
+                  onClick={onClose}
+                />
+                <MenuButton
+                  icon={LogOut}
+                  label="Güvenli Çıkış"
+                  danger
+                  onClick={handleLogout}
+                />
+              </Section>
+
+              {/* LEGAL */}
+              <Section title="Yasal & Kurumsal">
+                <MenuLink
+                  icon={Info}
+                  label="Kullanım Koşulları"
+                  href="/info/terms_of_use"
+                  onClick={onClose}
+                />
+                <MenuLink
+                  icon={Shield}
+                  label="Gizlilik Politikası"
+                  href="/info/privacy_policy"
+                  onClick={onClose}
+                />
+                <MenuLink
+                  icon={ShieldAlert}
+                  label="Hile Karşıtı Politika"
+                  href="/info/anti_cheat_policy"
+                  onClick={onClose}
+                />
+                <MenuLink
+                  icon={FileText}
+                  label="Çerez Politikası"
+                  href="/info/cookie_policy"
+                  onClick={onClose}
+                />
+                <MenuLink
+                  icon={User}
+                  label="Hakkımızda"
+                  href="/info/about"
+                  onClick={onClose}
+                />
+              </Section>
+
+              {/* SETTINGS */}
+              {/* SETTINGS */}
+              <Section title="Uygulama Ayarları">
+                {/* 🌍 DİL SEÇİMİ */}
+                <div className="mb-4">
+                 
+
+                  <div className="grid grid-cols-3 gap-2">
+                    <LangButton
+                      active={language === "tr"}
+                      label="TR"
+                      onClick={() => setLanguage("tr")}
+                    />
+                    <LangButton
+                      active={language === "en"}
+                      label="EN"
+                      onClick={() => setLanguage("en")}
+                    />
+                    <LangButton
+                      active={language === "pt"}
+                      label="PT"
+                      onClick={() => setLanguage("pt")}
+                    />
+                  </div>
+                </div>
+
+                {/* 🌙 TEMA */}
+                <button
+                  onClick={toggleTheme}
+                  className="w-full flex items-center gap-3 p-4 rounded-2xl
+      bg-black/5 dark:bg-white/5
+      hover:bg-black/10 dark:hover:bg-white/10
+      transition-all"
+                >
+                  {theme === "dark" ? (
+                    <Moon size={18} className="text-indigo-400" />
+                  ) : (
+                    <Sun size={18} className="text-orange-500" />
+                  )}
+                  <span className="text-sm font-bold dark:text-white">
+                    Tema Değiştir
+                  </span>
+                </button>
+              </Section>
+            </div>
+          </motion.aside>
+        </>
+      )}
+    </AnimatePresence>,
+    document.body
+  );
+}
+
+/* -------------------------------------------------- */
+/* HELPERS */
+/* -------------------------------------------------- */
+
+function Section({ title, children }: any) {
+  return (
+    <section className="mb-8">
+      <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4 px-1">
+        {title}
+      </p>
+      <div className="space-y-1">{children}</div>
+    </section>
+  );
+}
+
+function InfoBox({ label, value, highlight }: any) {
+  return (
+    <div className="bg-white dark:bg-black/40 p-2 rounded-xl border border-black/5 dark:border-white/5">
+      <span className="block opacity-50 mb-0.5">{label}</span>
+      <span
+        className={`font-bold ${
+          highlight ? "dark:text-emerald-400" : "dark:text-indigo-400"
+        }`}
+      >
+        {value}
+      </span>
     </div>
+  );
+}
+
+function MenuLink({ icon: Icon, label, href, onClick }: any) {
+  return (
+    <Link
+      href={href}
+      onClick={onClick}
+      className="flex items-center justify-between p-3 rounded-xl hover:bg-indigo-500/5 dark:hover:bg-indigo-500/10 transition-all group"
+    >
+      <div className="flex items-center gap-3 text-sm font-bold dark:text-slate-200">
+        <Icon size={18} className="opacity-70" />
+        {label}
+      </div>
+      <ChevronRight size={14} className="opacity-40" />
+    </Link>
+  );
+}
+
+function MenuButton({ icon: Icon, label, danger, onClick }: any) {
+  return (
+    <button
+      onClick={onClick}
+      className={`w-full flex items-center justify-between p-3 rounded-xl transition-all ${
+        danger
+          ? "text-red-500 hover:bg-red-500/10"
+          : "hover:bg-black/5 dark:hover:bg-white/10"
+      }`}
+    >
+      <div className="flex items-center gap-3 text-sm font-bold">
+        <Icon size={18} />
+        {label}
+      </div>
+      <ChevronRight size={14} className="opacity-40" />
+    </button>
+  );
+}
+
+function LangButton({ active, label, onClick }: any) {
+  return (
+    <button
+      onClick={onClick}
+      className={`py-2.5 rounded-xl text-xs font-black transition-all
+        border ${
+          active
+            ? "bg-indigo-600 text-white border-indigo-500 shadow-md shadow-indigo-500/30"
+            : "bg-black/5 dark:bg-white/5 hover:bg-indigo-500/10 border-black/5 dark:border-white/10 dark:text-white"
+        }`}
+    >
+      {label}
+    </button>
   );
 }
