@@ -35,7 +35,8 @@ const authOptions: NextAuthOptions = {
           name: user.name,
           surname: user.surname,
           email: user.email,
-          role: user.role, 
+          role: user.role,
+          membershipType: user.membershipType,
         };
       },
     }),
@@ -62,6 +63,7 @@ const authOptions: NextAuthOptions = {
         token.surname = user.surname;
         token.email = user.email;
         token.role = user.role;
+        token.membershipType = user.membershipType;
       }
       return token;
     },
@@ -74,6 +76,7 @@ const authOptions: NextAuthOptions = {
         surname: token.surname,
         email: token.email,
         role: token.role, // role'ün türünü uygun şekilde belirtin
+        membershipType: token.membershipType,
       };
       return session;
     },
