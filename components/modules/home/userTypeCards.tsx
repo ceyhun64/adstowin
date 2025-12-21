@@ -12,224 +12,213 @@ import {
   Globe,
   TrendingUp,
   Award,
+  Crown,
+  Layers,
 } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function UserTypeCards() {
   return (
-    <div className="relative min-h-screen flex items-center justify-center overflow-hidden py-20 bg-slate-50 dark:bg-slate-950 transition-colors duration-500">
-      {/* --- ARKA PLAN KATMANLARI --- */}
-      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-        {/* Işık Süzmeleri (Glow Effects) */}
-        <div className="absolute top-[-15%] right-[-10%] w-[600px] h-[600px] bg-indigo-500/10 dark:bg-indigo-600/15 rounded-full blur-[120px] animate-pulse" />
-        <div className="absolute bottom-[-15%] left-[-10%] w-[600px] h-[600px] bg-emerald-500/10 dark:bg-emerald-600/15 rounded-full blur-[120px] animate-pulse" />
+    <div className="relative min-h-screen flex items-center justify-center overflow-hidden py-24 bg-[#020617]">
+      {/* --- PREMIUM ARKA PLAN EFEKTLERİ --- */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-[120px] animate-pulse" />
+        <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-emerald-600/10 rounded-full blur-[120px] animate-pulse" />
 
-        {/* Modern Noktalı Grid */}
+        {/* İnce Grid Yapısı */}
         <div
-          className="absolute inset-0 opacity-[0.08] dark:opacity-[0.12] text-slate-500 dark:text-slate-400"
+          className="absolute inset-0 opacity-[0.03]"
           style={{
-            backgroundImage: `radial-gradient(currentColor 1px, transparent 1px)`,
-            backgroundSize: "40px 40px",
+            backgroundImage:
+              "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
+            backgroundSize: "60px 60px",
           }}
         />
-
-        {/* Yumuşak Geçiş Katmanı */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-slate-50/30 dark:to-slate-950/30" />
       </div>
 
-      <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6">
-        {/* Üst Logo ve Başlık */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6">
+        {/* Üst Başlık Grubu */}
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-20 space-y-6"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-24 space-y-6"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-400 text-xs font-black uppercase tracking-[0.3em] shadow-sm">
-            <Globe
-              size={14}
-              className="text-indigo-600 dark:text-indigo-500 animate-pulse"
-            />
-            Next-Gen Digital Interaction Network
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-indigo-300 text-[10px] font-black uppercase tracking-[0.4em]">
+            <Layers size={14} className="text-indigo-400" />
+            Ekosistem Seçimi
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-black text-slate-900 dark:text-white tracking-tighter leading-none">
-            ADS
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-500 dark:to-purple-500 font-light italic">
-              TOWIN
+          <h1 className="text-5xl md:text-6xl font-black text-white tracking-tighter">
+            Rolünüzü{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-emerald-400">
+              Belirleyin
             </span>
           </h1>
 
-          <p className="text-slate-600 dark:text-slate-400 text-lg max-w-2xl mx-auto font-medium">
-            İki farklı ekosistem, tek platform. Markanızı büyütün veya dijital
-            etkileşimlerinizden kazanç elde edin.
+          <p className="text-slate-400 text-lg max-w-2xl mx-auto font-light leading-relaxed">
+            ADS{" "}
+            <span className="text-white font-bold tracking-widest">TOWIN</span>{" "}
+            dünyasında iki farklı yolculuk mümkün. İster markanızı zirveye
+            taşıyın, ister etkileşiminizle kazanın.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-stretch">
-          {/* --- SOL TARAF: ADVERTISERS (Brands) --- */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+          {/* --- REKLAMVEREN KARTI (LÜKS İNDİGO) --- */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
+            initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="group relative flex flex-col justify-between p-10 md:p-12 rounded-[2.5rem] bg-white/80 dark:bg-white/[0.03] backdrop-blur-sm border-2 border-slate-200 dark:border-white/10 hover:border-indigo-500/40 dark:hover:border-indigo-500/30 transition-all duration-500 shadow-xl shadow-slate-200/50 dark:shadow-indigo-500/5 hover:shadow-2xl hover:shadow-indigo-500/10 hover:-translate-y-1"
+            whileHover={{ y: -10 }}
+            className="group relative p-[1px] rounded-[32px] bg-gradient-to-b from-indigo-500/20 to-transparent overflow-hidden"
           >
-            {/* Arka plan gradient efekti */}
-            <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-transparent dark:from-indigo-500/10 rounded-[2.5rem] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="relative h-full p-10 md:p-14 rounded-[31px] bg-[#020617]/90 backdrop-blur-xl flex flex-col justify-between border border-white/5">
+              {/* Kart İçindeki Parlama */}
+              <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 blur-3xl rounded-full group-hover:bg-indigo-500/20 transition-all duration-700" />
 
-            <div className="relative space-y-8">
-              <div className="flex items-center justify-between">
-                <div className="w-16 h-16 rounded-2xl bg-indigo-500/10 dark:bg-indigo-500/20 flex items-center justify-center text-indigo-600 dark:text-indigo-400 border border-indigo-500/20 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-lg shadow-indigo-500/10">
-                  <Target size={32} />
-                </div>
-                <div className="text-[10px] font-bold text-indigo-600 dark:text-indigo-500 uppercase tracking-widest bg-indigo-500/10 dark:bg-indigo-500/20 px-4 py-2 rounded-full border border-indigo-500/20">
-                  B2B Solution
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
-                  Growth For <br />
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-indigo-500 dark:from-indigo-500 dark:to-indigo-400 italic">
-                    Brands.
-                  </span>
-                </h2>
-                <p className="text-slate-600 dark:text-slate-400 font-medium leading-relaxed max-w-md text-base">
-                  Connect your brand with real and verified audiences. Manage
-                  your budget efficiently with transparent analytics and
-                  anti-bot protection.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                {[
-                  { icon: TrendingUp, text: "Targeted Traffic" },
-                  { icon: ShieldCheck, text: "Zero Bot Policy" },
-                  { icon: Zap, text: "API Integration" },
-                  { icon: BarChart3, text: "Real-time Stats" },
-                ].map((item, idx) => (
-                  <div
-                    key={idx}
-                    className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 font-semibold group/item hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
-                  >
-                    <item.icon
-                      size={16}
-                      className="text-indigo-600 dark:text-indigo-500"
-                    />
-                    {item.text}
+              <div className="relative space-y-10">
+                <div className="flex items-center justify-between">
+                  <div className="w-16 h-16 rounded-2xl bg-indigo-500/10 flex items-center justify-center text-indigo-400 border border-indigo-500/20 group-hover:shadow-[0_0_20px_rgba(99,102,241,0.3)] transition-all duration-500">
+                    <Target size={32} />
                   </div>
-                ))}
+                  <span className="text-[10px] font-black text-indigo-400 uppercase tracking-[0.3em] bg-indigo-500/5 px-4 py-2 rounded-lg border border-indigo-500/10">
+                    Advertiser
+                  </span>
+                </div>
+
+                <div className="space-y-4">
+                  <h2 className="text-4xl font-bold text-white tracking-tight">
+                    Marka <br />{" "}
+                    <span className="text-indigo-400 font-light italic text-5xl">
+                      Vizyonu
+                    </span>
+                  </h2>
+                  <p className="text-slate-400 font-light leading-relaxed text-base">
+                    Küresel ölçekte gerçek kullanıcılara ulaşın. Her kuruşun
+                    karşılığını aldığınız,
+                    <span className="text-white font-medium">
+                      {" "}
+                      %100 şeffaf{" "}
+                    </span>{" "}
+                    reklam paneli.
+                  </p>
+                </div>
+
+                <div className="space-y-4">
+                  {[
+                    { icon: TrendingUp, text: "Yüksek Dönüşüm Oranları" },
+                    { icon: ShieldCheck, text: "AI Destekli Bot Koruması" },
+                    { icon: BarChart3, text: "Granüler Veri Analitiği" },
+                  ].map((item, idx) => (
+                    <div
+                      key={idx}
+                      className="flex items-center gap-4 text-sm text-slate-300 group/item"
+                    >
+                      <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 group-hover/item:scale-150 transition-transform" />
+                      {item.text}
+                    </div>
+                  ))}
+                </div>
               </div>
+
+              <button className="mt-12 relative overflow-hidden group/btn px-8 py-5 rounded-2xl bg-indigo-600 text-white font-bold transition-all hover:bg-indigo-500 hover:shadow-[0_0_30px_rgba(79,70,229,0.4)]">
+                <span className="relative z-10 flex items-center justify-center gap-3">
+                  KAMPANYA OLUŞTUR{" "}
+                  <ArrowRight
+                    size={20}
+                    className="group-hover/btn:translate-x-1 transition-transform"
+                  />
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-700" />
+              </button>
             </div>
-
-            <button className="relative mt-12 flex items-center justify-center gap-3 w-full py-4 bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-700 hover:to-indigo-600 text-white font-bold rounded-2xl transition-all shadow-lg shadow-indigo-500/30 hover:shadow-xl hover:shadow-indigo-500/50 active:scale-95 group/btn overflow-hidden">
-              <span className="relative z-10">Launch Campaign</span>
-              <BarChart3
-                className="relative z-10 group-hover/btn:rotate-12 transition-transform"
-                size={18}
-              />
-
-              {/* Button hover effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-indigo-400 opacity-0 group-hover/btn:opacity-100 transition-opacity" />
-            </button>
-
-            {/* Köşe süsü */}
-            <div className="absolute top-6 right-6 w-20 h-20 border-2 border-indigo-500/10 dark:border-indigo-500/20 rounded-full blur-sm opacity-0 group-hover:opacity-100 transition-opacity" />
           </motion.div>
 
-          {/* --- SAĞ TARAF: PUBLISHERS (Users) --- */}
+          {/* --- KULLANICI KARTI (LÜKS EMERALD) --- */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
+            initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="group relative flex flex-col justify-between p-10 md:p-12 rounded-[2.5rem] bg-white/80 dark:bg-white/[0.03] backdrop-blur-sm border-2 border-slate-200 dark:border-white/10 hover:border-emerald-500/40 dark:hover:border-emerald-500/30 transition-all duration-500 shadow-xl shadow-slate-200/50 dark:shadow-emerald-500/5 hover:shadow-2xl hover:shadow-emerald-500/10 hover:-translate-y-1"
+            whileHover={{ y: -10 }}
+            className="group relative p-[1px] rounded-[32px] bg-gradient-to-b from-emerald-500/20 to-transparent overflow-hidden"
           >
-            {/* Arka plan gradient efekti */}
-            <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent dark:from-emerald-500/10 rounded-[2.5rem] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="relative h-full p-10 md:p-14 rounded-[31px] bg-[#020617]/90 backdrop-blur-xl flex flex-col justify-between border border-white/5">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 blur-3xl rounded-full group-hover:bg-emerald-500/20 transition-all duration-700" />
 
-            <div className="relative space-y-8">
-              <div className="flex items-center justify-between">
-                <div className="w-16 h-16 rounded-2xl bg-emerald-500/10 dark:bg-emerald-500/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-lg shadow-emerald-500/10">
-                  <MousePointer2 size={32} />
-                </div>
-                <div className="text-[10px] font-bold text-emerald-600 dark:text-emerald-500 uppercase tracking-widest bg-emerald-500/10 dark:bg-emerald-500/20 px-4 py-2 rounded-full border border-emerald-500/20">
-                  Community Ecosystem
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
-                  Value For <br />
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-emerald-500 dark:from-emerald-500 dark:to-emerald-400 italic">
-                    Users.
-                  </span>
-                </h2>
-                <p className="text-slate-600 dark:text-slate-400 font-medium leading-relaxed max-w-md text-base">
-                  Add value to digital interaction. Discover new brands,
-                  complete tasks, and earn points by contributing to the growth
-                  of the ecosystem.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                {[
-                  { icon: CheckCircle2, text: "Verified Earnings" },
-                  { icon: Sparkles, text: "Daily Challenges" },
-                  { icon: Zap, text: "Instant Access" },
-                  { icon: Award, text: "VIP Tiers" },
-                ].map((item, idx) => (
-                  <div
-                    key={idx}
-                    className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 font-semibold group/item hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
-                  >
-                    <item.icon
-                      size={16}
-                      className="text-emerald-600 dark:text-emerald-400"
-                    />
-                    {item.text}
+              <div className="relative space-y-10">
+                <div className="flex items-center justify-between">
+                  <div className="w-16 h-16 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 border border-emerald-500/20 group-hover:shadow-[0_0_20px_rgba(16,185,129,0.3)] transition-all duration-500">
+                    <Crown size={32} />
                   </div>
-                ))}
+                  <span className="text-[10px] font-black text-emerald-400 uppercase tracking-[0.3em] bg-emerald-500/5 px-4 py-2 rounded-lg border border-emerald-500/10">
+                    Publisher
+                  </span>
+                </div>
+
+                <div className="space-y-4">
+                  <h2 className="text-4xl font-bold text-white tracking-tight">
+                    Dijital <br />{" "}
+                    <span className="text-emerald-400 font-light italic text-5xl">
+                      Prestij
+                    </span>
+                  </h2>
+                  <p className="text-slate-400 font-light leading-relaxed text-base">
+                    Vaktinizi yüksek değerli varlıklara dönüştürün. Seviye
+                    atlayın,
+                    <span className="text-white font-medium">
+                      {" "}
+                      VIP avantajların{" "}
+                    </span>{" "}
+                    ve yüksek çarpanların tadını çıkarın.
+                  </p>
+                </div>
+
+                <div className="space-y-4">
+                  {[
+                    { icon: Sparkles, text: "Özel Görev Havuzları" },
+                    { icon: Zap, text: "Anında Kripto Çekim" },
+                    { icon: Award, text: "VIP Statü Ayrıcalıkları" },
+                  ].map((item, idx) => (
+                    <div
+                      key={idx}
+                      className="flex items-center gap-4 text-sm text-slate-300 group/item"
+                    >
+                      <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 group-hover/item:scale-150 transition-transform" />
+                      {item.text}
+                    </div>
+                  ))}
+                </div>
               </div>
+
+              <button className="mt-12 relative overflow-hidden group/btn px-8 py-5 rounded-2xl bg-white text-slate-950 font-bold transition-all hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(255,255,255,0.2)]">
+                <span className="relative z-10 flex items-center justify-center gap-3">
+                  KAZANMAYA BAŞLA{" "}
+                  <Sparkles size={18} className="animate-pulse" />
+                </span>
+              </button>
             </div>
-
-            <button className="relative mt-12 flex items-center justify-center gap-3 w-full py-4 bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-700 hover:to-emerald-600 text-white font-bold rounded-2xl transition-all shadow-lg shadow-emerald-500/30 hover:shadow-xl hover:shadow-emerald-500/50 active:scale-95 group/btn overflow-hidden">
-              <span className="relative z-10">Start Exploring</span>
-              <ArrowRight
-                className="relative z-10 group-hover/btn:translate-x-1 transition-transform"
-                size={18}
-              />
-
-              {/* Button hover effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-emerald-400 opacity-0 group-hover/btn:opacity-100 transition-opacity" />
-            </button>
-
-            {/* Köşe süsü */}
-            <div className="absolute top-6 right-6 w-20 h-20 border-2 border-emerald-500/10 dark:border-emerald-500/20 rounded-full blur-sm opacity-0 group-hover:opacity-100 transition-opacity" />
           </motion.div>
         </div>
 
-        {/* --- ALT TRUST BAR --- */}
+        {/* --- ALT GÜVEN PANELİ --- */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="mt-20 pt-10 border-t border-slate-200 dark:border-white/5 flex flex-wrap justify-center gap-12 text-slate-500 dark:text-slate-600 font-semibold uppercase tracking-[0.2em] text-[10px]"
+          className="mt-24 py-8 border-y border-white/5 flex flex-wrap justify-center gap-16 text-slate-500 text-[9px] font-black uppercase tracking-[0.5em]"
         >
-          <div className="flex items-center gap-2 hover:text-slate-700 dark:hover:text-slate-400 transition-colors">
-            <ShieldCheck
-              size={14}
-              className="text-indigo-600 dark:text-indigo-500"
-            />
-            Secured by SSL
+          <div className="flex items-center gap-3 hover:text-white transition-colors duration-500">
+            <ShieldCheck size={16} className="text-indigo-500" />
+            Military-Grade Security
           </div>
-          <div className="flex items-center gap-2 hover:text-slate-700 dark:hover:text-slate-400 transition-colors">
-            <Zap size={14} className="text-amber-500" />
-            Low Latency
+          <div className="flex items-center gap-3 hover:text-white transition-colors duration-500">
+            <Globe size={16} className="text-blue-500" />
+            Global Infrastructure
           </div>
-          <div className="flex items-center gap-2 hover:text-slate-700 dark:hover:text-slate-400 transition-colors">
-            <Sparkles size={14} className="text-blue-500" />
-            AI-Powered Anti-Bot
+          <div className="flex items-center gap-3 hover:text-white transition-colors duration-500">
+            <Zap size={16} className="text-amber-500" />
+            Ultra-Low Latency
           </div>
         </motion.div>
       </div>

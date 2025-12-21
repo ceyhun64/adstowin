@@ -2,7 +2,17 @@
 import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Trophy, Clock, Star, Gift, Megaphone, Info } from "lucide-react";
+import {
+  Trophy,
+  Clock,
+  Star,
+  Gift,
+  Megaphone,
+  Info,
+  Sparkles,
+  Crown,
+  Zap,
+} from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function FortuneWheelPage() {
@@ -14,16 +24,39 @@ export default function FortuneWheelPage() {
   const [result, setResult] = useState<string | null>(null);
 
   const wheelSegments = [
-    { label: "Normal Bilet", prob: 74.94, color: "#3b82f6" },
-    { label: "Premium Bilet", prob: 25.0, color: "#a855f7" },
-    { label: "0.10 $", prob: 0.5, color: "#10b981" },
-    { label: "0.30 $", prob: 0.1, color: "#eab308" },
+    {
+      label: "Normal Bilet",
+      prob: 74.94,
+      color: "#1e293b",
+      textColor: "#94a3b8",
+    },
+    { label: "Premium Bilet", prob: 25.0, color: "#4f46e5", textColor: "#fff" },
+    { label: "0.10 $", prob: 0.5, color: "#10b981", textColor: "#fff" },
+    { label: "0.30 $", prob: 0.1, color: "#f59e0b", textColor: "#fff" },
   ];
 
   const topSpinners = [
-    { rank: 1, name: "Ceyhun", spins: 245, prize: "10 TK + 10$" },
-    { rank: 2, name: "Demir", spins: 198, prize: "7 TK + 7$" },
-    { rank: 3, name: "Selin", spins: 167, prize: "5 TK + 5$" },
+    {
+      rank: 1,
+      name: "Ceyhun",
+      spins: 245,
+      prize: "10 TK + 10$",
+      color: "from-amber-400 to-yellow-600",
+    },
+    {
+      rank: 2,
+      name: "Demir",
+      spins: 198,
+      prize: "7 TK + 7$",
+      color: "from-slate-300 to-slate-500",
+    },
+    {
+      rank: 3,
+      name: "Selin",
+      spins: 167,
+      prize: "5 TK + 5$",
+      color: "from-orange-400 to-orange-700",
+    },
   ];
 
   useEffect(() => {
@@ -34,7 +67,7 @@ export default function FortuneWheelPage() {
       const diff = nextHour.getTime() - now.getTime();
       const mins = Math.floor((diff / 1000 / 60) % 60);
       const secs = Math.floor((diff / 1000) % 60);
-      setNextSpinTime(`${mins}dk ${secs}sn`);
+      setNextSpinTime(`${mins}d ${secs}s`);
       if (mins === 59 && secs === 59) setCanSpin(true);
     }, 1000);
     return () => clearInterval(timer);
@@ -56,245 +89,309 @@ export default function FortuneWheelPage() {
       }
     }
 
-    const extraSpins = 5;
+    const extraSpins = 8; // Daha uzun ve heyecanlı dönüş
     const segmentAngle = 360 / wheelSegments.length;
     const targetAngle =
-      extraSpins * 360 +
-      winnerIndex * segmentAngle +
-      Math.random() * (segmentAngle * 0.8);
+      extraSpins * 360 + winnerIndex * segmentAngle + segmentAngle / 2;
     setRotation((prev) => prev + targetAngle);
 
     setTimeout(() => {
       setIsSpinning(false);
       setResult(wheelSegments[winnerIndex].label);
       setCanSpin(false);
-    }, 4000);
+    }, 4500);
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#020617] text-slate-900 dark:text-slate-200 pt-24 pb-12 transition-colors duration-500">
-      {/* 2- SABİT REKLAM ALANI */}
-      <div className="max-w-6xl mx-auto px-6 mb-8">
-        <div className="w-full h-24 bg-white dark:bg-indigo-600/10 border border-slate-200 dark:border-indigo-500/30 rounded-[2rem] flex items-center justify-center relative overflow-hidden shadow-sm dark:shadow-none group">
-          <div className="flex items-center gap-4 z-10">
-            <Megaphone className="text-indigo-600 dark:text-indigo-400 animate-bounce" />
-            <span className="text-slate-600 dark:text-indigo-100 font-bold tracking-widest uppercase text-sm">
-              Sponsorlu Reklam Alanı
-            </span>
+    <div className="min-h-screen bg-[#020617] text-slate-200 pt-28 pb-12 relative overflow-hidden">
+      {/* Background Decorative Glows */}
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-indigo-600/10 blur-[120px] rounded-full" />
+      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-600/10 blur-[120px] rounded-full" />
+
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        {/* SPONSOR AREA - Luxury Banner */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-12"
+        >
+          <div className="group relative w-full h-20 bg-gradient-to-r from-indigo-950/40 via-slate-900/40 to-indigo-950/40 border border-white/5 rounded-3xl flex items-center justify-center overflow-hidden backdrop-blur-xl">
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+            <div className="flex items-center gap-6 opacity-80">
+              <Megaphone className="text-indigo-400 w-5 h-5" />
+              <span className="text-[10px] font-black tracking-[0.4em] uppercase text-indigo-200/60">
+                Sponsorlu Reklam Alanı
+              </span>
+              <Megaphone className="text-indigo-400 w-5 h-5 flip-x" />
+            </div>
           </div>
-        </div>
-      </div>
+        </motion.div>
 
-      <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-8">
-        {/* SOL KOLON: ÇARK */}
-        <div className="lg:col-span-8 space-y-8">
-          <Card className="bg-white dark:bg-white/[0.02] border-slate-200 dark:border-white/5 rounded-[3rem] overflow-hidden shadow-xl shadow-slate-200/50 dark:shadow-none backdrop-blur-md">
-            <CardHeader className="text-center pb-2">
-              <div className="flex justify-center mb-4">
-                <div className="px-4 py-1 rounded-full bg-amber-100 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 text-amber-700 dark:text-amber-500 text-xs font-bold uppercase tracking-tighter">
-                  {isPremium
-                    ? "Premium Avantajı: Saatte 2 Çevirme"
-                    : "Normal Üye: Saatte 1 Çevirme"}
-                </div>
-              </div>
-              <CardTitle className="text-4xl font-black text-slate-900 dark:text-white tracking-tight italic">
-                ŞANS ÇARKINI ÇEVİR
-              </CardTitle>
-              <p className="text-slate-500 dark:text-slate-400 text-sm">
-                Sistem her saat başı yenilenir.
-              </p>
-            </CardHeader>
-
-            <CardContent className="flex flex-col items-center py-10 relative">
-              <div className="relative w-72 h-72 sm:w-96 sm:h-96 mb-12">
-                {/* Pointer */}
-                <div className="absolute -top-2 left-1/2 -translate-x-1/2 z-20 drop-shadow-lg">
-                  <div className="w-0 h-0 border-l-[15px] border-r-[15px] border-t-[30px] border-l-transparent border-r-transparent border-t-red-600"></div>
-                </div>
-
-                {/* Wheel Visual */}
-                <div
-                  className="w-full h-full rounded-full border-[12px] border-slate-100 dark:border-slate-800 shadow-2xl transition-transform duration-[4000ms] cubic-bezier(0.15, 0, 0.15, 1) relative overflow-hidden"
-                  style={{ transform: `rotate(-${rotation}deg)` }}
-                >
-                  <div
-                    className="absolute inset-0"
-                    style={{
-                      background: `conic-gradient(from 0deg, #3b82f6 0% 74.94%, #a855f7 74.94% 99.94%, #10b981 99.94% 99.99%, #eab308 99.99% 100%)`,
-                    }}
-                  ></div>
-                  {/* Merkez Göbek */}
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-white dark:bg-slate-900 rounded-full border-4 border-slate-200 dark:border-slate-800 flex items-center justify-center z-10 shadow-xl">
-                    <Star className="text-amber-500 w-6 h-6 fill-amber-500" />
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+          {/* LEFT: WHEEL SECTION */}
+          <div className="lg:col-span-8 space-y-10">
+            <Card className="bg-white/5 border-white/10 rounded-[4rem] overflow-hidden backdrop-blur-2xl shadow-[0_40px_100px_-20px_rgba(0,0,0,0.5)]">
+              <CardHeader className="text-center pt-12">
+                <div className="flex justify-center mb-6">
+                  <div className="flex items-center gap-2 px-5 py-1.5 rounded-full bg-white/5 border border-white/10">
+                    <Crown
+                      size={14}
+                      className={
+                        isPremium ? "text-amber-400" : "text-slate-400"
+                      }
+                    />
+                    <span className="text-[10px] font-black uppercase tracking-widest text-slate-300">
+                      {isPremium ? "Premium Membership" : "Standard Account"}
+                    </span>
                   </div>
                 </div>
-              </div>
-
-              <div className="flex flex-col items-center gap-6">
-                <Button
-                  onClick={spinWheel}
-                  disabled={isSpinning || !canSpin}
-                  className="h-20 px-16 rounded-[2rem] bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-600 dark:hover:bg-indigo-500 text-white text-2xl font-black shadow-xl shadow-indigo-200 dark:shadow-none transition-all active:scale-95 disabled:opacity-30"
-                >
-                  {isSpinning ? "HESAPLANIYOR..." : "ŞİMDİ ÇEVİR"}
-                </Button>
-
-                <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400 font-mono text-sm bg-slate-100 dark:bg-white/5 px-4 py-2 rounded-xl border border-slate-200 dark:border-white/10">
-                  <Clock size={16} /> {nextSpinTime}
+                <CardTitle className="text-5xl font-black text-white tracking-tighter mb-4 italic">
+                  FORTUNE <span className="text-indigo-500">WHEEL</span>
+                </CardTitle>
+                <div className="flex items-center justify-center gap-4 text-slate-500 text-xs font-medium">
+                  <span className="flex items-center gap-1.5">
+                    <Zap size={14} className="text-indigo-400" /> Şansını Dene
+                  </span>
+                  <span className="w-1 h-1 rounded-full bg-slate-700" />
+                  <span className="flex items-center gap-1.5">
+                    <Clock size={14} /> {nextSpinTime} kaldı
+                  </span>
                 </div>
-              </div>
+              </CardHeader>
 
+              <CardContent className="flex flex-col items-center py-12 relative">
+                {/* WHEEL OUTER RING */}
+                <div className="relative p-4 rounded-full bg-gradient-to-b from-white/10 to-transparent shadow-2xl">
+                  <div className="relative w-80 h-80 sm:w-[450px] sm:h-[450px]">
+                    {/* The Pointer - Elegant Diamond Shape */}
+                    <div className="absolute -top-6 left-1/2 -translate-x-1/2 z-30">
+                      <div
+                        className="w-8 h-12 bg-indigo-500 clip-path-diamond shadow-[0_0_20px_rgba(79,70,229,0.6)] border-2 border-white/20"
+                        style={{
+                          clipPath:
+                            "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)",
+                        }}
+                      />
+                    </div>
+
+                    {/* Wheel Body */}
+                    <motion.div
+                      className="w-full h-full rounded-full border-[16px] border-slate-900 shadow-[0_0_80px_rgba(0,0,0,0.8)] relative overflow-hidden"
+                      animate={{ rotate: rotation }}
+                      transition={{ duration: 4.5, ease: [0.15, 0, 0.15, 1] }}
+                    >
+                      <div
+                        className="absolute inset-0"
+                        style={{
+                          background: `conic-gradient(from 0deg, 
+                            ${wheelSegments[0].color} 0% 74.94%, 
+                            ${wheelSegments[1].color} 74.94% 99.94%, 
+                            ${wheelSegments[2].color} 99.94% 99.99%, 
+                            ${wheelSegments[3].color} 99.99% 100%)`,
+                        }}
+                      />
+
+                      {/* Segment Labels (Simplified for clean look) */}
+                      {[0, 90, 180, 270].map((deg, i) => (
+                        <div
+                          key={i}
+                          className="absolute inset-0 flex justify-center pt-8"
+                          style={{ transform: `rotate(${deg}deg)` }}
+                        >
+                          <span className="text-[10px] font-black text-white/20 uppercase tracking-[0.3em]">
+                            Fortune
+                          </span>
+                        </div>
+                      ))}
+
+                      {/* Center Hub - High Tech Look */}
+                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 bg-slate-900 rounded-full border-[6px] border-white/5 flex items-center justify-center z-20 shadow-inner">
+                        <div className="w-16 h-16 rounded-full bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20">
+                          <Star className="text-indigo-500 w-8 h-8 fill-indigo-500 animate-pulse" />
+                        </div>
+                      </div>
+                    </motion.div>
+                  </div>
+                </div>
+
+                <div className="mt-16 relative group">
+                  <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-[2.5rem] blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+                  <Button
+                    onClick={spinWheel}
+                    disabled={isSpinning || !canSpin}
+                    className="relative h-24 px-20 rounded-[2.5rem] bg-white text-slate-950 hover:bg-slate-100 text-2xl font-black tracking-tighter shadow-2xl transition-all active:scale-95 disabled:opacity-20 disabled:grayscale"
+                  >
+                    {isSpinning ? "BEKLEYİN..." : "ÇARKI ÇEVİR"}
+                  </Button>
+                </div>
+              </CardContent>
+
+              {/* WIN MODAL OVERLAY */}
               <AnimatePresence>
                 {result && (
                   <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="absolute inset-0 flex items-center justify-center bg-white/90 dark:bg-[#020617]/90 backdrop-blur-md z-30 rounded-[3rem]"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    className="absolute inset-0 flex items-center justify-center bg-slate-950/80 backdrop-blur-2xl z-50 rounded-[4rem]"
                   >
-                    <div className="text-center space-y-4 p-8">
-                      <div className="w-20 h-20 bg-emerald-500 rounded-full flex items-center justify-center mx-auto animate-bounce shadow-lg">
-                        <Gift className="text-white w-10 h-10" />
+                    <div className="text-center space-y-6 p-12">
+                      <div className="relative">
+                        <div className="absolute inset-0 bg-emerald-500 blur-3xl opacity-20" />
+                        <div className="w-24 h-24 bg-emerald-500 rounded-3xl rotate-12 flex items-center justify-center mx-auto shadow-2xl relative">
+                          <Gift className="text-white w-12 h-12 -rotate-12" />
+                        </div>
                       </div>
-                      <h3 className="text-slate-900 dark:text-white text-3xl font-black italic">
-                        TEBRİKLER!
+                      <h3 className="text-white text-2xl font-black tracking-[0.2em] uppercase opacity-60">
+                        Muhteşem!
                       </h3>
-                      <p className="text-4xl text-emerald-600 dark:text-emerald-400 font-black tracking-tighter">
+                      <p className="text-6xl text-white font-black tracking-tighter italic">
                         {result}
                       </p>
                       <Button
+                        variant="outline"
                         onClick={() => setResult(null)}
-                        className="rounded-xl px-8"
+                        className="rounded-2xl px-10 h-14 border-white/10 hover:bg-white/5 text-white font-bold"
                       >
-                        Kapat
+                        Koleksiyona Ekle
                       </Button>
                     </div>
                   </motion.div>
                 )}
               </AnimatePresence>
-            </CardContent>
-          </Card>
+            </Card>
 
-          {/* 27- EN ÇOK ÇEVİRENLER */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {topSpinners.map((user, idx) => (
-              <div
-                key={idx}
-                className="bg-white dark:bg-white/[0.03] border border-slate-200 dark:border-white/5 p-6 rounded-[2rem] flex flex-col items-center text-center relative shadow-sm"
-              >
-                <div
-                  className={`absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full text-[10px] font-bold shadow-sm ${
-                    idx === 0
-                      ? "bg-amber-500 text-white"
-                      : "bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-white"
-                  }`}
+            {/* LEADERBOARD CARDS */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {topSpinners.map((user, idx) => (
+                <motion.div
+                  whileHover={{ y: -10 }}
+                  key={idx}
+                  className="bg-white/5 border border-white/5 p-8 rounded-[3rem] flex flex-col items-center text-center relative overflow-hidden group"
                 >
-                  RANK #{user.rank}
-                </div>
-                <div className="w-12 h-12 rounded-full bg-indigo-100 dark:bg-indigo-500/20 flex items-center justify-center mb-3 text-indigo-600 dark:text-indigo-400 font-bold">
-                  {user.name.charAt(0)}
-                </div>
-                <h4 className="font-bold text-slate-900 dark:text-white">
-                  {user.name}
-                </h4>
-                <p className="text-xs text-slate-500 mb-2">
-                  {user.spins} Çevirme
-                </p>
-                <div className="text-[10px] text-emerald-700 dark:text-emerald-400 font-bold bg-emerald-50 dark:bg-emerald-500/5 px-2 py-1 rounded-lg border border-emerald-100 dark:border-transparent">
-                  {user.prize}
-                </div>
-              </div>
-            ))}
+                  <div
+                    className={`absolute top-0 right-0 w-24 h-24 bg-gradient-to-br ${user.color} opacity-10 blur-2xl group-hover:opacity-20 transition-opacity`}
+                  />
+                  <div
+                    className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${user.color} flex items-center justify-center mb-4 shadow-lg text-slate-950 font-black text-xl`}
+                  >
+                    {user.rank}
+                  </div>
+                  <h4 className="font-bold text-white text-lg mb-1">
+                    {user.name}
+                  </h4>
+                  <p className="text-[10px] font-black tracking-widest text-slate-500 uppercase mb-4">
+                    {user.spins} Çevirme
+                  </p>
+                  <div className="w-full py-2 bg-white/5 rounded-xl border border-white/5 text-xs font-bold text-emerald-400">
+                    {user.prize}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
-        </div>
 
-        {/* SAĞ KOLON */}
-        <div className="lg:col-span-4 space-y-6">
-          <Card className="bg-white dark:bg-white/[0.02] border-slate-200 dark:border-white/5 rounded-[2.5rem] shadow-sm">
-            <CardHeader>
-              <CardTitle className="text-lg text-slate-900 dark:text-white flex items-center gap-2">
-                <Trophy className="text-amber-500" size={20} /> Aylık Ödül
-                Havuzu
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-3">
+          {/* RIGHT COLUMN */}
+          <div className="lg:col-span-4 space-y-8">
+            {/* PRIZE POOL */}
+            <Card className="bg-white/5 border-white/10 rounded-[3rem] backdrop-blur-xl">
+              <CardHeader>
+                <CardTitle className="text-sm font-black tracking-[0.2em] uppercase text-slate-400 flex items-center gap-3">
+                  <Trophy className="text-amber-500" size={18} /> Ödül Havuzu
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
                 {[
                   {
-                    label: "1. Kişi",
+                    label: "01",
+                    user: "Ceyhun",
                     prize: "10 TK + 10$",
-                    color: "text-amber-600 dark:text-amber-500",
+                    glow: "bg-amber-500",
                   },
                   {
-                    label: "2. Kişi",
+                    label: "02",
+                    user: "Demir",
                     prize: "7 TK + 7$",
-                    color: "text-slate-600 dark:text-slate-300",
+                    glow: "bg-slate-400",
                   },
                   {
-                    label: "3. Kişi",
+                    label: "03",
+                    user: "Selin",
                     prize: "5 TK + 5$",
-                    color: "text-orange-700 dark:text-orange-600",
+                    glow: "bg-orange-600",
                   },
                 ].map((item, i) => (
                   <div
                     key={i}
-                    className="flex items-center justify-between p-3 bg-slate-50 dark:bg-white/5 rounded-2xl border border-slate-100 dark:border-white/5"
+                    className="flex items-center justify-between p-4 bg-white/[0.03] rounded-2xl border border-white/5 group hover:border-white/20 transition-colors"
                   >
-                    <span className="text-sm text-slate-600 dark:text-slate-400">
-                      {item.label}
-                    </span>
-                    <span className={`text-sm font-bold ${item.color}`}>
+                    <div className="flex items-center gap-3">
+                      <span className="text-[10px] font-black text-slate-600">
+                        {item.label}
+                      </span>
+                      <span className="text-sm font-bold text-white/80">
+                        {item.user}
+                      </span>
+                    </div>
+                    <span className="text-xs font-black text-white">
                       {item.prize}
                     </span>
                   </div>
                 ))}
-              </div>
-              <div className="pt-4 border-t border-slate-100 dark:border-white/10 space-y-2">
-                <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">
-                  Çekiliş Ödülleri
-                </p>
-                <div className="flex justify-between text-xs">
-                  <span className="text-slate-600 dark:text-slate-400">
-                    Premium Bilet (1 Kişi)
-                  </span>
-                  <span className="text-purple-600 dark:text-purple-400 font-bold">
-                    3 TK + 3$
-                  </span>
-                </div>
-                <div className="flex justify-between text-xs">
-                  <span className="text-slate-600 dark:text-slate-400">
-                    Normal Bilet (1 Kişi)
-                  </span>
-                  <span className="text-blue-600 dark:text-blue-400 font-bold">
-                    1 TK + 1$
-                  </span>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
 
-          <Card className="bg-indigo-50 dark:bg-indigo-600/10 border-indigo-100 dark:border-indigo-500/20 rounded-[2.5rem]">
-            <CardContent className="p-6 space-y-4">
-              <div className="flex items-center gap-2 text-indigo-700 dark:text-indigo-400 font-bold">
-                <Info size={18} />
-                <span className="text-sm">Kazanma Olasılıkları</span>
-              </div>
-              <div className="space-y-2">
-                {wheelSegments.map((s, i) => (
-                  <div
-                    key={i}
-                    className="flex justify-between items-center text-xs"
-                  >
-                    <span className="text-slate-500 dark:text-slate-400">
-                      {s.label}
-                    </span>
-                    <span className="font-mono font-bold text-slate-700 dark:text-white">
-                      %{s.prob}
+                <div className="pt-6 mt-6 border-t border-white/5 space-y-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Sparkles size={14} className="text-purple-400" />
+                    <span className="text-[10px] font-black tracking-widest uppercase text-slate-500">
+                      Çekiliş Bonusları
                     </span>
                   </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+                  <div className="flex justify-between items-center text-xs p-3 bg-purple-500/5 rounded-xl border border-purple-500/10">
+                    <span className="text-purple-200/60">Premium Ticket</span>
+                    <span className="font-black text-purple-400">
+                      3 TK + 3$
+                    </span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* PROBABILITIES - Modern Glass Card */}
+            <Card className="bg-indigo-500/5 border border-indigo-500/10 rounded-[3rem]">
+              <CardContent className="p-8">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-8 h-8 rounded-lg bg-indigo-500 flex items-center justify-center shadow-[0_0_15px_rgba(79,70,229,0.4)]">
+                    <Info size={16} className="text-white" />
+                  </div>
+                  <span className="text-xs font-black uppercase tracking-widest text-indigo-200/80">
+                    Olasılık Verileri
+                  </span>
+                </div>
+                <div className="space-y-4">
+                  {wheelSegments.map((s, i) => (
+                    <div key={i} className="group">
+                      <div className="flex justify-between items-center mb-1.5">
+                        <span className="text-[11px] font-bold text-slate-400 group-hover:text-white transition-colors">
+                          {s.label}
+                        </span>
+                        <span className="text-[11px] font-black text-indigo-400">
+                          %{s.prob}
+                        </span>
+                      </div>
+                      <div className="w-full h-1 bg-white/5 rounded-full overflow-hidden">
+                        <motion.div
+                          initial={{ width: 0 }}
+                          animate={{ width: `${s.prob}%` }}
+                          transition={{ duration: 1, delay: i * 0.1 }}
+                          className="h-full bg-indigo-500/40"
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
     </div>

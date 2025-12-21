@@ -6,6 +6,8 @@ import UserTypeCards from "@/components/modules/home/userTypeCards";
 import PlatformFeatures from "@/components/modules/home/platformFeatures";
 import Users from "@/components/modules/home/ads/users/users";
 import Advertisers from "@/components/modules/home/ads/advertisers/advertisers";
+import LiveNetworkStats from "@/components/modules/home/liveNetworkStats";
+import HowItWorks from "@/components/modules/home/howItWorks";
 
 // Kullanıcı veri tipini tanımlayalım
 interface UserData {
@@ -77,7 +79,16 @@ export default function Home() {
     <div className="min-h-screen relative overflow-y-hidden font-sans overflow-x-hidden">
       <main className="relative z-10 container mx-auto max-w-8xl">
         <HeroSection onScrollToForm={handleScrollToForm} />
+        {/* 1. Güven Katmanı */}
+        <LiveNetworkStats />
+
+        {/* 2. Seçim Katmanı */}
         <UserTypeCards />
+
+        {/* 3. Eğitim Katmanı */}
+        <HowItWorks />
+
+        {/* 4. Derinlik/Özellik Katmanı */}
         <PlatformFeatures />
       </main>
     </div>

@@ -9,9 +9,12 @@ import {
   ShieldCheck,
   Loader2,
   X,
-  ExternalLink,
   Volume2,
   VolumeX,
+  Zap,
+  Gem,
+  ChevronRight,
+  Sparkles,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -218,228 +221,331 @@ export default function WatchAdsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#020617] pt-24 pb-12 px-6">
-      <div className="max-w-6xl mx-auto space-y-8">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-          <div>
-            <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight">
-              Reklam İzle & Kazan
+    <div className="min-h-screen bg-[#020617] text-white py-30 px-4 md:px-8 relative overflow-hidden">
+      {/* Arka Plan Sanat Eseri */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
+        <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] bg-indigo-600/10 blur-[120px] rounded-full" />
+        <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-purple-600/10 blur-[120px] rounded-full" />
+      </div>
+
+      <div className="max-w-6xl mx-auto space-y-12">
+        {/* Header Bölümü */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 border-b border-white/5 pb-10 italic">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+          >
+            <div className="flex items-center gap-2 mb-3">
+              <span className="h-[1px] w-8 bg-indigo-500"></span>
+              <span className="text-[10px] font-black tracking-[0.4em] uppercase text-indigo-400">
+                Premium Revenue Hub
+              </span>
+            </div>
+            <h1 className="text-4xl md:text-6xl font-black tracking-tighter">
+              ELITE{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">
+                STREAMS
+              </span>
             </h1>
-            <p className="text-slate-500 dark:text-slate-400 mt-1">
-              {userData?.name}, günlük reklam limitini doldurarak gelirini
-              artır.
+            <p className="text-slate-500 font-medium mt-2 max-w-md">
+              Seçkin içerikleri izleyerek dijital varlıklarını büyüt. Her saniye
+              değerlidir.
             </p>
-          </div>
-          <div className="px-4 py-2 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-600 dark:text-indigo-400 text-sm font-bold">
-            Aktif Reklamlar: {ads.length}
+          </motion.div>
+
+          <div className="flex flex-col items-end gap-2 text-right">
+            <div className="px-6 py-3 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md">
+              <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">
+                Mevcut Havuz
+              </p>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <span className="text-xl font-black">
+                  {ads.length} Aktif Yayın
+                </span>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {ads.map((ad) => (
-            <div
+        {/* Reklam Grid - Lüks Kart Tasarımı */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {ads.map((ad, index) => (
+            <motion.div
               key={ad.id}
-              className="group relative bg-white dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 rounded-[2.5rem] overflow-hidden hover:border-indigo-500/50 transition-all shadow-sm"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+              className="group relative bg-[#0a0f1e] border border-white/5 rounded-[2.5rem] overflow-hidden hover:border-indigo-500/40 transition-all duration-500 shadow-2xl"
             >
+              {/* Premium Badge */}
               {ad.adType === "PREMIUM" && (
-                <div className="absolute top-4 right-4 bg-amber-500 text-white p-2 rounded-xl z-10 shadow-lg">
-                  <Crown size={18} />
+                <div className="absolute top-6 right-6 bg-gradient-to-br from-amber-400 to-orange-600 p-2.5 rounded-2xl z-20 shadow-xl ring-4 ring-[#0a0f1e]">
+                  <Crown size={16} className="text-white" />
                 </div>
               )}
 
-              <div className="w-full h-48 bg-slate-100 dark:bg-slate-800 flex items-center justify-center relative">
+              {/* Resim Alanı - Sinematik Overlay */}
+              <div className="relative h-56 overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0f1e] to-transparent z-10" />
                 {ad.imageUrl ? (
                   <img
                     src={ad.imageUrl}
                     alt=""
-                    className="w-full h-full object-cover opacity-60"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-60"
                   />
                 ) : (
-                  <Play size={40} className="text-indigo-500 opacity-20" />
+                  <div className="w-full h-full bg-indigo-500/5 flex items-center justify-center">
+                    <Zap size={48} className="text-indigo-500/20" />
+                  </div>
                 )}
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors" />
-              </div>
-
-              <div className="p-6 space-y-4">
-                <div>
-                  <h3 className="font-bold text-slate-900 dark:text-white text-lg truncate">
-                    {ad.title}
-                  </h3>
-                  <div className="flex items-center gap-3 mt-2 text-xs font-semibold">
-                    <span className="flex items-center gap-1 text-slate-500">
-                      <Clock size={12} /> 15s
-                    </span>
-                    <span className="flex items-center gap-1 text-emerald-500">
-                      <DollarSign size={12} /> +${getReward(ad).toFixed(3)}
-                    </span>
+                <div className="absolute inset-0 flex items-center justify-center z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  <div className="w-16 h-16 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20">
+                    <Play fill="white" size={24} className="text-white ml-1" />
                   </div>
                 </div>
-                <Button
-                  onClick={() => handleStartAd(ad)}
-                  className="w-full rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white py-6 font-bold shadow-indigo-500/20 shadow-lg"
-                >
-                  İzlemeye Başla
-                </Button>
               </div>
-            </div>
+
+              {/* Kart İçeriği */}
+              <div className="p-8 space-y-6 relative">
+                <div>
+                  <h3 className="text-xl font-black tracking-tight group-hover:text-indigo-400 transition-colors line-clamp-1 italic">
+                    {ad.title}
+                  </h3>
+                  <div className="flex items-center gap-4 mt-4">
+                    <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/[0.03] border border-white/5">
+                      <Clock size={12} className="text-indigo-400" />
+                      <span className="text-[10px] font-black uppercase text-slate-400 tracking-tighter">
+                        15 SANİYE
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+                      <DollarSign size={12} className="text-emerald-500" />
+                      <span className="text-[10px] font-black uppercase text-emerald-500 tracking-tighter italic">
+                        +${getReward(ad).toFixed(3)}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => handleStartAd(ad)}
+                  className="w-full py-4 bg-white text-[#020617] rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-indigo-500 hover:text-white transition-all transform active:scale-95 flex items-center justify-center gap-2 group/btn italic"
+                >
+                  OTURUMU BAŞLAT
+                  <ChevronRight
+                    size={14}
+                    className="group-hover/btn:translate-x-1 transition-transform"
+                  />
+                </button>
+              </div>
+            </motion.div>
           ))}
         </div>
 
         {ads.length === 0 && (
-          <div className="text-center py-20 bg-white dark:bg-white/5 rounded-[3rem] border border-dashed border-slate-300 dark:border-white/10">
-            <Play size={48} className="text-slate-300 mx-auto mb-4" />
-            <p className="text-slate-500 font-medium">
-              Şu an için yeni reklam bulunmuyor.
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="flex flex-col items-center justify-center py-32 bg-white/[0.02] border border-dashed border-white/10 rounded-[3rem]"
+          >
+            <div className="w-20 h-20 rounded-full bg-white/5 flex items-center justify-center mb-6">
+              <Sparkles size={32} className="text-slate-700" />
+            </div>
+            <p className="text-slate-500 font-black uppercase tracking-[0.3em] text-sm italic">
+              Şu an yayınlanacak içerik bulunamadı
             </p>
-          </div>
+          </motion.div>
         )}
       </div>
 
-      {/* FULL SCREEN AD MODAL */}
+      {/* FULL SCREEN AD MODAL - Sinematik Deneyim */}
       <AnimatePresence>
         {activeAd && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[150] bg-black flex items-center justify-center"
+            className="fixed inset-0 z-[150] bg-[#020617] flex items-center justify-center"
           >
-            <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
-              {/* VIDEO PLAYER */}
-              <video
-                ref={videoRef}
-                src={activeAd.targetUrl}
-                className="w-full h-full object-contain pointer-events-none"
-                autoPlay
-                muted={isMuted}
-                playsInline
-              />
+            <div className="relative w-full h-full flex flex-col items-center justify-center bg-black">
+              {/* VIDEO - Sinematik Çerçeve */}
+              <div className="relative w-full max-w-5xl aspect-video shadow-[0_0_100px_rgba(79,70,229,0.2)]">
+                <video
+                  ref={videoRef}
+                  src={activeAd.targetUrl}
+                  className="w-full h-full object-cover rounded-[2rem] border border-white/10"
+                  autoPlay
+                  muted={isMuted}
+                  playsInline
+                />
 
-              {/* OVERLAY CONTROLS */}
-              <div className="absolute top-8 left-8 right-8 flex justify-between items-start z-20">
-                <div className="flex flex-col gap-2">
-                  <div className="bg-black/50 backdrop-blur-xl px-6 py-3 rounded-2xl border border-white/10 flex items-center gap-3 text-white">
-                    <Clock
-                      className={`text-indigo-400 ${
-                        timeLeft > 0 ? "animate-spin" : ""
-                      }`}
-                      size={24}
-                    />
-                    <span className="font-mono text-3xl font-black">
-                      {timeLeft}s
-                    </span>
+                {/* Sol Üst: Zamanlayıcı */}
+                <div className="absolute -top-10 left-4 md:-left-12 flex flex-col gap-4">
+                  <div className="bg-black/80 backdrop-blur-2xl px-6 py-4 rounded-[1.5rem] border border-white/10 flex items-center gap-4">
+                    <div className="relative w-10 h-10 flex items-center justify-center">
+                      <svg className="w-full h-full transform -rotate-90">
+                        <circle
+                          cx="20"
+                          cy="20"
+                          r="18"
+                          fill="none"
+                          stroke="white"
+                          strokeWidth="2"
+                          opacity="0.1"
+                        />
+                        <motion.circle
+                          cx="20"
+                          cy="20"
+                          r="18"
+                          fill="none"
+                          stroke="#6366f1"
+                          strokeWidth="2"
+                          strokeDasharray="113.1"
+                          animate={{
+                            strokeDashoffset:
+                              113.1 - (113.1 * (15 - timeLeft)) / 15,
+                          }}
+                        />
+                      </svg>
+                      <span className="absolute font-black text-sm">
+                        {timeLeft}
+                      </span>
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
+                        Kalan Süre
+                      </span>
+                      <span className="text-lg font-black italic uppercase tracking-tighter">
+                        Aktif Oturum
+                      </span>
+                    </div>
                   </div>
-                  <button
-                    onClick={() => setIsMuted(!isMuted)}
-                    className="bg-black/50 backdrop-blur-xl p-3 rounded-xl border border-white/10 text-white w-fit"
-                  >
-                    {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
-                  </button>
                 </div>
 
-                {/* EXIT BUTTON (Only visible when time is up) */}
-                {timeLeft === 0 && (
-                  <motion.button
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    onClick={() => {
-                      setActiveAd(null);
-                      resetAdState();
-                    }}
-                    className="bg-red-500 hover:bg-red-600 p-4 rounded-2xl text-white shadow-2xl"
-                  >
-                    <X size={32} />
-                  </motion.button>
-                )}
+                {/* Sağ Üst: Ses Kontrol */}
+                <button
+                  onClick={() => setIsMuted(!isMuted)}
+                  className="absolute -top-10 -right-4 md:-right-12 p-5 bg-white/5 hover:bg-white/10 backdrop-blur-md rounded-2xl border border-white/10 transition-colors"
+                >
+                  {isMuted ? <VolumeX size={24} /> : <Volume2 size={24} />}
+                </button>
               </div>
 
-              {/* PREMIUM CODE DISPLAY */}
-              {premiumCode !== null && timeLeft > 0 && !isCompleted && (
+              {/* PREMIUM CODE DISPLAY - Elegant Style */}
+              {premiumCode !== null && timeLeft > 0 && (
                 <motion.div
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="absolute bottom-32 bg-amber-500 text-white px-10 py-5 rounded-[2rem] text-4xl font-black shadow-2xl border-4 border-white/20 z-10"
+                  initial={{ y: 50, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  className="mt-12 flex flex-col items-center gap-4"
                 >
-                  KOD: {premiumCode}
+                  <p className="text-[10px] font-black tracking-[0.5em] text-amber-500 uppercase italic">
+                    Doğrulama Anahtarı
+                  </p>
+                  <div className="bg-gradient-to-br from-amber-400 to-orange-600 text-[#020617] px-12 py-4 rounded-2xl text-4xl font-black shadow-[0_10px_40px_rgba(245,158,11,0.3)] ring-4 ring-amber-500/20">
+                    {premiumCode}
+                  </div>
                 </motion.div>
               )}
 
-              {/* PROGRESS BAR */}
-              <div className="absolute bottom-0 left-0 right-0 h-2 bg-white/10">
+              {/* PROGRESS LINE */}
+              <div className="fixed bottom-0 left-0 w-full h-1 bg-white/5">
                 <motion.div
-                  className="h-full bg-indigo-500"
+                  className="h-full bg-gradient-to-r from-indigo-500 to-purple-500"
                   initial={{ width: "0%" }}
                   animate={{ width: `${((15 - timeLeft) / 15) * 100}%` }}
-                  transition={{ duration: 1, ease: "linear" }}
                 />
               </div>
 
-              {/* VERIFICATION SCREEN */}
+              {/* VERIFICATION MODAL - Ultra Modern Blur */}
               {timeLeft === 0 &&
                 activeAd.adType === "PREMIUM" &&
                 !isCompleted && (
                   <motion.div
-                    initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
-                    animate={{ opacity: 1, backdropFilter: "blur(20px)" }}
-                    className="absolute inset-0 bg-slate-900/90 flex items-center justify-center p-6 z-30"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="absolute inset-0 z-[160] backdrop-blur-[30px] bg-[#020617]/80 flex items-center justify-center p-6"
                   >
-                    <div className="max-w-md w-full space-y-6 text-center">
-                      <div className="w-20 h-20 bg-indigo-500/20 rounded-full flex items-center justify-center mx-auto">
+                    <div className="max-w-md w-full text-center space-y-8">
+                      <div className="w-24 h-24 bg-indigo-500/10 rounded-[2rem] flex items-center justify-center mx-auto border border-indigo-500/20">
                         <ShieldCheck size={48} className="text-indigo-400" />
                       </div>
-                      <h2 className="text-white text-3xl font-black italic">
-                        DOĞRULAMA GEREKLİ
-                      </h2>
-                      <p className="text-slate-400">
-                        Videoda görünen 4 haneli kodu aşağıdaki kutucuğa yazın.
-                      </p>
+                      <div>
+                        <h2 className="text-4xl font-black italic tracking-tighter mb-2 italic uppercase">
+                          Güvenli Aktarım
+                        </h2>
+                        <p className="text-slate-400 font-medium">
+                          Lütfen videoda gördüğünüz kodu girerek ödülü
+                          hesabınıza transfer edin.
+                        </p>
+                      </div>
 
                       <input
                         type="number"
                         value={userInputCode}
                         onChange={(e) => setUserInputCode(e.target.value)}
-                        className="w-full bg-white/10 border-2 border-white/20 rounded-[1.5rem] p-6 text-white text-center text-4xl font-black focus:border-indigo-500 outline-none transition-all tracking-[0.5em]"
-                        placeholder="----"
+                        className="w-full bg-white/[0.03] border-2 border-white/5 rounded-3xl p-8 text-white text-center text-5xl font-black focus:border-indigo-500 outline-none transition-all tracking-[0.4em] italic shadow-inner placeholder:text-white/5"
+                        placeholder="0000"
                         autoFocus
                       />
 
                       <Button
                         onClick={handleVerifyAndComplete}
                         disabled={isSubmitting || userInputCode.length < 1}
-                        className="w-full py-8 bg-indigo-600 hover:bg-indigo-700 text-white rounded-[1.5rem] text-xl font-black uppercase"
+                        className="w-full py-8 bg-indigo-600 hover:bg-indigo-700 text-white rounded-[1.5rem] text-lg font-black uppercase italic tracking-widest transition-all shadow-2xl shadow-indigo-600/30"
                       >
                         {isSubmitting ? (
                           <Loader2 className="animate-spin" />
                         ) : (
-                          "Ödülü Hesaba Aktar"
+                          "AKTARIYI TAMAMLA"
                         )}
                       </Button>
                     </div>
                   </motion.div>
                 )}
 
-              {/* SUCCESS SCREEN */}
+              {/* SUCCESS OVERLAY */}
               {isCompleted && (
                 <motion.div
-                  initial={{ scale: 0.8, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  className="absolute inset-0 bg-emerald-500 flex flex-col items-center justify-center z-50 text-white p-6"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="absolute inset-0 z-[170] bg-emerald-500 flex flex-col items-center justify-center text-white italic"
                 >
                   <motion.div
-                    initial={{ y: 20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    className="text-9xl mb-6"
+                    initial={{ scale: 0.5 }}
+                    animate={{ scale: 1 }}
+                    className="mb-8"
                   >
-                    💎
+                    <div className="w-32 h-32 rounded-full bg-white flex items-center justify-center shadow-2xl">
+                      <Gem size={64} className="text-emerald-500" />
+                    </div>
                   </motion.div>
-                  <h2 className="text-5xl font-black mb-2 uppercase italic tracking-tighter">
-                    Mükemmel!
+                  <h2 className="text-6xl font-black tracking-tighter uppercase mb-4">
+                    Başarılı!
                   </h2>
-                  <p className="text-emerald-100 text-xl font-medium">
-                    Ödülünüz başarıyla tanımlandı.
+                  <p className="text-emerald-100 text-xl font-bold tracking-widest uppercase opacity-80">
+                    Varlıklar Hesabınıza İşlendi
                   </p>
                 </motion.div>
               )}
+
+              {/* EXIT - Sadece süre bittiğinde */}
+              {timeLeft === 0 &&
+                !isCompleted &&
+                activeAd.adType === "NORMAL" && (
+                  <button
+                    onClick={() => {
+                      setActiveAd(null);
+                      resetAdState();
+                    }}
+                    className="absolute top-8 right-8 p-6 bg-white/5 hover:bg-red-500 rounded-full transition-all group"
+                  >
+                    <X
+                      size={32}
+                      className="group-hover:rotate-90 transition-transform duration-500"
+                    />
+                  </button>
+                )}
             </div>
           </motion.div>
         )}

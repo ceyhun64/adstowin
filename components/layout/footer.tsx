@@ -9,43 +9,62 @@ import {
   Twitter,
   Instagram,
   Send,
+  ArrowUpRight,
+  Zap,
 } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative bg-slate-50 dark:bg-[#020617] border-t border-slate-200 dark:border-white/5 pt-16 pb-8 overflow-hidden transition-colors duration-500">
-      {/* Arka Plan Hafif Işıklandırma - Temaya göre renk değiştirir */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-[300px] bg-indigo-500/10 dark:bg-indigo-600/5 blur-[120px] pointer-events-none" />
+    <footer className="relative bg-[#020617] border-t border-white/5 pt-24 pb-12 overflow-hidden">
+      {/* --- LÜKS ARKA PLAN EFEKTLERİ --- */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        {/* Kareli Grid Deseni */}
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage:
+              "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
+            backgroundSize: "40px 40px",
+          }}
+        />
+        {/* Gradyan Işıltılar */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[300px] bg-indigo-600/5 blur-[120px]" />
+        <div className="absolute -bottom-24 -right-24 w-[400px] h-[400px] bg-emerald-600/5 blur-[100px] rounded-full" />
+      </div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-          {/* Bölüm 1: Marka Kimliği */}
-          <div className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-16 mb-20">
+          {/* Bölüm 1: Marka & Vizyon (Lg: 4 Sütun) */}
+          <div className="lg:col-span-4 space-y-8">
             <Link href="/" className="flex items-center gap-3 group">
-              <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/20 group-hover:rotate-6 transition-transform">
+              <div className="relative w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-[0_0_20px_rgba(255,255,255,0.1)] group-hover:scale-110 transition-transform duration-500 overflow-hidden">
                 <Image
                   src="/logo/logotrans.png"
                   alt="Logo"
-                  width={24}
-                  height={24}
-                  className="brightness-0 invert"
+                  width={28}
+                  height={28}
+                  className="relative z-10"
                 />
+                <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500 to-emerald-500 opacity-0 group-hover:opacity-10 transition-opacity" />
               </div>
-              <span className="font-black text-xl tracking-tighter text-slate-900 dark:text-white uppercase">
+              <span className="font-black text-2xl tracking-tighter text-white uppercase italic">
                 ADS
-                <span className="text-indigo-600 dark:text-indigo-500">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-emerald-400 not-italic">
                   TOWIN
                 </span>
               </span>
             </Link>
-            <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
-              Dijital etkileşimi değere dönüştüren yeni nesil ekosistem.
-              Markalar için şeffaf büyüme, topluluk için sürdürülebilir ödül
-              altyapısı.
+
+            <p className="text-slate-500 text-sm leading-relaxed max-w-sm font-light">
+              Dijital etkileşimi yüksek performanslı varlıklara dönüştüren
+              premium ekosistem. Geleceğin reklamcılık standartlarını bugünden
+              inşa ediyoruz.
             </p>
-            <div className="flex items-center gap-4">
+
+            <div className="flex items-center gap-3">
               {[
                 { Icon: Twitter, href: "#" },
                 { Icon: Instagram, href: "#" },
@@ -54,17 +73,20 @@ export default function Footer() {
                 <Link
                   key={index}
                   href={social.href}
-                  className="p-2 rounded-lg bg-slate-200/50 dark:bg-white/5 text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-500 hover:bg-slate-200 dark:hover:bg-white/10 transition-all"
+                  className="w-10 h-10 rounded-xl bg-white/[0.03] border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300 group"
                 >
-                  <social.Icon size={18} />
+                  <social.Icon
+                    size={18}
+                    className="group-hover:scale-110 transition-transform"
+                  />
                 </Link>
               ))}
             </div>
           </div>
 
-          {/* Bölüm 2: Kurumsal Linkler */}
-          <div>
-            <h4 className="text-slate-900 dark:text-white font-bold mb-6 text-sm uppercase tracking-widest">
+          {/* Bölüm 2: Hızlı Linkler (Lg: 2 Sütun) */}
+          <div className="lg:col-span-2">
+            <h4 className="text-white font-bold mb-8 text-[11px] uppercase tracking-[0.3em] opacity-50">
               Kurumsal
             </h4>
             <ul className="space-y-4">
@@ -72,14 +94,17 @@ export default function Footer() {
                 "Hakkımızda",
                 "Kullanım Koşulları",
                 "Gizlilik Politikası",
-                "KVKK Aydınlatma",
+                "KVKK",
               ].map((item) => (
                 <li key={item}>
                   <Link
                     href="#"
-                    className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-white text-sm transition-colors flex items-center gap-2 group"
+                    className="text-slate-500 hover:text-indigo-400 text-sm transition-colors flex items-center gap-2 group font-light"
                   >
-                    <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <ArrowUpRight
+                      size={12}
+                      className="opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all"
+                    />
                     {item}
                   </Link>
                 </li>
@@ -87,24 +112,27 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Bölüm 3: Ekosistem Linkleri */}
-          <div>
-            <h4 className="text-slate-900 dark:text-white font-bold mb-6 text-sm uppercase tracking-widest">
+          {/* Bölüm 3: Ekosistem (Lg: 2 Sütun) */}
+          <div className="lg:col-span-2">
+            <h4 className="text-white font-bold mb-8 text-[11px] uppercase tracking-[0.3em] opacity-50">
               Ekosistem
             </h4>
             <ul className="space-y-4">
               {[
-                "Hile Karşıtı Sistem",
-                "Reklamveren Paneli",
-                "Yayıncı Rehberi",
-                "TKripto Whitepaper",
+                "Anti-Cheat",
+                "Reklam Veren",
+                "Yayıncı Paneli",
+                "Whitepaper",
               ].map((item) => (
                 <li key={item}>
                   <Link
                     href="#"
-                    className="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-white text-sm transition-colors flex items-center gap-2 group"
+                    className="text-slate-500 hover:text-emerald-400 text-sm transition-colors flex items-center gap-2 group font-light"
                   >
-                    <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <ArrowUpRight
+                      size={12}
+                      className="opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all"
+                    />
                     {item}
                   </Link>
                 </li>
@@ -112,76 +140,82 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Bölüm 4: İletişim & Hedef */}
-          <div className="space-y-6">
-            <h4 className="text-slate-900 dark:text-white font-bold mb-6 text-sm uppercase tracking-widest">
-              Destek & Vizyon
-            </h4>
-            <div className="space-y-3">
-              <div className="flex items-start gap-3 text-slate-600 dark:text-slate-400 group cursor-pointer">
-                <Mail
-                  size={18}
-                  className="text-indigo-600 dark:text-indigo-500 shrink-0"
+          {/* Bölüm 4: Roadmap & Destek (Lg: 4 Sütun) - LÜKS KART */}
+          <div className="lg:col-span-4 space-y-6">
+            <div className="relative p-6 rounded-[24px] bg-gradient-to-br from-white/[0.03] to-transparent border border-white/5 overflow-hidden group">
+              <div className="absolute top-0 right-0 p-3">
+                <Zap
+                  size={20}
+                  className="text-indigo-500/20 group-hover:text-indigo-500 transition-colors duration-700"
                 />
-                <div className="text-sm">
-                  <p className="text-slate-900 dark:text-white font-medium">
-                    Bize Ulaşın
-                  </p>
-                  <p className="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
-                    support@adsTOWIN.com
-                  </p>
-                </div>
               </div>
-              <div className="flex items-start gap-3 text-slate-600 dark:text-slate-400">
-                <ShieldCheck
-                  size={18}
-                  className="text-emerald-600 dark:text-emerald-500 shrink-0"
-                />
-                <div className="text-sm">
-                  <p className="text-slate-900 dark:text-white font-medium">
-                    Güvenlik Sistemi
+
+              <span className="text-indigo-400 text-[9px] font-black uppercase tracking-[0.4em] block mb-4">
+                Global Vizyon 2027
+              </span>
+
+              <div className="space-y-4">
+                <div className="flex justify-between items-end">
+                  <p className="text-white text-lg font-bold tracking-tight">
+                    TKRİPTO{" "}
+                    <span className="text-slate-500 font-light">Listing</span>
                   </p>
-                  <p>256-bit SSL Koruma</p>
+                  <span className="text-emerald-500 font-mono text-xs">
+                    07/07/2027
+                  </span>
+                </div>
+
+                {/* Progress Bar */}
+                <div className="relative w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
+                  <motion.div
+                    initial={{ width: 0 }}
+                    whileInView={{ width: "35%" }}
+                    transition={{ duration: 2, ease: "easeOut" }}
+                    className="absolute top-0 left-0 h-full bg-gradient-to-r from-indigo-600 to-emerald-500 shadow-[0_0_15px_rgba(99,102,241,0.4)]"
+                  />
+                </div>
+
+                <div className="flex items-center gap-4 pt-2">
+                  <div className="flex items-center gap-2">
+                    <ShieldCheck size={14} className="text-emerald-500" />
+                    <span className="text-[10px] text-slate-500 uppercase font-bold tracking-tighter italic">
+                      Verified Protocol
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* TKripto Badge - Light mode'da daha belirgin hale getirildi */}
-            <div className="p-4 rounded-2xl bg-indigo-600/5 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/20 shadow-sm dark:shadow-none">
-              <p className="text-[10px] text-indigo-600 dark:text-indigo-400 font-black uppercase tracking-widest mb-1">
-                Roadmap Milestone
-              </p>
-              <div className="flex items-center justify-between text-xs text-slate-900 dark:text-white">
-                <span>TKripto Listing</span>
-                <span className="font-bold">07/07/2027</span>
-              </div>
-              <div className="mt-2 w-full h-1 bg-slate-200 dark:bg-white/5 rounded-full overflow-hidden">
-                <div className="w-1/3 h-full bg-indigo-600 dark:bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,0.5)]" />
-              </div>
+            <div className="flex items-center gap-4 px-2">
+              <Mail size={16} className="text-slate-600" />
+              <span className="text-sm text-slate-400 font-light">
+                support@adstowin.com
+              </span>
             </div>
           </div>
         </div>
 
-        {/* Alt Bilgi */}
-        <div className="pt-8 border-t border-slate-200 dark:border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-slate-500 text-xs">
-            © {currentYear}{" "}
-            <span className="text-slate-900 dark:text-white font-bold">
-              ADS
-              <span className="text-indigo-600 dark:text-indigo-500 font-medium">
-                TOWIN
-              </span>
-            </span>
-            . Tüm hakları saklıdır.
-          </p>
-          <div className="flex items-center gap-6 text-slate-500 text-[10px] uppercase font-bold tracking-widest">
-            <div className="flex items-center gap-1.5 hover:text-slate-900 dark:hover:text-slate-300 transition-colors cursor-pointer">
-              <Globe size={12} />
-              TR / EN
-            </div>
-            <p className="hidden sm:block">
-              Made for the future of digital assets
+        {/* Alt Bilgi Barı */}
+        <div className="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8">
+            <p className="text-slate-600 text-[11px] font-medium tracking-wide">
+              © {currentYear}{" "}
+              <span className="text-white">ADS TOWIN GLOBAL</span>. All Rights
+              Reserved.
             </p>
+            <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/[0.02] border border-white/5 text-[10px] text-slate-500 font-bold uppercase tracking-widest cursor-pointer hover:bg-white/5 transition-colors">
+              <Globe size={12} />
+              Region: Global (TR/EN)
+            </div>
+          </div>
+
+          <div className="flex items-center gap-6 opacity-30 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-700">
+            <span className="text-[10px] text-white font-black tracking-[0.2em] uppercase">
+              PCI-DSS Compliant
+            </span>
+            <span className="text-[10px] text-white font-black tracking-[0.2em] uppercase">
+              Secure Assets
+            </span>
           </div>
         </div>
       </div>

@@ -9,18 +9,19 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
   CheckCircle2,
   Coins,
   TrendingUp,
-  Shield,
+  ShieldCheck,
   Download,
-  Moon,
-  Sun,
   Megaphone,
   Smartphone,
   Info,
+  RefreshCcw,
+  Wallet,
+  Zap,
+  Lock,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -32,24 +33,8 @@ export default function AppInstallCaptchaEarningPage() {
   const [isSuccess, setIsSuccess] = useState(false);
   const [completedCount, setCompletedCount] = useState(0);
   const [appInstalled, setAppInstalled] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
 
-  /* -------------------- THEME -------------------- */
-  useEffect(() => {
-    const saved = localStorage.getItem("theme");
-    if (saved === "dark") setDarkMode(true);
-  }, []);
-
-  useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-    localStorage.setItem("theme", darkMode ? "dark" : "light");
-  }, [darkMode]);
-
-  /* -------------------- CAPTCHA -------------------- */
+  /* -------------------- CAPTCHA GENERATION -------------------- */
   const generateCaptcha = () => {
     const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
     let result = "";
@@ -66,7 +51,7 @@ export default function AppInstallCaptchaEarningPage() {
 
   const verifyCaptcha = () => {
     if (!appInstalled) {
-      setMessage("Önce uygulamayı yüklemeniz gerekiyor!");
+      setMessage("Erişim Reddedildi: Önce uygulamayı doğrulamalısınız.");
       setIsSuccess(false);
       return;
     }
@@ -75,11 +60,11 @@ export default function AppInstallCaptchaEarningPage() {
       const earning = Math.floor(Math.random() * 3) + 2;
       setBalance((prev) => prev + earning);
       setCompletedCount((prev) => prev + 1);
-      setMessage(`Başarılı! ${earning} TL kazandınız 🎉`);
+      setMessage(`Madencilik Başarılı: +${earning} TL cüzdana eklendi.`);
       setIsSuccess(true);
       generateCaptcha();
     } else {
-      setMessage("Yanlış captcha! Tekrar deneyin.");
+      setMessage("Doğrulama Hatası: Lütfen kodu kontrol edin.");
       setIsSuccess(false);
       generateCaptcha();
     }
@@ -88,189 +73,260 @@ export default function AppInstallCaptchaEarningPage() {
   const handleInstall = () => {
     setAppInstalled(true);
     setBalance((prev) => prev + 5);
-    setMessage("Uygulama yüklendi! +5 TL kazandınız 🚀");
+    setMessage("Sistem Aktif: Kurulum bonusu +5 TL tanımlandı.");
     setIsSuccess(true);
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#020617] text-slate-900 dark:text-slate-200 pt-20 pb-12 transition-colors duration-500">
-      {/* 3- SABİT REKLAM ALANI */}
-      <div className="max-w-4xl mx-auto px-4 mb-8">
-        <div className="w-full h-24 bg-white dark:bg-indigo-600/10 border border-slate-200 dark:border-indigo-500/30 rounded-[2rem] flex items-center justify-center relative overflow-hidden shadow-sm group">
-          <div className="flex items-center gap-4 z-10">
-            <Megaphone className="text-indigo-600 dark:text-indigo-400 animate-pulse" />
-            <span className="text-slate-600 dark:text-indigo-100 font-bold tracking-widest uppercase text-xs md:text-sm text-center">
-              Sponsorlu Reklam Alanı
-            </span>
-          </div>
-        </div>
-      </div>
+    <div className="min-h-screen bg-[#020617] text-slate-200 pt-24 pb-16 relative overflow-hidden">
+      {/* Decorative Gradient Background */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-gradient-to-b from-indigo-500/10 to-transparent blur-[120px] pointer-events-none" />
 
-      <div className="max-w-4xl mx-auto px-4">
-        {/* HEADER */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
-          <div>
-            <h1 className="text-3xl font-black tracking-tight text-slate-900 dark:text-white uppercase italic">
-              Ek Kazanç Merkezi
+      <div className="max-w-5xl mx-auto px-6 relative z-10">
+        {/* LUXURY AD BANNER */}
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-10"
+        >
+          <div className="w-full h-20 bg-white/[0.02] border border-white/5 rounded-3xl flex items-center justify-center relative overflow-hidden group">
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-indigo-500/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+            <div className="flex items-center gap-4 text-slate-400">
+              <Megaphone size={18} className="text-indigo-400" />
+              <span className="text-[10px] font-black tracking-[0.4em] uppercase opacity-60">
+                Sponsorlu Premium İçerik
+              </span>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* HEADER SECTION */}
+        <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-12">
+          <div className="space-y-2">
+            <div className="flex items-center gap-2 text-indigo-400 font-bold text-xs tracking-widest uppercase">
+              <Zap size={14} className="fill-indigo-400" /> Aktif Kazanç Kanalı
+            </div>
+            <h1 className="text-5xl font-black tracking-tighter text-white italic">
+              EARN<span className="text-indigo-500 text-6xl">.</span>HUB
             </h1>
-            <p className="text-slate-500 dark:text-slate-400 text-sm">
-              Görevleri tamamla, bakiyeni anında yükselt.
+            <p className="text-slate-500 font-medium">
+              Sistem görevlerini tamamlayarak dijital varlıklarını yönet.
             </p>
           </div>
-    
+
+          {/* USER BALANCE CARD - High Tech Look */}
+          <div className="bg-white/[0.03] border border-white/10 px-8 py-4 rounded-3xl backdrop-blur-xl flex items-center gap-6 shadow-2xl">
+            <div className="space-y-1">
+              <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
+                Kullanılabilir Bakiye
+              </p>
+              <p className="text-3xl font-black text-white tabular-nums">
+                {balance.toFixed(2)}{" "}
+                <span className="text-indigo-500 text-sm">TL</span>
+              </p>
+            </div>
+            <div className="w-12 h-12 bg-indigo-500/10 rounded-2xl flex items-center justify-center border border-indigo-500/20">
+              <Wallet className="text-indigo-400" />
+            </div>
+          </div>
         </div>
 
-        {/* STATS */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+        {/* STATS ROW */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
           {[
             {
-              title: "Toplam Bakiye",
-              val: `${balance} TL`,
-              icon: <Coins className="text-amber-500" />,
-            },
-            {
-              title: "Tamamlanan",
+              label: "Görevler",
               val: completedCount,
-              icon: <CheckCircle2 className="text-emerald-500" />,
+              icon: <CheckCircle2 size={16} />,
+              color: "text-emerald-400",
             },
             {
-              title: "Ortalama Kazanç",
-              val: `${
-                completedCount > 0
-                  ? (balance / completedCount).toFixed(2)
-                  : "0.00"
-              } TL`,
-              icon: <TrendingUp className="text-indigo-500" />,
+              label: "Verimlilik",
+              val: "%98.4",
+              icon: <TrendingUp size={16} />,
+              color: "text-indigo-400",
             },
-          ].map((stat, i) => (
-            <Card
+            {
+              label: "Güvenlik",
+              val: "SSL-S3",
+              icon: <ShieldCheck size={16} />,
+              color: "text-blue-400",
+            },
+            {
+              label: "Durum",
+              val: "Online",
+              icon: (
+                <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              ),
+              color: "text-emerald-500",
+            },
+          ].map((s, i) => (
+            <div
               key={i}
-              className="bg-white dark:bg-white/[0.02] border-slate-200 dark:border-white/5 rounded-3xl shadow-sm"
+              className="bg-white/[0.02] border border-white/5 p-4 rounded-2xl flex items-center gap-3"
             >
-              <CardHeader className="pb-2">
-                <CardTitle className="text-xs font-bold uppercase text-slate-500 flex items-center gap-2">
-                  {stat.icon} {stat.title}
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="text-2xl font-black text-slate-900 dark:text-white">
-                {stat.val}
-              </CardContent>
-            </Card>
+              <div className={s.color}>{s.icon}</div>
+              <div>
+                <p className="text-[9px] font-black text-slate-600 uppercase tracking-tighter">
+                  {s.label}
+                </p>
+                <p className="text-sm font-bold text-slate-200">{s.val}</p>
+              </div>
+            </div>
           ))}
         </div>
 
-        {/* 35- APP INSTALL BÖLÜMÜ */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-          <div className="md:col-span-5">
-            <Card className="h-full bg-gradient-to-br from-indigo-600 to-purple-700 text-white rounded-[2.5rem] border-none shadow-xl overflow-hidden relative">
-              <div className="absolute top-0 right-0 p-8 opacity-10">
-                <Smartphone size={120} />
-              </div>
-              <CardHeader>
-                <CardTitle className="flex gap-2 items-center text-white">
-                  <Download size={20} /> Uygulama Görevi
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          {/* LEFT: INSTALL MISSION */}
+          <div className="lg:col-span-5">
+            <Card className="h-full bg-gradient-to-br from-slate-900 to-[#020617] border-white/5 rounded-[3rem] shadow-2xl overflow-hidden relative group">
+              <div className="absolute inset-0 bg-indigo-500/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+              <CardHeader className="relative z-10 pt-10">
+                <div className="w-12 h-12 bg-indigo-500 rounded-2xl flex items-center justify-center mb-4 shadow-[0_0_30px_rgba(79,70,229,0.3)]">
+                  <Smartphone className="text-white" size={24} />
+                </div>
+                <CardTitle className="text-2xl font-black text-white">
+                  Mobil Aktivasyon
                 </CardTitle>
-                <CardDescription className="text-indigo-100">
-                  Uygulamayı cihazına yükle, captcha kazancını aktif et.
+                <CardDescription className="text-slate-500 font-medium">
+                  Sistemi tam kapasite kullanmak için mobil entegrasyonu
+                  tamamlayın.
                 </CardDescription>
               </CardHeader>
-              <CardContent className="pt-4">
-                <div className="bg-white/10 p-4 rounded-2xl mb-6 backdrop-blur-md">
-                  <ul className="text-xs space-y-2">
-                    <li className="flex items-center gap-2">
-                      <CheckCircle2 size={14} /> Anında +5.00 TL Bonus
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <CheckCircle2 size={14} /> Captcha Çözme Yetkisi
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <CheckCircle2 size={14} /> Sınırsız Günlük Görev
-                    </li>
-                  </ul>
+              <CardContent className="relative z-10 space-y-8">
+                <div className="space-y-3">
+                  {[
+                    "Anında +5.00 TL Geçit Bonusu",
+                    "Sınırsız Captcha Madenciliği",
+                    "Öncelikli Ödeme Talebi",
+                  ].map((text, i) => (
+                    <div
+                      key={i}
+                      className="flex items-center gap-3 text-xs font-semibold text-slate-300 bg-white/[0.03] p-3 rounded-xl border border-white/5"
+                    >
+                      <CheckCircle2 size={14} className="text-indigo-400" />{" "}
+                      {text}
+                    </div>
+                  ))}
                 </div>
+
                 <Button
                   onClick={handleInstall}
                   disabled={appInstalled}
-                  className={`w-full py-7 rounded-2xl text-lg font-bold transition-all ${
+                  className={`w-full py-8 rounded-[2rem] text-lg font-black tracking-tight transition-all duration-500 ${
                     appInstalled
-                      ? "bg-emerald-500 text-white opacity-100"
-                      : "bg-white text-indigo-700 hover:bg-indigo-50 shadow-lg"
+                      ? "bg-emerald-500/10 text-emerald-500 border border-emerald-500/20"
+                      : "bg-white text-slate-950 hover:bg-slate-200 shadow-[0_20px_40px_-10px_rgba(255,255,255,0.1)]"
                   }`}
                 >
                   {appInstalled
-                    ? "Uygulama Yüklendi ✅"
-                    : "HEMEN YÜKLE (+5 TL)"}
+                    ? "AKTİVASYON TAMAMLANDI"
+                    : "SİSTEMİ KUR (+5 TL)"}
                 </Button>
               </CardContent>
             </Card>
           </div>
 
-          {/* CAPTCHA BÖLÜMÜ */}
-          <div className="md:col-span-7">
-            <Card className="bg-white dark:bg-white/[0.02] border-slate-200 dark:border-white/5 rounded-[2.5rem] shadow-sm h-full">
-              <CardHeader>
-                <CardTitle className="flex gap-2 items-center text-slate-900 dark:text-white">
-                  <Shield className="text-indigo-500" size={20} /> Captcha
-                  Doğrulama
-                </CardTitle>
-                <CardDescription>
-                  Uygulama yüklendikten sonra her captcha 2-5 TL kazandırır.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="relative group">
-                  <div className="p-8 text-center text-5xl font-black tracking-[0.5em] bg-slate-100 dark:bg-white/5 rounded-[2rem] select-none border-2 border-dashed border-slate-200 dark:border-white/10 text-indigo-600 dark:text-indigo-400 italic">
-                    {captchaText}
+          {/* RIGHT: CAPTCHA MINING */}
+          <div className="lg:col-span-7">
+            <Card className="bg-white/[0.02] border-white/5 rounded-[3rem] backdrop-blur-3xl shadow-2xl h-full relative overflow-hidden">
+              {!appInstalled && (
+                <div className="absolute inset-0 bg-[#020617]/60 backdrop-blur-md z-20 flex flex-col items-center justify-center p-12 text-center">
+                  <div className="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center mb-4 border border-white/10">
+                    <Lock className="text-slate-500" size={24} />
                   </div>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={generateCaptcha}
-                    className="absolute top-2 right-2 text-slate-400 hover:text-indigo-500"
-                  >
-                    Yenile
-                  </Button>
+                  <h3 className="text-xl font-black text-white mb-2">
+                    ERİŞİM KISITLANDI
+                  </h3>
+                  <p className="text-sm text-slate-500 max-w-[280px]">
+                    Madencilik terminalini kullanmak için önce uygulamayı
+                    yüklemelisiniz.
+                  </p>
+                </div>
+              )}
+
+              <CardHeader className="pt-10 px-10">
+                <div className="flex justify-between items-center">
+                  <div className="space-y-1">
+                    <CardTitle className="text-2xl font-black text-white tracking-tight">
+                      Veri Doğrulama
+                    </CardTitle>
+                    <CardDescription className="text-slate-500 font-medium text-xs">
+                      Her başarılı doğrulama cüzdanınızı büyütür.
+                    </CardDescription>
+                  </div>
+                  <div className="px-4 py-2 bg-indigo-500/10 rounded-xl border border-indigo-500/20 text-indigo-400 text-[10px] font-black uppercase tracking-widest">
+                    Canlı Havuz
+                  </div>
+                </div>
+              </CardHeader>
+
+              <CardContent className="px-10 pb-10 space-y-8">
+                {/* Visual Captcha Box */}
+                <div className="relative group">
+                  <div className="absolute inset-0 bg-indigo-500/20 blur-3xl opacity-0 group-hover:opacity-30 transition-opacity" />
+                  <div className="relative p-12 bg-slate-950 rounded-[2.5rem] border border-white/5 flex items-center justify-center shadow-inner overflow-hidden">
+                    {/* Security Lines Overlay */}
+                    <div
+                      className="absolute inset-0 opacity-10 pointer-events-none"
+                      style={{
+                        backgroundImage:
+                          "linear-gradient(0deg, transparent 24%, rgba(255, 255, 255, .05) 25%, rgba(255, 255, 255, .05) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .05) 75%, rgba(255, 255, 255, .05) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(255, 255, 255, .05) 25%, rgba(255, 255, 255, .05) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .05) 75%, rgba(255, 255, 255, .05) 76%, transparent 77%, transparent)",
+                        backgroundSize: "30px 30px",
+                      }}
+                    />
+
+                    <span className="text-5xl font-black tracking-[0.6em] text-white italic drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] select-none">
+                      {captchaText}
+                    </span>
+
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={generateCaptcha}
+                      className="absolute bottom-4 right-4 text-slate-600 hover:text-white transition-colors"
+                    >
+                      <RefreshCcw size={18} />
+                    </Button>
+                  </div>
                 </div>
 
                 <div className="space-y-4">
-                  <Input
-                    value={userInput}
-                    onChange={(e) => setUserInput(e.target.value)}
-                    maxLength={6}
-                    placeholder="Kodu buraya yazın..."
-                    className="h-16 text-center text-2xl font-bold tracking-widest rounded-2xl border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-transparent focus:ring-indigo-500"
-                  />
+                  <div className="relative">
+                    <Input
+                      value={userInput}
+                      onChange={(e) => setUserInput(e.target.value)}
+                      maxLength={6}
+                      placeholder="Giriş kodunu onaylayın..."
+                      className="h-20 text-center text-3xl font-black tracking-[0.4em] rounded-[2rem] border-white/5 bg-white/[0.03] text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all placeholder:text-slate-700 placeholder:text-sm placeholder:tracking-normal"
+                    />
+                  </div>
 
                   <Button
                     onClick={verifyCaptcha}
                     disabled={userInput.length < 4 || isSuccess}
-                    className="w-full py-8 rounded-[1.5rem] text-xl font-black bg-slate-900 dark:bg-indigo-600 hover:bg-slate-800 dark:hover:bg-indigo-500 shadow-lg"
+                    className="w-full py-9 rounded-[2rem] text-xl font-black bg-indigo-600 hover:bg-indigo-500 text-white shadow-[0_20px_50px_-15px_rgba(79,70,229,0.5)] transition-all active:scale-95 disabled:opacity-20"
                   >
-                    KONTROL ET & KAZAN
+                    ONAYLA VE KAZAN
                   </Button>
                 </div>
 
-                <AnimatePresence>
+                {/* Status Message */}
+                <AnimatePresence mode="wait">
                   {message && (
                     <motion.div
+                      key={message}
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      className={`p-4 rounded-2xl border flex items-center gap-3 font-bold text-xs ${
+                        isSuccess
+                          ? "bg-emerald-500/5 border-emerald-500/20 text-emerald-400"
+                          : "bg-red-500/5 border-red-500/20 text-red-400"
+                      }`}
                     >
-                      <Alert
-                        className={`rounded-2xl border-none ${
-                          isSuccess
-                            ? "bg-emerald-500/10 text-emerald-600"
-                            : "bg-red-500/10 text-red-600"
-                        }`}
-                      >
-                        <div className="flex items-center gap-2">
-                          <Info size={16} />
-                          <AlertDescription className="font-bold">
-                            {message}
-                          </AlertDescription>
-                        </div>
-                      </Alert>
+                      <Info size={16} />
+                      {message}
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -279,13 +335,19 @@ export default function AppInstallCaptchaEarningPage() {
           </div>
         </div>
 
-        <div className="mt-8 p-6 bg-amber-500/5 border border-amber-500/10 rounded-3xl flex items-start gap-4">
-          <Info className="text-amber-500 shrink-0" size={20} />
-          <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-            <b>Önemli Bilgi:</b> Kazançlarınızın hesabınıza yansıması için
-            uygulamanın cihazınızda yüklü kalması gerekmektedir. Captcha
-            görevleri her 24 saatte bir yenilenen havuzdan beslenir. Adil
-            kullanım politikası gereği bot kullanımı yasaktır.
+        {/* FOOTER INFO - Sophisticated Note */}
+        <div className="mt-12 p-8 bg-white/[0.01] border border-white/5 rounded-[2.5rem] flex items-center gap-6">
+          <div className="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center shrink-0 border border-white/5">
+            <ShieldCheck className="text-slate-400" size={20} />
+          </div>
+          <p className="text-[11px] text-slate-500 leading-relaxed font-medium">
+            <b className="text-slate-300 uppercase tracking-widest mr-2">
+              Güvenlik Protokolü:
+            </b>
+            Tüm kazançlar şifrelenmiş bloklar halinde cüzdanınıza yansıtılır.
+            Uygulamanın kaldırılması durumunda doğrulanmamış bakiyeler askıya
+            alınabilir. Günlük limitler sunucu yoğunluğuna göre dinamik olarak
+            güncellenir.
           </p>
         </div>
       </div>

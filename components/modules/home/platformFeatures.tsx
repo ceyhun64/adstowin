@@ -1,172 +1,164 @@
 "use client";
 import React from "react";
-import { Play, Star, Gift, Users, Crown } from "lucide-react";
+import {
+  Play,
+  Star,
+  Gift,
+  Users,
+  Crown,
+  ChevronRight,
+  Hexagon,
+  Zap,
+  ShieldCheck,
+  Cpu,
+} from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function PlatformFeatures() {
   const features = [
     {
       icon: Play,
-      label: "Smart Stream",
-      desc: "Standard & Premium Content",
-      iconColor: "text-blue-600 dark:text-blue-400",
-      glowColor:
-        "group-hover:shadow-blue-500/20 dark:group-hover:shadow-blue-500/30",
-      accent: "bg-blue-50 dark:bg-blue-500/10",
-      borderColor: "hover:border-blue-200 dark:hover:border-blue-500/30",
-      hoverBg: "hover:bg-blue-50/50 dark:hover:bg-blue-500/5",
+      label: "Akıllı Yayın",
+      desc: "Premium içerik algoritması ile yüksek etkileşimli reklamlar.",
+      color: "from-blue-500 to-indigo-600",
+      bgLight: "bg-blue-500/10",
     },
     {
       icon: Star,
-      label: "Spin Wheel",
-      desc: "Daily Dynamic Rewards",
-      iconColor: "text-amber-600 dark:text-amber-400",
-      glowColor:
-        "group-hover:shadow-amber-500/20 dark:group-hover:shadow-amber-500/30",
-      accent: "bg-amber-50 dark:bg-amber-500/10",
-      borderColor: "hover:border-amber-200 dark:hover:border-amber-500/30",
-      hoverBg: "hover:bg-amber-50/50 dark:hover:bg-amber-500/5",
+      label: "Şans Çarkı",
+      desc: "Saatlik dinamik jackpot ve garantili TKRİPTO çekilişleri.",
+      color: "from-amber-400 to-orange-600",
+      bgLight: "bg-amber-500/10",
     },
     {
       icon: Gift,
-      label: "Growth Tasks",
-      desc: "Value-Driven Objectives",
-      iconColor: "text-emerald-600 dark:text-emerald-400",
-      glowColor:
-        "group-hover:shadow-emerald-500/20 dark:group-hover:shadow-emerald-500/30",
-      accent: "bg-emerald-50 dark:bg-emerald-500/10",
-      borderColor: "hover:border-emerald-200 dark:hover:border-emerald-500/30",
-      hoverBg: "hover:bg-emerald-50/50 dark:hover:bg-emerald-500/5",
+      label: "Gelişim",
+      desc: "Değer odaklı görevlerle günlük pasif gelir limitlerini aşın.",
+      color: "from-emerald-400 to-teal-600",
+      bgLight: "bg-emerald-500/10",
     },
     {
       icon: Users,
       label: "Global Hub",
-      desc: "Real-time Community",
-      iconColor: "text-indigo-600 dark:text-indigo-400",
-      glowColor:
-        "group-hover:shadow-indigo-500/20 dark:group-hover:shadow-indigo-500/30",
-      accent: "bg-indigo-50 dark:bg-indigo-500/10",
-      borderColor: "hover:border-indigo-200 dark:hover:border-indigo-500/30",
-      hoverBg: "hover:bg-indigo-50/50 dark:hover:bg-indigo-500/5",
+      desc: "Real-time topluluk ağı ve canlı WebSocket sohbet deneyimi.",
+      color: "from-indigo-400 to-purple-600",
+      bgLight: "bg-indigo-500/10",
     },
     {
       icon: Crown,
-      label: "VIP Tier",
-      desc: "Exclusive Ecosystem Access",
-      iconColor: "text-fuchsia-600 dark:text-fuchsia-400",
-      glowColor:
-        "group-hover:shadow-fuchsia-500/20 dark:group-hover:shadow-fuchsia-500/30",
-      accent: "bg-fuchsia-50 dark:bg-fuchsia-500/10",
-      borderColor: "hover:border-fuchsia-200 dark:hover:border-fuchsia-500/30",
-      hoverBg: "hover:bg-fuchsia-50/50 dark:hover:bg-fuchsia-500/5",
+      label: "VIP Seviye",
+      desc: "Özel ekosistem erişimi, 2 kat kazanç ve reklam kaldırma gücü.",
+      color: "from-fuchsia-500 to-pink-600",
+      bgLight: "bg-fuchsia-500/10",
     },
   ];
 
   return (
-    <div className="w-full bg-slate-50 dark:bg-slate-950 transition-colors duration-500 py-24 relative overflow-hidden">
-      {/* Arka Plan Dekorasyonları */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Sol üst ışık */}
-        <div className="absolute top-0 left-0 w-96 h-96 bg-indigo-500/5 dark:bg-indigo-500/10 rounded-full blur-[100px]" />
+    <div className="w-full bg-[#020617] py-32 relative overflow-hidden">
+      {/* --- LÜKS ARKA PLAN EFEKTLERİ (KARELİ GRID) --- */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        {/* Ana Parlamalar */}
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-[120px]" />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-emerald-600/5 rounded-full blur-[120px]" />
 
-        {/* Sağ alt ışık */}
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-500/5 dark:bg-purple-500/10 rounded-full blur-[100px]" />
+        {/* İstediğiniz Kareli Grid Deseni */}
+        <div
+          className="absolute inset-0 opacity-[0.05]"
+          style={{
+            backgroundImage:
+              "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
+            backgroundSize: "50px 50px",
+          }}
+        />
+
+        {/* Maske: Grid'in kenarlara doğru sönümlenmesini sağlar */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#020617] via-transparent to-[#020617]" />
       </div>
 
-      <section className="relative max-w-7xl mx-auto px-6">
-        {/* BAŞLIK ALANI */}
-        <div className="flex flex-col items-center text-center mb-16 space-y-6">
+      <section className="relative z-10 max-w-7xl mx-auto px-6">
+        {/* ÜST BAŞLIK */}
+        <div className="flex flex-col items-center text-center mb-24 space-y-6">
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-400 text-xs font-bold uppercase tracking-widest shadow-sm"
+            className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.03] border border-white/10 backdrop-blur-md"
           >
-            <div className="w-1.5 h-1.5 rounded-full bg-indigo-600 dark:bg-indigo-500 animate-pulse" />
-            Platform Ecosystem
+            <Zap size={14} className="text-amber-400 fill-amber-400/20" />
+            <span className="text-white/60 text-[10px] font-black uppercase tracking-[0.4em]">
+              Platform Kabiliyetleri
+            </span>
           </motion.div>
 
-          <motion.h3
-            initial={{ opacity: 0, y: -10 }}
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-6xl font-black text-slate-900 dark:text-white tracking-tight"
+            transition={{ duration: 0.8 }}
+            className="text-4xl md:text-6xl font-bold text-white tracking-tighter"
           >
-            Smarter{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-500 dark:to-purple-500">
-              Interaction
-            </span>{" "}
-            Hub
-          </motion.h3>
+            Dijital Varlıklarınızı <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-blue-400 to-emerald-400 italic font-light">
+              Yeniden Tanımlayın
+            </span>
+          </motion.h2>
 
-          <p className="text-slate-600 dark:text-slate-400 text-lg max-w-2xl font-medium leading-relaxed">
-            Çok yönlü dijital ekosistemimiz, her etkileşimi değerli bir veriye
-            ve ödüle dönüştürmek için tasarlandı.
+          <p className="text-slate-400 text-lg max-w-2xl font-light leading-relaxed">
+            ADS <span className="text-white font-semibold">TOWIN</span> hibrit
+            altyapısı, geleneksel reklamcılığı{" "}
+            <span className="text-indigo-400">blockchain vizyonuyla</span>{" "}
+            birleştirerek size sürdürülebilir bir kazanç kapısı açar.
           </p>
         </div>
 
         {/* ÖZELLİKLER GRID */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-5">
           {features.map((feature, idx) => {
-            const IconComponent = feature.icon;
+            const Icon = feature.icon;
             return (
               <motion.div
                 key={idx}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.1, duration: 0.5 }}
-                className={`group relative p-8 rounded-3xl 
-                  bg-white/80 dark:bg-white/[0.03] backdrop-blur-sm
-                  border border-slate-200 dark:border-white/10 
-                  ${feature.borderColor}
-                  ${feature.hoverBg}
-                  transition-all duration-500 hover:-translate-y-2 
-                  shadow-sm hover:shadow-2xl ${feature.glowColor}
-                  cursor-pointer`}
+                whileHover={{ y: -10 }}
+                className="group relative h-full"
               >
-                {/* İKON KUTUSU */}
+                {/* Kart Glow Efekti */}
                 <div
-                  className={`w-14 h-14 rounded-2xl ${feature.accent} 
-                  border border-slate-100 dark:border-white/5 
-                  flex items-center justify-center mb-6 
-                  group-hover:scale-110 group-hover:rotate-3 transition-all duration-500
-                  shadow-sm`}
-                >
-                  <IconComponent className={`w-7 h-7 ${feature.iconColor}`} />
-                </div>
+                  className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-0 group-hover:opacity-10 blur-2xl transition-opacity duration-500 rounded-[32px]`}
+                />
 
-                {/* METİN İÇERİĞİ */}
-                <div className="space-y-2">
-                  <h4 className="text-slate-900 dark:text-white font-bold text-xl tracking-tight group-hover:text-slate-950 dark:group-hover:text-white transition-colors">
-                    {feature.label}
-                  </h4>
-                  <p className="text-slate-500 dark:text-slate-400 text-sm font-medium leading-relaxed group-hover:text-slate-700 dark:group-hover:text-slate-300 transition-colors">
-                    {feature.desc}
-                  </p>
-                </div>
-
-                {/* HOVER ARROW (Yeni) */}
-                <div className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <svg
-                    className="w-5 h-5 text-slate-400 dark:text-slate-600 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M14 5l7 7m0 0l-7 7m7-7H3"
-                    />
-                  </svg>
-                </div>
-
-                {/* KÖŞE DETAYI */}
-                <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="relative h-full p-8 rounded-[32px] bg-white/[0.02] hover:bg-white/[0.04] backdrop-blur-3xl border border-white/5 group-hover:border-white/20 overflow-hidden transition-all duration-500 flex flex-col items-center md:items-start text-center md:text-left">
+                  {/* İkon Kutusu */}
                   <div
-                    className={`w-1.5 h-1.5 rounded-full ${feature.iconColor} blur-[1px] animate-pulse`}
+                    className={`w-14 h-14 rounded-2xl ${feature.bgLight} flex items-center justify-center mb-8 border border-white/5 relative group-hover:scale-110 transition-transform duration-500 shadow-xl`}
+                  >
+                    <Icon className="w-7 h-7 text-white" />
+                    {/* İkonun altındaki ufak parlama */}
+                    <div
+                      className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-20 blur-sm rounded-2xl`}
+                    />
+                  </div>
+
+                  {/* Metin İçeriği */}
+                  <div className="space-y-4">
+                    <h4 className="text-white font-bold text-xl tracking-tight flex items-center gap-2 justify-center md:justify-start">
+                      {feature.label}
+                      <ChevronRight
+                        size={16}
+                        className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-white/50"
+                      />
+                    </h4>
+                    <p className="text-slate-500 text-xs leading-relaxed font-medium group-hover:text-slate-300 transition-colors">
+                      {feature.desc}
+                    </p>
+                  </div>
+
+                  {/* Dekoratif Alt Çizgi */}
+                  <div
+                    className={`absolute bottom-0 left-0 h-[2px] w-0 group-hover:w-full bg-gradient-to-r ${feature.color} transition-all duration-700`}
                   />
                 </div>
               </motion.div>
@@ -174,24 +166,53 @@ export default function PlatformFeatures() {
           })}
         </div>
 
-        {/* ALT TRUST BAR */}
+        {/* ALT GÜVEN PANELİ */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="mt-20 pt-10 border-t border-slate-200 dark:border-white/5 flex flex-wrap justify-center gap-8 text-slate-500 dark:text-slate-600 font-semibold text-xs"
+          transition={{ delay: 0.5 }}
+          className="mt-24 pt-10 border-t border-white/5 flex flex-wrap justify-center md:justify-between items-center gap-8"
         >
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span>99.9% Uptime</span>
+          <div className="flex gap-10">
+            {[
+              {
+                label: "Uptime",
+                value: "%99.9",
+                icon: Cpu,
+                color: "text-emerald-500",
+              },
+              {
+                label: "Security",
+                value: "AES-256",
+                icon: ShieldCheck,
+                color: "text-blue-500",
+              },
+              {
+                label: "Network",
+                value: "WebSocket",
+                icon: Zap,
+                color: "text-amber-500",
+              },
+            ].map((stat, i) => (
+              <div key={i} className="flex flex-col gap-1">
+                <div className="flex items-center gap-2">
+                  <stat.icon size={12} className={stat.color} />
+                  <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
+                    {stat.label}
+                  </span>
+                </div>
+                <span className="text-white font-bold text-sm tracking-tighter">
+                  {stat.value}
+                </span>
+              </div>
+            ))}
           </div>
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
-            <span>ISO 27001 Certified</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
-            <span>24/7 Support</span>
+
+          <div className="hidden md:flex items-center gap-4 text-slate-600 text-[10px] font-bold uppercase tracking-[0.2em]">
+            <span>Verified Ecosystem</span>
+            <div className="w-1 h-1 rounded-full bg-slate-800" />
+            <span>2024-2027 Roadmap</span>
           </div>
         </motion.div>
       </section>

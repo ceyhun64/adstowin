@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Crown, Wallet, Coins, Plus, LogIn } from "lucide-react";
+import { Crown, Wallet, Coins, Plus, LogIn, Sparkles } from "lucide-react";
 import HamburgerMenu from "./hamburgerMenu";
 import { useAuth } from "@/hooks/useAuth";
 import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Navbar() {
   const { user, isLoggedIn, loading } = useAuth();
@@ -20,159 +21,130 @@ export default function Navbar() {
 
   if (loading)
     return (
-      <div className="h-20 bg-slate-50/50 dark:bg-white/5 animate-pulse border-b border-slate-200 dark:border-white/10" />
+      <div className="fixed top-0 inset-x-0 h-20 bg-[#020617]/50 backdrop-blur-md border-b border-white/5 animate-pulse z-50" />
     );
 
   return (
     <>
       <header
-        className={`fixed top-0 inset-x-0 z-60 transition-all duration-500 ${
-          scrolled
-            ? "bg-white/80 dark:bg-[#020617]/80 backdrop-blur-xl border-b border-slate-200 dark:border-white/10 py-3 shadow-sm"
-            : "bg-transparent py-5"
+        className={`fixed top-0 inset-x-0 z-[60] transition-all duration-700 ${
+          scrolled ? "py-3" : "py-6"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-          {/* LOGO SECTION */}
-          <Link href="/" className="group flex items-center gap-3 outline-none">
-            <div className="relative">
-              <div className="absolute inset-0 bg-indigo-500 blur-lg opacity-0 group-hover:opacity-30 transition-opacity" />
-              <Image
-                src="/logo/logo2.jpg"
-                alt="Logo"
-                width={42}
-                height={42}
-                className="relative rounded-2xl shadow-lg border-2 border-white dark:border-slate-800 transition-transform group-hover:scale-110"
-              />
-            </div>
-            <span className="font-black text-xl tracking-tighter text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
-              ADSTOWIN
-            </span>
-          </Link>
-
-          {/* RIGHT SIDE SECTION */}
-          <div className="flex items-center gap-4">
-            {isLoggedIn && user && (
-              <div className="hidden lg:flex items-center gap-3">
-                <Stat
-                  label="Balance"
-                  value={`$${user.balance}`}
-                  icon={<Wallet size={16} />}
-                  href="/"
-                  variant="indigo"
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <nav
+            className={`relative transition-all duration-500 ease-in-out flex items-center justify-between px-4 py-2 sm:px-6 sm:py-3 rounded-[24px] border ${
+              scrolled
+                ? "bg-[#020617]/80 backdrop-blur-2xl border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
+                : "bg-transparent border-transparent"
+            }`}
+          >
+            {/* LOGO SECTION */}
+            <Link href="/" className="group flex items-center gap-3 outline-none shrink-0">
+              <div className="relative overflow-hidden rounded-xl sm:rounded-2xl border border-white/10 p-0.5 bg-gradient-to-br from-white/10 to-transparent">
+                <Image
+                  src="/logo/logo2.jpg"
+                  alt="Logo"
+                  width={40}
+                  height={40}
+                  className="relative rounded-[10px] sm:rounded-[14px] transition-transform duration-500 group-hover:scale-110 sm:w-[38px] sm:h-[38px] object-cover"
                 />
-                <Stat
-                  label="TKripto"
-                  value={user.tkripto}
-                  icon={<Coins size={16} />}
-                  href="/"
-                  variant="amber"
-                />
+                <div className="absolute inset-0 bg-indigo-500/20 opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
-            )}
+              <div className="flex flex-col">
+                <span className="font-black text-lg sm:text-xl tracking-[ -0.05em] text-white leading-none">
+                  ADS<span className="text-indigo-500">TOWIN</span>
+                </span>
+                <span className="text-[8px] font-bold tracking-[0.3em] text-slate-500 uppercase">Premium Ecosystem</span>
+              </div>
+            </Link>
 
-            {!isLoggedIn ? (
-              <div className="flex items-center gap-2">
-                <Link
-                  href="/auth/login"
-                  className="hidden md:flex items-center gap-2 px-5 py-2.5 text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-white transition-all"
-                >
-                  <LogIn size={18} />
-                  Giriş Yap
-                </Link>
-                <Link
-                  href="/auth/register"
-                  className="relative group overflow-hidden bg-indigo-600 text-white px-6 py-2.5 rounded-2xl text-sm font-black shadow-xl shadow-indigo-500/30 hover:shadow-indigo-500/50 transition-all active:scale-95"
-                >
-                  <span className="relative z-10 uppercase tracking-widest">
-                    Hemen Başla
-                  </span>
-                  <div className="absolute inset-0 bg-linear-to-r from-indigo-400 to-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity" />
-                </Link>
-              </div>
-            ) : (
-              <div className="flex items-center gap-3">
-                {/* PREMIUM STATUS CHECK - STRING BASED */}
-                {user?.membershipType === "PREMIUM" ? (
-                  <div className="flex items-center gap-2 px-4 py-2 rounded-2xl bg-linear-to-r from-amber-400 to-yellow-600 text-white text-xs font-black shadow-lg shadow-yellow-500/30 border border-white/20">
-                    <Crown size={14} className="fill-current animate-pulse" />
-                    <span className="uppercase tracking-wider text-[10px]">
-                      Premium
-                    </span>
-                  </div>
-                ) : (
-                  <Link
-                    href="/premium"
-                    className="group relative flex items-center gap-2 px-4 py-2 rounded-2xl bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-xs font-black shadow-sm border border-slate-200 dark:border-white/10 hover:border-amber-500 transition-all overflow-hidden"
-                  >
-                    <div className="absolute inset-0 bg-linear-to-r from-amber-500 to-orange-500 opacity-0 group-hover:opacity-10 transition-opacity" />
-                    <Crown
-                      size={14}
-                      className="text-amber-500 group-hover:rotate-12 transition-transform"
+            {/* RIGHT SIDE SECTION */}
+            <div className="flex items-center gap-2 sm:gap-6">
+              {isLoggedIn && user ? (
+                <div className="flex items-center gap-2 sm:gap-4">
+                  {/* Bakiye - Glass Style */}
+                  <div className="hidden xs:flex items-center gap-3">
+                    <Stat
+                      value={`$${user.balance}`}
+                      icon={<Wallet size={14} className="text-indigo-400" />}
+                      href="/wallet"
+                      variant="glass"
                     />
-                    <span className="uppercase tracking-wider text-[10px]">
-                      Premium'a Geç
-                    </span>
-                  </Link>
-                )}
-              </div>
-            )}
+                    <Stat
+                      value={user.tkripto}
+                      icon={<Coins size={14} className="text-emerald-400" />}
+                      href="/mining"
+                      variant="glass"
+                    />
+                  </div>
 
-            {/* MENU BUTTON */}
-            <button
-              onClick={() => setIsMenuOpen(true)}
-              className="group relative w-12 h-12 flex flex-col items-center justify-center rounded-2xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 hover:border-indigo-500/50 transition-all active:scale-90"
-            >
-              <div className="w-6 flex flex-col gap-1.5 items-end">
-                <span
-                  className={`h-0.5 bg-slate-800 dark:bg-white rounded-full transition-all duration-300 ${
-                    isMenuOpen ? "w-6 rotate-45 translate-y-2" : "w-6"
-                  }`}
-                />
-                <span
-                  className={`h-0.5 bg-indigo-500 rounded-full transition-all duration-300 ${
-                    isMenuOpen ? "opacity-0" : "w-4 group-hover:w-6"
-                  }`}
-                />
-                <span
-                  className={`h-0.5 bg-slate-800 dark:bg-white rounded-full transition-all duration-300 ${
-                    isMenuOpen
-                      ? "w-6 -rotate-45 -translate-y-2"
-                      : "w-5 group-hover:w-6"
-                  }`}
-                />
-              </div>
-            </button>
-          </div>
+                  {/* PREMIUM / UPGRADE */}
+                  <div className="relative group">
+                    <div className="absolute -inset-1 bg-gradient-to-r from-amber-500 to-yellow-600 rounded-2xl blur opacity-20 group-hover:opacity-50 transition duration-1000"></div>
+                    {user?.membershipType === "PREMIUM" ? (
+                      <div className="relative flex items-center gap-2 px-3 py-1.5 sm:px-5 sm:py-2.5 rounded-xl sm:rounded-2xl bg-[#020617] border border-amber-500/30 text-amber-500 shadow-xl">
+                        <Crown size={14} className="fill-current animate-pulse" />
+                        <span className="hidden sm:inline text-[10px] font-black uppercase tracking-widest">Premium</span>
+                      </div>
+                    ) : (
+                      <Link
+                        href="/premium"
+                        className="relative flex items-center gap-2 px-3 py-1.5 sm:px-5 sm:py-2.5 rounded-xl sm:rounded-2xl bg-gradient-to-r from-amber-500 to-yellow-600 text-white shadow-xl hover:shadow-amber-500/20 transition-all active:scale-95"
+                      >
+                        <Sparkles size={14} className="text-white fill-current" />
+                        <span className="hidden sm:inline text-[10px] font-black uppercase tracking-widest italic">Yükselt</span>
+                      </Link>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                <div className="flex items-center gap-3">
+                  <Link
+                    href="/auth/login"
+                    className="hidden sm:block text-[11px] font-black tracking-widest text-slate-400 hover:text-white transition-colors uppercase"
+                  >
+                    Giriş Yap
+                  </Link>
+                  <Link
+                    href="/auth/register"
+                    className="relative px-6 py-2.5 rounded-xl bg-white text-black text-[11px] font-black uppercase tracking-widest shadow-xl shadow-white/5 hover:bg-indigo-500 hover:text-white transition-all duration-300"
+                  >
+                    Kayıt Ol
+                  </Link>
+                </div>
+              )}
+
+              {/* MODERN HAMBURGER */}
+              <button
+                onClick={() => setIsMenuOpen(true)}
+                className="group relative w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all"
+              >
+                <div className="space-y-1.5">
+                  <span className="block w-5 h-[2px] bg-white rounded-full group-hover:w-3 transition-all"></span>
+                  <span className="block w-3 h-[2px] bg-indigo-500 rounded-full group-hover:w-5 transition-all"></span>
+                  <span className="block w-5 h-[2px] bg-white rounded-full group-hover:w-4 transition-all"></span>
+                </div>
+              </button>
+            </div>
+          </nav>
         </div>
       </header>
 
-      <HamburgerMenu
-        isMenuOpen={isMenuOpen}
-        onClose={() => setIsMenuOpen(false)}
-      />
+      <HamburgerMenu isMenuOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
     </>
   );
 }
 
-function Stat({ value, icon, href, variant }: any) {
-  const colors = {
-    indigo:
-      "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-500/10 border-indigo-100 dark:border-indigo-500/20",
-    amber:
-      "text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-500/10 border-amber-100 dark:border-amber-500/20",
-  }[variant as "indigo" | "amber"];
-
+function Stat({ value, icon, href }: any) {
   return (
     <Link
       href={href}
-      className={`flex items-center gap-2.5 px-4 py-2 rounded-2xl border transition-all hover:scale-105 active:scale-95 group ${colors}`}
+      className="group flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.08] hover:border-white/20 transition-all duration-300"
     >
-      <div className="transition-transform group-hover:scale-110">{icon}</div>
-      <span className="text-sm font-black tracking-tight">{value}</span>
-      <div className="ml-1 p-1 rounded-lg bg-white dark:bg-white/10 shadow-sm border border-inherit transition-transform group-hover:rotate-90">
-        <Plus size={12} strokeWidth={4} />
-      </div>
+      <div className="p-1 rounded-lg bg-white/5 group-hover:scale-110 transition-transform">{icon}</div>
+      <span className="text-[12px] font-bold text-slate-200 tracking-tight">{value}</span>
+      <Plus size={10} className="text-slate-500 group-hover:text-white transition-colors" />
     </Link>
   );
 }

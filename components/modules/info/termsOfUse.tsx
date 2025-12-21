@@ -1,6 +1,8 @@
 "use client";
+
 import React from "react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import {
   Shield,
   CheckCircle2,
@@ -11,287 +13,279 @@ import {
   Home,
   ArrowLeft,
   MessageCircle,
+  Coins,
+  Gavel,
+  History,
+  Crown,
 } from "lucide-react";
 
 const KullanimKosullari = () => {
   const sections = [
     {
-      id: 1,
-      title: "Genel Hükümler",
+      id: "I",
+      title: "Foundational Terms",
+      subtitle: "Genel Hükümler",
       icon: FileText,
       content: [
-        "ADSTOWIN platformuna erişim ve kullanım, bu kullanım koşullarının kabulü ile mümkündür.",
-        "18 yaş ve üzeri kullanıcılar platforma kayıt olabilir.",
-        "Kayıt sırasında verilen bilgilerin doğru ve güncel olması kullanıcının sorumluluğundadır.",
-        "Her kullanıcı yalnızca bir hesap oluşturabilir. Çoklu hesap kullanımı tespit edildiğinde tüm hesaplar kapatılır.",
+        "ADSTOWIN platformuna erişim, bu dijital protokolün tam mutabakatı ile sağlanır.",
+        "Üyelik ekosistemi yalnızca 18 yaş ve üzeri bireyler için tasarlanmıştır.",
+        "Kullanıcı kimliği ve verilerinin doğruluğu, platform bütünlüğü için esastır.",
+        "Her birey tek bir dijital kimliğe (hesap) sahip olabilir; ihlaller kalıcı kısıtlama sebebidir.",
       ],
     },
     {
-      id: 2,
-      title: "Platform Kullanımı",
+      id: "II",
+      title: "Operational Framework",
+      subtitle: "Platform Kullanımı",
       icon: CheckCircle2,
       content: [
-        "Kullanıcılar reklam izleyerek, çark çevirerek ve ek görevler tamamlayarak kazanç elde edebilir.",
-        "Normal üyeler saatte 1 kez, Premium üyeler saatte 2 kez çark çevirebilir.",
-        "Reklam izleme süresi 15 saniyedir ve süre dolmadan çıkış yapılamaz.",
-        "Premium üyeler reklam izlerken ekrana çıkan kodu doğru girerek ekstra kazanç sağlayabilir.",
-        "Kazançlar minimum çekim limitine ulaştığında Payoneer veya Litecoin ile çekilebilir.",
+        "Kazanç döngüsü; reklam etkileşimleri ve mikro görevler üzerine inşa edilmiştir.",
+        "Normal statüdeki üyeler saatlik 1, Premium üyeler 2 çark çevirme hakkına sahiptir.",
+        "Reklam etkileşimleri 15 saniyelik doğrulama periyoduna tabidir.",
+        "Premium üyeler, interaktif kod sistemiyle kazanç katsayılarını 2x artırabilir.",
+        "Likidite çıkışları Payoneer ve Litecoin ağları üzerinden asimetrik şifreleme ile yapılır.",
       ],
     },
     {
-      id: 3,
-      title: "Reklam Verme Kuralları",
-      icon: Scale,
+      id: "III",
+      title: "Advertising Protocol",
+      subtitle: "Reklam Verme Kuralları",
+      icon: Gavel,
       content: [
-        "Reklam verenler minimum 1000 gösterim satın almalıdır.",
-        "Normal reklam: 1000 gösterim = 5 USD, gösterim başına 0.005 USD",
-        "Premium reklam: 1000 gösterim = 20 USD, gösterim başına 0.02 USD",
-        "Reklam içerikleri yasalara uygun olmalı, yanıltıcı içerik içermemelidir.",
-        "Kullanıcılar her reklamı yalnızca 1 kez tıklayabilir.",
-        "Reklam verenler kampanya istatistiklerini anlık olarak takip edebilir.",
+        "Kampanyalar minimum 1.000 gösterimlik paketler halinde stabilize edilmiştir.",
+        "Premium Reklam: Yüksek etkileşimli trafik için 1.000 gösterim / 20 USD.",
+        "Standart Reklam: Geniş erişimli trafik için 1.000 gösterim / 5 USD.",
+        "Reklam içerikleri evrensel etik değerlere ve yerel yasalara tam uyumlu olmalıdır.",
       ],
     },
     {
-      id: 4,
-      title: "Premium Üyelik",
-      icon: Shield,
+      id: "IV",
+      title: "Premium Elite Suite",
+      subtitle: "Premium Üyelik",
+      icon: Crown,
       content: [
-        "Aylık Premium: 4.99 USD",
-        "Yıllık Premium: 39.99 USD (yaklaşık %33 indirim)",
-        "Premium üyeler sabit reklamlardan muaftır.",
-        "Premium üyeler saatte 2 kez çark çevirebilir.",
-        "Premium üyeler reklam izlerken kod girişi ile 2x kazanç sağlar.",
-        "Premium üyelik iptali için destek birimi ile iletişime geçilmelidir.",
+        "Aylık abonelik 4.99 USD, yıllık elit paket 39.99 USD olarak fiyatlandırılmıştır.",
+        "Premium üyeler, platform genelindeki statik reklamlardan tamamen muaftır.",
+        "Yüksek frekanslı çark çevirme ve çift katmanlı kazanç çarpanları aktiftir.",
       ],
     },
     {
-      id: 5,
-      title: "TKripto Token Sistemi",
-      icon: CoinsIcon, // Özel ikon veya Coins
+      id: "V",
+      title: "TKripto Asset System",
+      subtitle: "TKripto Token Sistemi",
+      icon: Coins,
       content: [
-        "TKripto, ADSTOWIN'un özel kripto token'ıdır ve 7/7/2027 tarihinde borsaya açılması hedeflenmektedir.",
-        "Toplam 6 adet TKripto üretilecek, 5'i dağıtılacak, 1'i kurucuda kalacaktır.",
-        "Aylık çark yarışmalarında en başarılı kullanıcılara TKripto ödülü verilir.",
-        "Yıl sonunda en çok TKripto dağıtan kullanıcı 1 AKripto alacaktır.",
-        "TKripto transferleri ve değişimi platform içinde gerçekleştirilir.",
+        "TKripto, platformun yerel varlığıdır; 07/07/2027 borsa listelenmesi hedeflenmektedir.",
+        "Arz kıtlığı esastır: Toplam 6 adet üretilmiş, 5 adedi ekosisteme ayrılmıştır.",
+        "Aylık performans liderleri TKripto ödülleri ile taltif edilir.",
+        "Yıl sonunda en yüksek TKripto hacmine sahip kullanıcı AKripto statüsüne yükselir.",
       ],
     },
     {
-      id: 6,
-      title: "Yasaklı Davranışlar",
+      id: "VI",
+      title: "Restricted Actions",
+      subtitle: "Yasaklı Davranışlar",
       icon: AlertTriangle,
       content: [
-        "Bot, script veya otomatik araçlar kullanmak kesinlikle yasaktır.",
-        "VPN, proxy veya IP maskeleme araçları kullanımı yasaktır.",
-        "Sahte tıklama, hileli kazanç elde etme girişimleri tespit edildiğinde hesap kalıcı kapatılır.",
-        "Çoklu hesap açma ve yönetme yasaktır.",
-        "Sistemde hata bulunması durumunda bu hatadan yararlanmak yerine destek birimine bildirilmelidir.",
-        "Diğer kullanıcıları rahatsız edici davranışlar, chat'te küfür ve hakaret yasaktır.",
+        "Otomatize sistemler, botlar ve script kullanımı ekosistemden men edilme sebebidir.",
+        "VPN ve Proxy gibi anonimleştirme araçları sistem güvenliği gereği kısıtlanmıştır.",
+        "Hileli etkileşimler yapay zeka tarafından anlık olarak denetlenir.",
+        "Platform içi iletişimde kurumsal nezaket dışı davranışlara izin verilmez.",
       ],
     },
     {
-      id: 7,
-      title: "Ödeme ve Çekim Koşulları",
+      id: "VII",
+      title: "Liquidity & Payouts",
+      subtitle: "Ödeme ve Çekim Koşulları",
       icon: Scale,
       content: [
-        "Minimum çekim limiti: 10 USD",
-        "Çekim talepleri 1-7 iş günü içinde işleme alınır.",
-        "Payoneer ve Litecoin ödeme yöntemleri desteklenmektedir.",
-        "Çekim ücretleri ödeme yöntemine göre değişiklik gösterebilir.",
-        "Şüpheli aktivite tespit edilen hesaplarda çekim işlemleri askıya alınabilir.",
-        "Kullanıcı bilgileri ile ödeme bilgileri uyuşmuyorsa çekim reddedilir.",
+        "Minimum çekim eşiği 10 USD olarak belirlenmiştir.",
+        "Talepler, finans departmanı onayından sonra 1-7 iş günü içinde realize edilir.",
+        "Kullanıcı profil verileri ile ödeme kanalı verileri tam eşleşme sağlamalıdır.",
       ],
     },
     {
-      id: 8,
-      title: "Sorumluluk Reddi",
+      id: "VIII",
+      title: "Liability Disclaimer",
+      subtitle: "Sorumluluk Reddi",
       icon: Shield,
       content: [
-        "ADSTOWIN, üçüncü taraf reklamların içeriğinden sorumlu değildir.",
-        "Platform kesintisiz hizmet garantisi vermez, bakım ve güncelleme dönemlerinde geçici kesintiler olabilir.",
-        "Kullanıcıların hesap güvenliği kendi sorumluluğundadır.",
-        "Platform, kurallara uymayan kullanıcıların hesaplarını önceden bildirimde bulunmaksızın kapatma hakkını saklı tutar.",
-        "TKripto'nun borsaya açılması bir hedeftir ve garanti edilmemektedir.",
-      ],
-    },
-    {
-      id: 9,
-      title: "Değişiklik Hakkı",
-      icon: FileText,
-      content: [
-        "ADSTOWIN, kullanım koşullarını önceden bildirimde bulunarak değiştirme hakkını saklı tutar.",
-        "Önemli değişiklikler kullanıcılara e-posta ile bildirilir.",
-        "Değişiklikler yürürlüğe girdikten sonra platformu kullanmaya devam etmek, yeni koşulların kabul edildiği anlamına gelir.",
-        "Kullanıcılar, koşulları düzenli olarak kontrol etmekle yükümlüdür.",
+        "Üçüncü taraf reklam içeriklerinin doğruluğu ilgili sağlayıcının sorumluluğundadır.",
+        "Teknik güncellemeler esnasında geçici servis kesintileri yaşanabilir.",
+        "TKripto borsaya açılış süreci bir vizyon olup, piyasa koşullarına bağlıdır.",
       ],
     },
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#020617] transition-colors duration-300 pt-20">
-      {/* 📢 Sabit Reklam Alanı */}
-      <div className="bg-white/50 dark:bg-white/5 border-b border-slate-200 dark:border-white/10 backdrop-blur-md sticky top-0 z-50 overflow-hidden">
-        <div className="max-w-6xl mx-auto px-4 py-3">
-          <div className="bg-indigo-600/10 dark:bg-indigo-500/10 rounded-2xl py-2 px-4 border border-indigo-200/50 dark:border-indigo-500/20 flex items-center justify-center gap-2">
-            <span className="animate-pulse w-2 h-2 rounded-full bg-indigo-500" />
-            <p className="text-indigo-700 dark:text-indigo-300 text-xs font-bold uppercase tracking-widest text-center">
-              Reklam Alanı • Kampanyaları Keşfedin
-            </p>
-          </div>
-        </div>
-      </div>
+    <div className="min-h-screen bg-[#020617] text-white selection:bg-orange-500/30 pt-32 pb-20 italic overflow-x-hidden">
+      {/* 🌌 Atmospheric Background */}
+      <div className="absolute top-0 left-0 w-full h-[800px] bg-gradient-to-b from-indigo-600/10 via-transparent to-transparent -z-10 blur-[120px]" />
 
-      <div className="max-w-4xl mx-auto px-6 py-12">
-        {/* 🧭 Breadcrumb & Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-          <div>
-            <nav className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 mb-4">
-              <Link
-                href="/"
-                className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
-              >
-                <Home size={16} />
-              </Link>
-              <ChevronRight size={14} />
-              <span className="font-medium text-slate-900 dark:text-white">
-                Kullanım Koşulları
+      <div className="max-w-7xl mx-auto px-6">
+        {/* 🧭 Elite Navigation */}
+        <motion.nav
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="flex items-center gap-3 text-[10px] font-black tracking-[0.4em] uppercase text-slate-500 mb-16"
+        >
+          <Link
+            href="/"
+            className="hover:text-indigo-400 transition-colors flex items-center gap-1"
+          >
+            <Home size={12} /> Index
+          </Link>
+          <ChevronRight size={10} />
+          <span className="text-white">Legal Agreements</span>
+        </motion.nav>
+
+        {/* 🖋️ Section: Header */}
+        <header className="max-w-4xl mb-32">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+          >
+            <div className="flex items-center gap-4 mb-8">
+              <div className="h-[1px] w-12 bg-indigo-500" />
+              <span className="text-[10px] font-black tracking-[0.5em] uppercase text-indigo-500">
+                Legal Governance
               </span>
-            </nav>
-            <h1 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tighter">
-              Kullanım{" "}
-              <span className="text-indigo-600 dark:text-indigo-500">
-                Koşulları
+            </div>
+            <h1 className="text-6xl md:text-8xl font-black tracking-tighter uppercase leading-[0.85] mb-10">
+              Kullanım <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-indigo-700">
+                Koşulları.
               </span>
             </h1>
-          </div>
-          <div className="px-4 py-2 rounded-full bg-slate-200/50 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-xs font-bold text-slate-500 dark:text-slate-400">
-            Son Güncelleme: 18 Aralık 2025
-          </div>
-        </div>
-
-        {/* 📝 Giriş Özeti */}
-        <div className="relative group mb-12 p-8 rounded-[2.5rem] bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-xl shadow-slate-200/50 dark:shadow-none transition-all">
-          <div className="absolute top-0 right-0 p-6 opacity-10">
-            <Scale size={120} className="text-indigo-600" />
-          </div>
-          <div className="relative z-10">
-            <div className="w-12 h-12 rounded-2xl bg-indigo-600 flex items-center justify-center text-white mb-6 shadow-lg shadow-indigo-600/20">
-              <Shield size={24} />
-            </div>
-            <p className="text-lg text-slate-700 dark:text-slate-300 leading-relaxed font-medium">
-              ADSTOWIN platformunu kullanarak aşağıdaki kullanım koşullarını
-              kabul etmiş sayılırsınız. Bu metin, platform üzerindeki
-              haklarınızı ve sorumluluklarınızı belirleyen yasal bir çerçevedir.
+            <p className="text-xl text-slate-400 font-light max-w-2xl leading-relaxed">
+              Bu belge, ADSTOWIN dijital ekosistemindeki varlığınızı ve
+              etkileşimlerinizi düzenleyen en üst düzey protokol metnidir.
             </p>
-          </div>
-        </div>
+          </motion.div>
+        </header>
 
-        {/* 📂 Maddeler Grid/List */}
-        <div className="grid gap-6">
-          {sections.map((section) => (
-            <div
-              key={section.id}
-              className="group bg-white dark:bg-white/[0.03] rounded-3xl border border-slate-200 dark:border-white/10 p-6 md:p-8 hover:border-indigo-500/50 transition-all duration-300"
-            >
-              <div className="flex items-start gap-5">
-                <div className="flex-shrink-0 w-14 h-14 rounded-2xl bg-slate-100 dark:bg-white/5 flex items-center justify-center text-indigo-600 dark:text-indigo-400 group-hover:scale-110 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300">
-                  <section.icon size={28} />
+        {/* 🏛️ The Constitution Grid */}
+        <div className="grid lg:grid-cols-12 gap-12 items-start mb-40">
+          {/* Left Side: Sidebar Info */}
+          <aside className="lg:col-span-4 sticky top-32 space-y-8">
+            <div className="p-8 bg-white/[0.02] border border-white/5 rounded-[2rem] backdrop-blur-md">
+              <History className="text-indigo-500 mb-6" size={32} />
+              <h4 className="text-xs font-black uppercase tracking-widest text-slate-500 mb-2">
+                Son Revizyon
+              </h4>
+              <p className="text-2xl font-bold tracking-tight">
+                18 Aralık, 2025
+              </p>
+              <div className="mt-6 pt-6 border-t border-white/5 space-y-4">
+                <div className="flex justify-between text-[10px] font-black uppercase tracking-widest">
+                  <span className="text-slate-500">Versiyon</span>
+                  <span className="text-indigo-400 text-sm">v2.1.0</span>
                 </div>
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-2">
-                    <span className="text-xs font-black text-indigo-600 dark:text-indigo-500 uppercase tracking-widest">
-                      Madde 0{section.id}
-                    </span>
-                  </div>
-                  <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4">
-                    {section.title}
-                  </h3>
-                  <ul className="space-y-4">
-                    {section.content.map((item, idx) => (
-                      <li
-                        key={idx}
-                        className="flex gap-3 text-slate-600 dark:text-slate-400"
-                      >
-                        <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-indigo-500 flex-shrink-0" />
-                        <span className="text-sm leading-relaxed">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
+                <div className="flex justify-between text-[10px] font-black uppercase tracking-widest">
+                  <span className="text-slate-500">Durum</span>
+                  <span className="text-emerald-500 text-sm">Aktif</span>
                 </div>
               </div>
             </div>
-          ))}
+
+            <div className="p-8 bg-indigo-600 rounded-[2.5rem] shadow-2xl shadow-indigo-600/20 group overflow-hidden relative">
+              <div className="relative z-10">
+                <h3 className="text-2xl font-black uppercase tracking-tight mb-4 leading-none">
+                  Yardıma mı <br />
+                  İhtiyacınız Var?
+                </h3>
+                <p className="text-indigo-100 text-xs font-medium mb-8 leading-relaxed opacity-80">
+                  Hukuki terimler veya kurallar hakkında netlik mi arıyorsunuz?
+                  Destek ekibimiz 7/24 yanınızda.
+                </p>
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center gap-3 px-6 py-4 bg-white text-indigo-600 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:scale-105 transition-transform"
+                >
+                  <MessageCircle size={14} /> İletişime Geç
+                </Link>
+              </div>
+              <Shield
+                size={150}
+                className="absolute -right-10 -bottom-10 opacity-10 group-hover:rotate-12 transition-transform duration-700"
+              />
+            </div>
+          </aside>
+
+          {/* Right Side: Constitutional Articles */}
+          <main className="lg:col-span-8 space-y-6">
+            {sections.map((section) => (
+              <motion.section
+                key={section.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="group p-10 md:p-14 bg-white/[0.01] border border-white/5 rounded-[3.5rem] hover:bg-white/[0.02] hover:border-indigo-500/20 transition-all duration-500"
+              >
+                <div className="flex flex-col md:flex-row gap-12">
+                  <div className="shrink-0 flex flex-col items-center">
+                    <span className="text-4xl font-black text-indigo-500/20 mb-4 font-serif">
+                      {section.id}
+                    </span>
+                    <div className="w-14 h-14 rounded-2xl bg-indigo-600/10 flex items-center justify-center text-indigo-500">
+                      <section.icon size={28} strokeWidth={1.5} />
+                    </div>
+                  </div>
+
+                  <div className="flex-1">
+                    <div className="text-[10px] font-black uppercase tracking-[0.4em] text-indigo-500 mb-2">
+                      {section.title}
+                    </div>
+                    <h2 className="text-3xl font-black uppercase tracking-tighter mb-8 italic">
+                      {section.subtitle}
+                    </h2>
+                    <ul className="grid gap-6">
+                      {section.content.map((item, idx) => (
+                        <li key={idx} className="flex gap-4 group/item">
+                          <span className="mt-2 w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0 opacity-40 group-hover/item:opacity-100 transition-opacity" />
+                          <p className="text-slate-400 group-hover/item:text-slate-200 transition-colors text-sm md:text-base leading-relaxed font-light">
+                            {item}
+                          </p>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </motion.section>
+            ))}
+          </main>
         </div>
 
-        {/* ⚠️ Önemli Uyarı Kutusu */}
-        <div className="mt-16 p-8 rounded-[2rem] bg-amber-50 dark:bg-amber-500/5 border border-amber-200 dark:border-amber-500/20 relative overflow-hidden">
-          <div className="flex items-start gap-4">
-            <div className="p-3 bg-amber-500 rounded-xl text-white">
-              <AlertTriangle size={24} />
-            </div>
-            <div>
-              <h4 className="text-xl font-black text-amber-800 dark:text-amber-500 mb-2">
-                Önemli Uyarı
-              </h4>
-              <p className="text-amber-700 dark:text-amber-200/70 text-sm leading-relaxed font-medium">
-                Bu kullanım koşullarına uymayan kullanıcıların hesapları önceden
-                bildirimde bulunulmaksızın askıya alınabilir veya kalıcı olarak
-                kapatılabilir. Sistem dürüstlüğü bizim için en öncelikli
-                kuraldır.
-              </p>
-            </div>
+        {/* 🏁 Footer Navigation */}
+        <footer className="pt-20 border-t border-white/5 flex flex-col items-center gap-12">
+          <div className="flex flex-wrap justify-center gap-8">
+            <Link
+              href="/privacy"
+              className="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-colors"
+            >
+              Privacy Policy
+            </Link>
+            <Link
+              href="/cookies"
+              className="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-colors"
+            >
+              Cookie Governance
+            </Link>
           </div>
-        </div>
-
-        {/* 💬 Footer CTA */}
-        <div className="mt-12 text-center flex flex-col items-center">
-          <div className="w-1 h-12 bg-indigo-600 dark:bg-indigo-500 rounded-full mb-8" />
-          <h4 className="text-slate-900 dark:text-white font-bold mb-4">
-            Hala sorularınız mı var?
-          </h4>
-          <Link
-            href="/contact"
-            className="group flex items-center gap-3 px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl font-bold shadow-xl shadow-indigo-600/20 transition-all active:scale-95"
-          >
-            <MessageCircle
-              size={20}
-              className="group-hover:rotate-12 transition-transform"
-            />
-            Destek Ekibine Yazın
-          </Link>
           <Link
             href="/"
-            className="mt-6 text-sm text-slate-500 hover:text-indigo-600 transition-colors flex items-center gap-2"
+            className="inline-flex items-center gap-3 text-slate-600 hover:text-indigo-400 transition-all group font-black uppercase tracking-[0.3em] text-[10px]"
           >
-            <ArrowLeft size={14} /> Ana Sayfaya Dön
+            <ArrowLeft
+              size={14}
+              className="group-hover:-translate-x-2 transition-transform"
+            />
+            Terminal ana menüsüne dön
           </Link>
-        </div>
+        </footer>
       </div>
     </div>
   );
 };
-
-// Basit bir ikon (CoinsIcon) tanımlaması ya da Lucide'den çekme
-function CoinsIcon(props: any) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <circle cx="8" cy="8" r="6" />
-      <path d="M18.09 10.37A6 6 0 1 1 10.34 18" />
-      <path d="M7 6h1v4" />
-      <path d="m16.71 13.88.7.71-2.82 2.82" />
-    </svg>
-  );
-}
 
 export default KullanimKosullari;

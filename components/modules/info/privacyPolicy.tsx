@@ -1,6 +1,8 @@
 "use client";
+
 import React from "react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import {
   Shield,
   Lock,
@@ -8,283 +10,246 @@ import {
   Database,
   UserCheck,
   Globe,
-  AlertCircle,
   Home,
   ChevronRight,
   ArrowLeft,
   Mail,
+  Fingerprint,
+  FileLock2,
+  Cpu,
+  ShieldCheck,
 } from "lucide-react";
 
 const GizlilikPolitikasi = () => {
   const sections = [
     {
-      id: 1,
-      title: "Toplanan Veriler",
+      id: "01",
+      title: "Data Acquisition",
+      subtitle: "Toplanan Veriler",
       icon: Database,
       content: [
         {
-          subtitle: "Kişisel Bilgiler",
-          items: [
-            "Ad Soyad",
-            "E-posta adresi",
-            "Payoneer ID (ödeme için)",
-            "IP adresi ve konum bilgisi",
-            "Cihaz ve tarayıcı bilgileri",
-          ],
+          label: "Identity Data",
+          items: ["Ad Soyad", "E-posta Adresi", "Payoneer ID (Billing)", "Biyometrik Onay"],
         },
         {
-          subtitle: "Kullanım Verileri",
-          items: [
-            "Platform kullanım alışkanlıkları",
-            "İzlenen reklam sayısı ve süreleri",
-            "Kazanç geçmişi ve çekim talepleri",
-            "Chat mesajları ve aktiviteleri",
-          ],
+          label: "Technical Data",
+          items: ["IP & Geo-Location", "Hardware Fingerprint", "Behavioral Analytics"],
         },
       ],
     },
     {
-      id: 2,
-      title: "Verilerin Kullanım Amaçları",
+      id: "02",
+      title: "Operational Intent",
+      subtitle: "Kullanım Amaçları",
       icon: Eye,
       content: [
         {
-          subtitle: "Temel Hizmetler",
-          items: [
-            "Hesap oluşturma ve yönetimi",
-            "Ödeme işlemlerinin gerçekleştirilmesi",
-            "Kazanç takibi ve raporlama",
-            "Platform güvenliğinin sağlanması",
-          ],
+          label: "Core Service",
+          items: ["Account Ecosystem Management", "Payment Routing", "Security Audit Logs"],
         },
         {
-          subtitle: "İyileştirme ve Analiz",
-          items: [
-            "Kullanıcı deneyiminin geliştirilmesi",
-            "Reklam hedeflemesi ve optimizasyonu",
-            "Hile ve dolandırıcılık tespiti",
-          ],
+          label: "Optimization",
+          items: ["UX Enhancement", "Anti-Fraud Algorithms", "Targeted Ad-Stream"],
         },
       ],
     },
     {
-      id: 3,
-      title: "Veri Güvenliği",
-      icon: Lock,
+      id: "03",
+      title: "Security Infrastructure",
+      subtitle: "Veri Güvenliği",
+      icon: FileLock2,
       content: [
         {
-          subtitle: "Güvenlik Önlemleri",
-          items: [
-            "SSL/TLS şifreleme ile veri iletimi",
-            "Şifrelenmiş veritabanı depolama",
-            "İki faktörlü kimlik doğrulama (2FA) desteği",
-            "Düzenli güvenlik denetimleri",
-          ],
+          label: "Protocols",
+          items: ["256-bit SSL/TLS Encryption", "AES-256 Storage", "2FA Authentication"],
         },
       ],
     },
     {
-      id: 4,
-      title: "Çerez Kullanımı",
+      id: "04",
+      title: "Cookie Governance",
+      subtitle: "Çerez Politikası",
       icon: Globe,
       content: [
         {
-          subtitle: "Çerez Türleri",
-          items: [
-            "Zorunlu Çerezler: Temel işlevsellik için",
-            "Performans Çerezleri: Analiz amaçlı",
-            "Hedefleme Çerezleri: Kişiselleştirilmiş reklamlar",
-          ],
+          label: "Classifications",
+          items: ["Mandatory Core Cookies", "Performance Metrics", "Experience Personalization"],
         },
       ],
     },
     {
-      id: 5,
-      title: "Üçüncü Taraf Paylaşımı",
+      id: "05",
+      title: "Ethics & Sharing",
+      subtitle: "Paylaşım İlkeleri",
       icon: UserCheck,
       content: [
         {
-          subtitle: "Paylaşım İlkeleri",
-          items: [
-            "Sadece gerekli minimum veri paylaşılır",
-            "Kullanıcı verilerinin satışı kesinlikle yapılmaz",
-            "Tüm entegrasyonlar güvenlik denetiminden geçer",
-          ],
+          label: "Privacy First",
+          items: ["Sıfır Veri Satışı Garantisi", "Minimal Data Exposure", "Verified Integrations"],
         },
       ],
     },
     {
-      id: 6,
-      title: "Kullanıcı Hakları",
+      id: "06",
+      title: "User Sovereignty",
+      subtitle: "Kullanıcı Hakları",
       icon: Shield,
       content: [
         {
-          subtitle: "Veri Erişim Hakları",
-          items: [
-            "Kişisel verilerinize erişim talebi",
-            "Veri düzeltme ve silme (unutulma) hakkı",
-            "Veri taşınabilirliği hakkı",
-          ],
+          label: "Your Rights",
+          items: ["Veri Erişim & Kopyalama", "Unutulma Hakkı (Deletion)", "Veri Taşınabilirliği"],
         },
       ],
     },
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#020617] transition-colors duration-300 pt-20">
-      {/* 🔒 Sabit Reklam Alanı */}
-      <div className="bg-white/50 dark:bg-white/5 border-b border-slate-200 dark:border-white/10 backdrop-blur-md sticky top-0 z-50">
-        <div className="max-w-6xl mx-auto px-4 py-3">
-          <div className="bg-indigo-600/10 dark:bg-indigo-500/10 rounded-2xl py-2 px-4 border border-indigo-200/50 dark:border-indigo-500/20 flex items-center justify-center gap-2">
-            <Lock size={14} className="text-indigo-600 animate-pulse" />
-            <p className="text-indigo-700 dark:text-indigo-300 text-[10px] md:text-xs font-black uppercase tracking-[0.2em] text-center">
-              Verileriniz 256-bit SSL ile Korunmaktadır
-            </p>
-          </div>
-        </div>
-      </div>
+    <div className="min-h-screen bg-[#020617] text-white selection:bg-indigo-500/30 pt-32 pb-20 overflow-x-hidden">
+      {/* 🛡️ Vault Access Header */}
+      <section className="relative px-6 mb-32">
+        {/* Deep Glow Background */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-[120px] -z-10 animate-pulse" />
+        <div className="absolute top-20 left-0 w-[300px] h-[300px] bg-blue-600/5 rounded-full blur-[100px] -z-10" />
 
-      <div className="max-w-4xl mx-auto px-6 py-12">
-        {/* 🧭 Header Section */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
-          <div>
-            <nav className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 mb-4 font-medium">
-              <Link
-                href="/"
-                className="hover:text-indigo-600 transition-colors"
-              >
-                <Home size={16} />
-              </Link>
-              <ChevronRight size={14} />
-              <span className="text-slate-900 dark:text-white">
-                Gizlilik Politikası
-              </span>
-            </nav>
-            <h1 className="text-4xl md:text-6xl font-black text-slate-900 dark:text-white tracking-tight">
-              Güvenliğiniz{" "}
-              <span className="text-indigo-600 italic">Önceliğimiz.</span>
-            </h1>
-          </div>
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-200/50 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-xs font-bold text-slate-500 dark:text-slate-400">
-            <AlertCircle size={14} /> Revizyon: 18.12.2025
-          </div>
-        </div>
+        <div className="max-w-7xl mx-auto">
+          <motion.nav 
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex items-center gap-3 text-[10px] font-black tracking-[0.4em] uppercase text-slate-500 mb-16 italic"
+          >
+            <Link href="/" className="hover:text-indigo-500 transition-colors flex items-center gap-1">
+              <Home size={12} /> Root
+            </Link>
+            <ChevronRight size={10} />
+            <span className="text-indigo-500">Privacy Protocol</span>
+          </motion.nav>
 
-        {/* 🛡️ Intro Card */}
-        <div className="mb-12 relative overflow-hidden p-8 rounded-[2.5rem] bg-indigo-600 text-white shadow-2xl shadow-indigo-600/20 transition-all">
-          <Shield
-            size={180}
-            className="absolute -right-10 -bottom-10 opacity-10 rotate-12"
-          />
-          <div className="relative z-10">
-            <h2 className="text-2xl font-bold mb-4">
-              Gizliliğiniz Bizim İçin Önemli
-            </h2>
-            <p className="text-indigo-50 leading-relaxed text-lg opacity-90">
-              ADSTOWIN olarak, verilerinizin gizliliğine büyük önem veriyoruz.
-              Bu politika, verilerinizin nasıl toplandığını, korunduğunu ve
-              haklarınızı GDPR uyumlu olarak açıklamaktadır.
-            </p>
-          </div>
-        </div>
-
-        {/* 📋 Sections */}
-        <div className="space-y-8">
-          {sections.map((section) => (
-            <div
-              key={section.id}
-              className="group bg-white dark:bg-white/[0.02] rounded-[2rem] border border-slate-200 dark:border-white/10 p-8 hover:shadow-xl hover:shadow-indigo-500/5 transition-all duration-500"
+          <div className="grid lg:grid-cols-12 gap-12 items-start">
+            <motion.div 
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="lg:col-span-8"
             >
-              <div className="flex flex-col md:flex-row gap-8">
-                <div className="flex-shrink-0">
-                  <div className="w-16 h-16 rounded-2xl bg-slate-100 dark:bg-white/5 flex items-center justify-center text-indigo-600 dark:text-indigo-400 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-500">
-                    <section.icon size={32} />
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 mb-6">
+                <Lock size={12} className="text-indigo-500" />
+                <span className="text-[10px] font-black tracking-[0.2em] uppercase text-indigo-400">Military Grade Encryption</span>
+              </div>
+              <h1 className="text-6xl md:text-8xl font-black leading-[0.85] tracking-tighter italic uppercase mb-8">
+                Gizlilik, <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-blue-200 to-white">
+                  Kutsaldır.
+                </span>
+              </h1>
+              <p className="text-xl md:text-2xl text-slate-400 max-w-2xl font-light leading-relaxed italic border-l-2 border-indigo-500/30 pl-6">
+                ADSTOWIN ekosisteminde her veri bloğu, dijital bir kale içinde saklanır. Gizliliğiniz sadece bir kural değil, mimarimizin temel taşıdır.
+              </p>
+            </motion.div>
+
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="lg:col-span-4 flex flex-col items-end gap-4"
+            >
+              <div className="p-6 bg-white/[0.02] border border-white/5 rounded-3xl backdrop-blur-xl text-right">
+                <div className="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-1">Revizyon Modeli</div>
+                <div className="text-sm font-mono text-indigo-400">ADSTW-V.2025.12</div>
+              </div>
+              <ShieldCheck size={120} className="text-indigo-600/20 mr-4" />
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* 🏛️ Privacy Ledger (Sections) */}
+      <section className="px-6 mb-40">
+        <div className="max-w-7xl mx-auto space-y-4">
+          {sections.map((section, idx) => (
+            <motion.div
+              key={section.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="group relative bg-white/[0.01] border border-white/5 rounded-[3rem] p-10 md:p-16 hover:bg-white/[0.03] hover:border-indigo-500/20 transition-all duration-700 overflow-hidden"
+            >
+              {/* Background ID number */}
+              <span className="absolute -right-4 -top-10 text-[12rem] font-black text-white/[0.02] group-hover:text-indigo-500/[0.03] transition-colors leading-none italic pointer-events-none">
+                {section.id}
+              </span>
+
+              <div className="relative z-10 flex flex-col lg:flex-row gap-16">
+                <div className="lg:w-1/3">
+                  <div className="w-16 h-16 rounded-2xl bg-indigo-600/10 flex items-center justify-center text-indigo-500 group-hover:scale-110 transition-transform duration-500 mb-8">
+                    <section.icon size={32} strokeWidth={1.5} />
                   </div>
+                  <div className="text-[10px] font-black text-indigo-500 uppercase tracking-[0.4em] mb-3 italic">Bölüm {section.id}</div>
+                  <h3 className="text-3xl font-black uppercase italic tracking-tight mb-2">{section.title}</h3>
+                  <p className="text-slate-500 font-medium text-sm">{section.subtitle}</p>
                 </div>
 
-                <div className="flex-1">
-                  <div className="text-xs font-black text-indigo-600 mb-2 uppercase tracking-widest">
-                    Bölüm 0{section.id}
-                  </div>
-                  <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">
-                    {section.title}
-                  </h3>
-
-                  <div className="grid md:grid-cols-2 gap-8">
-                    {section.content.map((sub, idx) => (
-                      <div key={idx} className="space-y-4">
-                        <h4 className="font-bold text-indigo-600 dark:text-indigo-400 text-sm uppercase">
-                          {sub.subtitle}
-                        </h4>
-                        <ul className="space-y-3">
-                          {sub.items.map((item, i) => (
-                            <li
-                              key={i}
-                              className="flex items-start gap-3 text-slate-600 dark:text-slate-400 text-sm leading-relaxed"
-                            >
-                              <CheckCircleIcon className="w-4 h-4 text-indigo-500 mt-0.5" />
+                <div className="lg:w-2/3 grid md:grid-cols-2 gap-12">
+                  {section.content.map((content, cIdx) => (
+                    <div key={cIdx} className="space-y-6">
+                      <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-400 border-b border-white/5 pb-2">
+                        {content.label}
+                      </h4>
+                      <ul className="space-y-4">
+                        {content.items.map((item, iIdx) => (
+                          <li key={iIdx} className="flex items-center gap-3 group/item">
+                            <div className="w-1 h-1 rounded-full bg-indigo-600 group-hover/item:w-3 transition-all" />
+                            <span className="text-sm text-slate-400 group-hover/item:text-white transition-colors font-light italic">
                               {item}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
-                  </div>
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
+      </section>
 
-        {/* ✉️ Contact Footer */}
-        <div className="mt-16 text-center">
-          <div className="inline-block p-1 rounded-2xl bg-slate-200 dark:bg-white/5 mb-8">
-            <div className="px-6 py-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 shadow-sm">
-              <p className="text-sm text-slate-500 dark:text-slate-400">
-                Veri koruma ile ilgili sorularınız için:
-                <span className="font-bold text-indigo-600 ml-1">
-                  privacy@adstowin.com
-                </span>
-              </p>
+      {/* 🛡️ Secure Contact Section */}
+      <section className="px-6 py-40 bg-white/[0.01] border-y border-white/5 relative overflow-hidden">
+        <Cpu size={300} className="absolute -left-20 top-1/2 -translate-y-1/2 text-indigo-500/[0.03] -z-10" />
+        
+        <div className="max-w-4xl mx-auto text-center space-y-12 relative z-10">
+          <div className="w-20 h-20 bg-indigo-600 rounded-3xl flex items-center justify-center mx-auto shadow-2xl shadow-indigo-600/40 rotate-12 group-hover:rotate-0 transition-transform">
+            <Fingerprint size={40} className="text-white" />
+          </div>
+          
+          <div className="space-y-4">
+            <h2 className="text-4xl md:text-6xl font-black uppercase italic tracking-tighter">
+              Verileriniz Üzerinde <br /> Tam Hakimiyet.
+            </h2>
+            <p className="text-slate-500 text-lg font-light max-w-2xl mx-auto italic leading-relaxed">
+              Veri koruma yasalarına (GDPR, KVKK) tam uyumlu süreçlerimiz hakkında sormak istediğiniz her şeyi doğrudan güvenlik departmanımıza iletebilirsiniz.
+            </p>
+          </div>
+
+          <div className="flex flex-col md:flex-row items-center justify-center gap-6">
+            <button className="px-10 py-6 bg-white text-indigo-600 font-black uppercase text-[10px] tracking-[0.3em] rounded-2xl hover:scale-105 active:scale-95 transition-all shadow-xl flex items-center gap-3">
+              <Mail size={16} /> Güvenlik Ekibine Yazın
+            </button>
+            <div className="text-[11px] font-mono text-slate-500 px-6 py-2 border border-white/5 rounded-full">
+              SECURE CHANNEL: privacy@adstowin.com
             </div>
           </div>
-
-          <div className="flex flex-col items-center gap-6">
-            <h3 className="text-xl font-bold text-slate-900 dark:text-white">
-              Verileriniz Üzerinde Kontrol Sizde
-            </h3>
-            <Link
-              href="/contact"
-              className="flex items-center gap-2 px-8 py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-2xl font-black hover:scale-105 active:scale-95 transition-all shadow-xl"
-            >
-              <Mail size={20} />
-              GİZLİLİK EKİBİYLE İLETİŞİME GEÇ
-            </Link>
-            <Link
-              href="/"
-              className="text-slate-400 hover:text-indigo-600 transition-colors flex items-center gap-2 text-sm font-medium"
-            >
-              <ArrowLeft size={16} /> Ana Sayfaya Dön
-            </Link>
-          </div>
         </div>
-      </div>
+      </section>
+
+      {/* 🏁 Footer Navigation */}
+      <footer className="px-6 py-20 text-center">
+        <Link href="/" className="inline-flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.5em] text-slate-600 hover:text-indigo-500 transition-all group">
+          <ArrowLeft size={14} className="group-hover:-translate-x-2 transition-transform" />
+          Back to Dashboard
+        </Link>
+      </footer>
     </div>
   );
 };
-
-function CheckCircleIcon(props: any) {
-  return (
-    <svg
-      {...props}
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-      strokeWidth={3}
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-    </svg>
-  );
-}
 
 export default GizlilikPolitikasi;

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   HelpCircle,
@@ -9,11 +9,11 @@ import {
   DollarSign,
   Shield,
   CreditCard,
-  Users,
-  Settings,
   MessageCircle,
+  Sparkles,
+  ArrowRight,
+  LifeBuoy,
 } from "lucide-react";
-
 interface FAQItem {
   question: string;
   answer: string;
@@ -133,136 +133,202 @@ export default function HelpFAQPage() {
   const [selectedCategory, setSelectedCategory] = useState("Tümü");
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
 
-  const filteredFAQs = faqData.filter((faq) => {
-    const matchesSearch =
-      faq.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      faq.answer.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory =
-      selectedCategory === "Tümü" || faq.category === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
+  const filteredFAQs = useMemo(() => {
+    return faqData.filter((faq) => {
+      const matchesSearch =
+        faq.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        faq.answer.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesCategory =
+        selectedCategory === "Tümü" || faq.category === selectedCategory;
+      return matchesSearch && matchesCategory;
+    });
+  }, [searchQuery, selectedCategory]);
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#020617] pt-24 pb-12 px-6">
-      <div className="max-w-5xl mx-auto space-y-8">
-        {/* Header */}
-        <div className="text-center">
-          <h1 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-4">
-            Yardım & SSS
+    <div className="min-h-screen bg-[#020617] text-white pt-32 pb-20 px-4 md:px-8 relative overflow-hidden">
+      {/* Arka Plan Işık Oyunları */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-gradient-to-b from-indigo-500/10 to-transparent blur-[120px] -z-10 pointer-events-none" />
+
+      <div className="max-w-5xl mx-auto space-y-16">
+        {/* Header Bölümü */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center space-y-4"
+        >
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/10 backdrop-blur-md mb-4">
+            <Sparkles size={14} className="text-indigo-400" />
+            <span className="text-[10px] font-black tracking-[0.3em] uppercase text-slate-400">
+              Destek Merkezi
+            </span>
+          </div>
+          <h1 className="text-5xl md:text-7xl font-black tracking-tighter italic italic uppercase">
+            Nasıl{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">
+              Yardımcı
+            </span>{" "}
+            Olabiliriz?
           </h1>
-          <p className="text-slate-500 dark:text-slate-400">
-            Sık sorulan sorular ve yardım dokümanları
+          <p className="text-slate-500 font-medium max-w-xl mx-auto text-lg">
+            Platform kullanımı, ödemeler ve güvenlik hakkında merak ettiğiniz
+            her şey burada.
           </p>
+        </motion.div>
+
+        {/* Arama Barı - Modern Glassmorphism */}
+        <div className="relative group max-w-2xl mx-auto">
+          <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-[2rem] blur opacity-25 group-focus-within:opacity-100 transition duration-500" />
+          <div className="relative flex items-center bg-[#0a0f1e]/80 border border-white/10 backdrop-blur-xl rounded-[1.8rem] overflow-hidden transition-all duration-300 group-focus-within:border-indigo-500/50">
+            <Search
+              className="ml-6 text-slate-500 group-focus-within:text-indigo-400 transition-colors"
+              size={20}
+            />
+            <input
+              type="text"
+              placeholder="Bir konu veya soru arayın..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full px-4 py-6 bg-transparent outline-none text-white placeholder:text-slate-600 font-medium"
+            />
+          </div>
         </div>
 
-        {/* Search */}
-        <div className="relative">
-          <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
-          <input
-            type="text"
-            placeholder="Sorunuzu yazın..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-14 pr-6 py-4 bg-white dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 rounded-2xl outline-none focus:ring-2 ring-indigo-500/50 text-slate-900 dark:text-white"
-          />
-        </div>
-
-        {/* Categories */}
-        <div className="flex gap-3 overflow-x-auto pb-2">
+        {/* Kategoriler - Minimalist Şerit */}
+        <div className="flex justify-center gap-3 overflow-x-auto pb-4 no-scrollbar">
           {categories.map((cat) => {
             const Icon = cat.icon;
+            const isActive = selectedCategory === cat.name;
             return (
               <button
                 key={cat.name}
                 onClick={() => setSelectedCategory(cat.name)}
-                className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl font-bold text-sm whitespace-nowrap transition-all ${
-                  selectedCategory === cat.name
-                    ? "bg-indigo-600 text-white"
-                    : "bg-white dark:bg-white/5 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10"
+                className={`flex items-center gap-2 px-6 py-3 rounded-2xl font-black text-[11px] uppercase tracking-widest transition-all duration-500 whitespace-nowrap border italic ${
+                  isActive
+                    ? "bg-white text-[#020617] border-white shadow-[0_0_30px_rgba(255,255,255,0.1)]"
+                    : "bg-white/[0.03] text-slate-500 border-white/5 hover:border-white/20 hover:text-white"
                 }`}
               >
-                <Icon size={18} />
+                <Icon
+                  size={14}
+                  className={isActive ? "text-[#020617]" : "text-indigo-500"}
+                />
                 {cat.name}
               </button>
             );
           })}
         </div>
 
-        {/* FAQ List */}
-        <div className="space-y-4">
-          {filteredFAQs.length === 0 ? (
-            <div className="text-center py-12">
-              <p className="text-slate-500 dark:text-slate-400">
-                Aradığınız sonuç bulunamadı
-              </p>
-            </div>
-          ) : (
-            filteredFAQs.map((faq, index) => (
+        {/* FAQ Listesi - Akordiyon Tasarımı */}
+        <div className="space-y-6">
+          <AnimatePresence mode="popLayout">
+            {filteredFAQs.length === 0 ? (
               <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.05 }}
-                className="bg-white dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 rounded-2xl overflow-hidden"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="text-center py-20 bg-white/[0.02] border border-dashed border-white/10 rounded-[3rem]"
               >
-                <button
-                  onClick={() =>
-                    setExpandedIndex(expandedIndex === index ? null : index)
-                  }
-                  className="w-full flex items-center justify-between p-6 text-left hover:bg-slate-50 dark:hover:bg-white/5 transition-all"
-                >
-                  <div className="flex-1">
-                    <div className="text-xs text-indigo-600 dark:text-indigo-400 font-bold mb-1">
-                      {faq.category}
-                    </div>
-                    <div className="font-bold text-slate-900 dark:text-white">
-                      {faq.question}
-                    </div>
-                  </div>
-                  <motion.div
-                    animate={{ rotate: expandedIndex === index ? 180 : 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <ChevronDown className="text-slate-400 w-5 h-5 flex-shrink-0" />
-                  </motion.div>
-                </button>
-
-                <AnimatePresence>
-                  {expandedIndex === index && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.2 }}
-                      className="overflow-hidden"
-                    >
-                      <div className="px-6 pb-6 text-slate-600 dark:text-slate-300">
-                        {faq.answer}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                <LifeBuoy size={48} className="text-slate-700 mx-auto mb-4" />
+                <p className="text-slate-500 font-black uppercase tracking-[0.2em] text-sm">
+                  Eşleşen bir sonuç bulunamadı
+                </p>
               </motion.div>
-            ))
-          )}
+            ) : (
+              filteredFAQs.map((faq, index) => (
+                <motion.div
+                  key={faq.question}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.05 }}
+                  className={`group rounded-[2rem] border transition-all duration-500 overflow-hidden ${
+                    expandedIndex === index
+                      ? "bg-white/[0.04] border-indigo-500/30 shadow-2xl shadow-indigo-500/5"
+                      : "bg-transparent border-white/5 hover:border-white/10 hover:bg-white/[0.02]"
+                  }`}
+                >
+                  <button
+                    onClick={() =>
+                      setExpandedIndex(expandedIndex === index ? null : index)
+                    }
+                    className="w-full flex items-center justify-between p-8 text-left"
+                  >
+                    <div className="space-y-2">
+                      <span className="text-[10px] font-black text-indigo-400 uppercase tracking-[0.3em] opacity-80 italic">
+                        {faq.category}
+                      </span>
+                      <h3 className="text-xl font-bold tracking-tight text-slate-200 group-hover:text-white transition-colors">
+                        {faq.question}
+                      </h3>
+                    </div>
+                    <div
+                      className={`p-3 rounded-xl transition-all duration-500 ${
+                        expandedIndex === index
+                          ? "bg-indigo-500 text-white rotate-180"
+                          : "bg-white/5 text-slate-500"
+                      }`}
+                    >
+                      <ChevronDown size={20} />
+                    </div>
+                  </button>
+
+                  <AnimatePresence>
+                    {expandedIndex === index && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                      >
+                        <div className="px-8 pb-8 text-slate-400 leading-relaxed font-medium text-lg border-t border-white/5 pt-4 italic">
+                          {faq.answer}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+              ))
+            )}
+          </AnimatePresence>
         </div>
 
-        {/* Contact Support */}
-        <div className="bg-gradient-to-br from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 rounded-[2.5rem] p-8 text-center">
-          <MessageCircle className="w-12 h-12 text-indigo-500 mx-auto mb-4" />
-          <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
-            Sorunuzu bulamadınız mı?
-          </h3>
-          <p className="text-slate-600 dark:text-slate-300 mb-6">
-            Destek ekibimize ulaşın, size yardımcı olmaktan mutluluk duyarız
-          </p>
-          <button
-            onClick={() => (window.location.href = "/account/support_requests")}
-            className="px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-2xl transition-all"
-          >
-            Destek Talebi Oluştur
-          </button>
-        </div>
+        {/* İletişim Kartı - Ultra Modern Call-to-Action */}
+        <motion.div whileHover={{ y: -5 }} className="relative mt-24 group p-1">
+          <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-[3rem] blur-xl opacity-20 group-hover:opacity-40 transition duration-700" />
+          <div className="relative bg-[#0a0f1e] border border-white/10 rounded-[2.8rem] p-10 md:p-16 overflow-hidden">
+            {/* Arka plan deseni */}
+            <div className="absolute top-0 right-0 p-8 opacity-5">
+              <MessageCircle size={200} />
+            </div>
+
+            <div className="relative z-10 flex flex-col items-center text-center space-y-8">
+              <div className="w-20 h-20 bg-indigo-500/10 rounded-3xl flex items-center justify-center border border-indigo-500/20">
+                <MessageCircle className="w-10 h-10 text-indigo-400" />
+              </div>
+              <div className="space-y-4">
+                <h2 className="text-3xl md:text-5xl font-black italic uppercase tracking-tighter">
+                  Özel Bir <span className="text-indigo-400">Desteğe</span> mi
+                  İhtiyacınız Var?
+                </h2>
+                <p className="text-slate-400 font-medium max-w-lg mx-auto italic">
+                  Sorunuzun yanıtını bulamadıysanız, 7/24 hizmet veren uzman
+                  destek ekibimizle bir oturum başlatın.
+                </p>
+              </div>
+
+              <button
+                onClick={() =>
+                  (window.location.href = "/account/support_requests")
+                }
+                className="flex items-center gap-3 px-10 py-5 bg-white text-[#020617] rounded-2xl font-black text-xs uppercase tracking-[0.2em] hover:bg-indigo-500 hover:text-white transition-all transform active:scale-95 group/btn italic"
+              >
+                DESTEK TALEBİ OLUŞTUR
+                <ArrowRight
+                  size={16}
+                  className="group-hover/btn:translate-x-1 transition-transform"
+                />
+              </button>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </div>
   );

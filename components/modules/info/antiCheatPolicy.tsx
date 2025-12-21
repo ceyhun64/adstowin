@@ -2,12 +2,11 @@
 
 import React from "react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import {
   ShieldAlert,
   Ban,
   AlertTriangle,
-  CheckCircle,
-  XCircle,
   Zap,
   Eye,
   Target,
@@ -15,276 +14,264 @@ import {
   ChevronRight,
   ShieldCheck,
   Flag,
-  Info,
+  Fingerprint,
+  Cpu,
+  Lock,
+  ArrowUpRight,
 } from "lucide-react";
 
 const HileKarsitiPolitika = () => {
   const prohibitedActions = [
     {
-      title: "Bot ve Otomasyon",
-      icon: Ban,
-      color: "red",
+      title: "Otomasyon & Script",
+      icon: Cpu,
       severity: "KRİTİK",
       description:
-        "Otomatik araçlar, botlar veya scriptler kullanarak sistemin doğal işleyişine müdahale etmek.",
-      penalty: "Hesap kalıcı kapatılır, kazançlar silinir.",
-      examples: [
-        "İzleme botları",
-        "Tıklama scriptleri",
-        "Tarayıcı eklentileri",
-      ],
+        "Sistemin doğal dengesini bozacak bot, macro veya yapay script kullanımı kesinlikle yasaktır.",
+      penalty: "Varlıkların Tasfiyesi & Kalıcı Yasaklama",
+      examples: ["İzleme Botları", "Clickerlar", "Headless Browser"],
     },
     {
-      title: "VPN ve Proxy",
-      icon: ShieldAlert,
-      color: "orange",
+      title: "VPN & Anonimlik",
+      icon: Lock,
       severity: "YÜKSEK",
       description:
-        "Gerçek konumunuzu gizlemek için VPN, Proxy veya IP maskeleme araçları kullanmak.",
-      penalty: "Geçici askıya alma veya kalıcı ban.",
-      examples: ["Ücretli/Ücretsiz VPN", "Tor Browser", "IP Değiştiriciler"],
+        "IP maskeleme, Proxy veya VPN servisleri üzerinden coğrafi konum manipülasyonu kabul edilemez.",
+      penalty: "Erişim Kısıtlaması & Doğrulama Talebi",
+      examples: ["Residential Proxy", "Ücretli VPN", "Tor Network"],
     },
     {
-      title: "Çoklu Hesap",
-      icon: AlertTriangle,
-      color: "amber",
+      title: "Multi-Identity",
+      icon: Fingerprint,
       severity: "YÜKSEK",
       description:
-        "Aynı kişinin birden fazla hesap oluşturarak sistemi manipüle etmesi.",
-      penalty: "Tüm ilişkili hesaplar süresiz kapatılır.",
-      examples: ["Sahte e-postalar", "Referans istismarı", "Sahte kimlik"],
+        "Tek bir bireyin birden fazla kimlikle ödül havuzunu manipüle etmesi sistem bütünlüğüne aykırıdır.",
+      penalty: "İlişkili Tüm Hesapların İptali",
+      examples: ["Sahte E-posta", "Referans Avcılığı", "Bot Hesaplar"],
     },
     {
       title: "Sistem İstismarı",
       icon: Zap,
-      color: "rose",
       severity: "YÜKSEK",
       description:
-        "Platform açıklarını (bug) bildirmek yerine haksız kazanç için kullanmak.",
-      penalty: "Haksız kazancın iadesi ve hesap kısıtlaması.",
-      examples: [
-        "API manipülasyonu",
-        "Süre atlatma hileleri",
-        "Veri manipülasyonu",
-      ],
+        "Yazılımsal açıkların (Bug) bildirilmek yerine haksız kazanç kapısı olarak kullanılması ağır suçtur.",
+      penalty: "Geri Alım & Hukuki Takip",
+      examples: ["API Reverse Engineering", "Timer Exploits", "Data Injection"],
     },
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#030712] transition-colors duration-300 pt-20">
-      {/* 🚩 Top Alert Banner */}
-      <div className="bg-red-600 dark:bg-red-500/10 border-b border-red-700 dark:border-red-500/20 py-2">
-        <div className="max-w-6xl mx-auto px-4 flex items-center justify-center gap-2">
-          <ShieldAlert
-            size={14}
-            className="text-white dark:text-red-500 animate-pulse"
-          />
-          <p className="text-white dark:text-red-400 text-[10px] font-black uppercase tracking-widest">
-            Sıfır Tolerans Politikası Uygulanmaktadır
-          </p>
-        </div>
-      </div>
+    <div className="min-h-screen bg-[#020617] text-white selection:bg-red-500/30 pt-32 pb-20">
+      {/* 🛑 High-Security Header */}
+      <section className="relative px-6 mb-24 overflow-hidden">
+        {/* Background Aura */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[600px] bg-gradient-to-b from-red-600/5 to-transparent -z-10 blur-3xl" />
 
-      <div className="max-w-5xl mx-auto px-6 py-12">
-        {/* 🧭 Breadcrumb & Header */}
-        <div className="mb-16">
-          <nav className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 mb-6 font-medium">
-            <Link href="/" className="hover:text-red-600 transition-colors">
-              <Home size={16} />
+        <div className="max-w-7xl mx-auto">
+          <motion.nav
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex items-center gap-3 text-[10px] font-black tracking-[0.4em] uppercase text-slate-500 mb-12 italic"
+          >
+            <Link
+              href="/"
+              className="hover:text-red-500 transition-colors flex items-center gap-1"
+            >
+              <Home size={12} /> System
             </Link>
-            <ChevronRight size={14} />
-            <span className="text-slate-900 dark:text-white font-bold">
-              Hile Karşıtı Politika
-            </span>
-          </nav>
+            <ChevronRight size={10} />
+            <span className="text-red-600">Anti-Fraud Protocol</span>
+          </motion.nav>
 
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
-            <div className="max-w-2xl">
-              <h1 className="text-4xl md:text-6xl font-black text-slate-900 dark:text-white tracking-tighter mb-6">
-                Adil Oyun <br />
-                <span className="text-red-600 dark:text-red-500 inline-flex items-center gap-3">
-                  Gerçek Kazanç{" "}
-                  <ShieldCheck size={48} className="md:w-16 md:h-16" />
+          <div className="grid lg:grid-cols-12 gap-12 items-end">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="lg:col-span-8"
+            >
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/20 mb-6">
+                <ShieldCheck size={12} className="text-red-500" />
+                <span className="text-[10px] font-black tracking-[0.2em] uppercase text-red-500">
+                  Zero Tolerance Policy
+                </span>
+              </div>
+              <h1 className="text-6xl md:text-8xl font-black leading-[0.85] tracking-tighter italic uppercase italic mb-8">
+                Adalet <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-b from-red-500 via-red-700 to-red-900">
+                  Zırhımızdır.
                 </span>
               </h1>
-              <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
-                ADSTOWIN ekosisteminde dürüstlük en büyük değerimizdir.
-                Sistemimizi manipüle etmeye yönelik her türlü girişim, gelişmiş
-                algoritmalarımız tarafından anlık olarak takip edilmektedir.
+              <p className="text-xl md:text-2xl text-slate-400 max-w-2xl font-light leading-relaxed">
+                ADSTOWIN ekosistemi, dürüst kullanıcıların ve prestijli reklam
+                verenlerin haklarını korumak için askeri düzeyde güvenlik
+                algoritmalarıyla donatılmıştır.
               </p>
-            </div>
+            </motion.div>
 
-            <div className="bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 p-6 rounded-[2.5rem] shadow-xl dark:shadow-red-900/10 shrink-0 text-center">
-              <div className="text-3xl font-black text-red-600 mb-1 font-mono">
-                24/7
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="lg:col-span-4 hidden lg:flex justify-end"
+            >
+              <div className="w-48 h-48 rounded-[3rem] bg-red-600/5 border border-red-500/20 flex flex-col items-center justify-center p-8 text-center backdrop-blur-xl">
+                <div className="text-4xl font-black text-red-500 mb-2">
+                  24/7
+                </div>
+                <div className="text-[9px] font-black uppercase tracking-widest text-slate-500 leading-tight">
+                  Gözlem & <br /> Otonom Koruma
+                </div>
               </div>
-              <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-                Aktif Koruma
-              </div>
-            </div>
+            </motion.div>
           </div>
         </div>
+      </section>
 
-        {/* 🚫 Prohibited Actions Grid */}
-        <div className="grid md:grid-cols-2 gap-6 mb-20">
+      {/* 🚫 Protocol Violations Grid */}
+      <section className="px-6 mb-32">
+        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-4">
           {prohibitedActions.map((item, idx) => (
-            <div
+            <motion.div
               key={idx}
-              className="group relative bg-white dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 rounded-[2rem] p-8 hover:border-red-500/50 transition-all duration-300 shadow-sm hover:shadow-2xl hover:shadow-red-500/5"
+              whileHover={{ y: -5 }}
+              className="group p-10 bg-white/[0.02] border border-white/5 rounded-[3rem] hover:bg-white/[0.04] transition-all duration-500 relative overflow-hidden"
             >
-              <div
-                className={`w-14 h-14 rounded-2xl mb-6 flex items-center justify-center transition-transform group-hover:scale-110 duration-500 bg-${item.color}-500/10 text-${item.color}-600 dark:text-${item.color}-500`}
-              >
-                <item.icon size={28} />
+              <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
+                <item.icon size={120} />
               </div>
 
-              <div className="absolute top-8 right-8 text-[10px] font-black px-3 py-1 rounded-full bg-slate-100 dark:bg-white/5 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-white/10 uppercase tracking-tighter">
-                {item.severity}
+              <div className="flex items-start justify-between mb-8">
+                <div className="w-16 h-16 rounded-2xl bg-red-600/10 flex items-center justify-center text-red-500 group-hover:bg-red-600 group-hover:text-white transition-all duration-500">
+                  <item.icon size={32} />
+                </div>
+                <span className="text-[9px] font-black tracking-[0.3em] px-4 py-1.5 rounded-full border border-red-500/20 text-red-500 uppercase">
+                  {item.severity}
+                </span>
               </div>
 
-              <h3 className="text-xl font-black text-slate-900 dark:text-white mb-3 tracking-tight">
+              <h3 className="text-2xl font-black uppercase italic mb-4">
                 {item.title}
               </h3>
-              <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6 font-medium">
+              <p className="text-slate-400 font-light text-sm leading-relaxed mb-8 max-w-sm italic">
                 {item.description}
               </p>
 
-              <div className="space-y-4">
+              <div className="space-y-6 pt-6 border-t border-white/5">
                 <div className="flex flex-wrap gap-2">
                   {item.examples.map((ex, i) => (
                     <span
                       key={i}
-                      className="text-[11px] font-bold px-3 py-1 rounded-lg bg-slate-50 dark:bg-white/5 text-slate-400 border border-slate-200 dark:border-white/5 italic"
+                      className="text-[10px] font-bold px-3 py-1 rounded-md bg-white/5 text-slate-500 border border-white/5 uppercase tracking-tighter"
                     >
                       {ex}
                     </span>
                   ))}
                 </div>
-                <div className="pt-4 border-t border-slate-100 dark:border-white/5">
-                  <p className="text-xs font-bold text-red-600 dark:text-red-400 uppercase flex items-center gap-2">
-                    <Ban size={12} /> {item.penalty}
-                  </p>
+                <div className="flex items-center gap-3 text-red-500 text-[11px] font-black uppercase tracking-widest">
+                  <Ban size={14} /> {item.penalty}
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
+      </section>
 
-        {/* 🕵️ Detection & Penalties Section */}
-        <div className="grid lg:grid-cols-3 gap-8 mb-20">
-          <div className="lg:col-span-2 space-y-4">
-            <h2 className="text-2xl font-black text-slate-900 dark:text-white mb-6 uppercase tracking-tight flex items-center gap-3">
-              <Eye className="text-red-600" /> Tespit Yöntemlerimiz
+      {/* 🕵️ Detection Intelligence Section */}
+      <section className="px-6 py-32 bg-white/[0.01] border-y border-white/5">
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center">
+          <div>
+            <span className="text-red-600 font-black text-xs uppercase tracking-[0.4em] mb-6 block">
+              Intelligence Units
+            </span>
+            <h2 className="text-5xl font-black uppercase italic tracking-tighter mb-8 leading-none">
+              Nasıl Tespit <br /> Ediyoruz?
             </h2>
-            <div className="grid sm:grid-cols-2 gap-4">
+            <div className="grid sm:grid-cols-2 gap-6">
               {[
                 {
-                  t: "AI Analizi",
-                  d: "Davranışsal patern analizi.",
+                  t: "Neural Patterns",
+                  d: "Yapay zeka tabanlı davranış analizi.",
                   i: Target,
                 },
                 {
-                  t: "IP Denetimi",
-                  d: "Lokasyon ve ağ doğrulama.",
+                  t: "IP Integrity",
+                  d: "Ağ katmanlı sahtecilik kontrolü.",
                   i: ShieldAlert,
                 },
                 {
-                  t: "Cihaz Parmak İzi",
-                  d: "Benzersiz donanım takibi.",
+                  t: "Hardware ID",
+                  d: "Cihaz bazlı parmak izi takibi.",
                   i: Zap,
                 },
-                {
-                  t: "Manuel Denetim",
-                  d: "Uzman güvenlik ekibi onayı.",
-                  i: CheckCircle,
-                },
+                { t: "Manual Audit", d: "Uzman güvenlik operasyonu.", i: Eye },
               ].map((m, i) => (
                 <div
                   key={i}
-                  className="p-4 rounded-2xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center gap-4"
+                  className="group p-6 bg-white/[0.02] border border-white/5 rounded-3xl hover:border-red-500/30 transition-all"
                 >
-                  <div className="p-2 bg-red-500/10 text-red-500 rounded-lg">
-                    <m.i size={20} />
+                  <m.i
+                    className="text-red-500 mb-4 group-hover:scale-110 transition-transform"
+                    size={24}
+                  />
+                  <div className="font-black text-xs uppercase tracking-widest mb-1">
+                    {m.t}
                   </div>
-                  <div>
-                    <div className="font-bold text-slate-900 dark:text-white text-sm">
-                      {m.t}
-                    </div>
-                    <div className="text-xs text-slate-500">{m.d}</div>
-                  </div>
+                  <div className="text-xs text-slate-500 font-light">{m.d}</div>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="bg-slate-900 dark:bg-red-600 rounded-[2.5rem] p-8 text-white flex flex-col justify-between relative overflow-hidden">
-            <div className="relative z-10">
-              <h3 className="text-2xl font-black mb-4 italic leading-tight">
+          <div className="relative group">
+            <div className="absolute inset-0 bg-red-600/20 blur-[120px] rounded-full group-hover:bg-red-600/30 transition-all" />
+            <div className="relative p-12 bg-red-600 rounded-[4rem] shadow-2xl shadow-red-600/20 overflow-hidden">
+              <ShieldAlert
+                size={200}
+                className="absolute -right-20 -bottom-20 text-white/10 rotate-12"
+              />
+              <h3 className="text-3xl font-black uppercase italic mb-6">
                 İtiraz Hakkı
               </h3>
-              <p className="text-sm text-white/80 leading-relaxed font-medium">
-                Yanlışlıkla yasaklandığınızı mı düşünüyorsunuz? Kanıtlarınızla
-                birlikte 48 saat içinde itiraz oluşturabilirsiniz.
+              <p className="text-white/80 leading-relaxed font-light mb-10 italic">
+                Dürüst bir hataya inanıyorsanız, profesyonel bir savunma ile
+                itiraz hakkınızı kullanabilirsiniz. Kanıtlar incelenir ve 48
+                saat içinde nihai karar verilir.
               </p>
-            </div>
-            <button className="relative z-10 mt-8 w-full py-4 bg-white text-slate-900 dark:text-red-600 font-black rounded-2xl hover:scale-105 transition-all text-sm uppercase">
-              İtiraz Formu Aç
-            </button>
-            <ShieldAlert
-              size={120}
-              className="absolute -right-8 -bottom-8 opacity-10 rotate-12"
-            />
-          </div>
-        </div>
-
-        {/* 📜 Final Notice Block */}
-        <div className="relative group p-1 rounded-[2.5rem] bg-gradient-to-r from-red-600 to-orange-500">
-          <div className="bg-white dark:bg-[#0b0c10] rounded-[2.4rem] p-8 md:p-12 overflow-hidden relative">
-            <div className="relative z-10 flex flex-col md:flex-row items-center gap-8">
-              <div className="w-20 h-20 bg-red-500/10 rounded-3xl flex items-center justify-center shrink-0">
-                <Flag className="text-red-600" size={40} />
-              </div>
-              <div>
-                <h4 className="text-2xl font-black text-slate-900 dark:text-white mb-3">
-                  Önemli Hatırlatma
-                </h4>
-                <p className="text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
-                  ADSTOWIN, reklam verenlerimizin bütçesini ve dürüst
-                  kullanıcılarımızın hakkını korumak için milyonlarca veri
-                  noktasını saniyeler içinde analiz eder. Hile yaparak elde
-                  edilen kazançlar hiçbir zaman ödenmez ve yasal takip
-                  başlatılabilir.
-                </p>
-              </div>
+              <button className="w-full py-6 bg-white text-red-600 font-black uppercase text-xs tracking-[0.3em] rounded-2xl hover:scale-[1.02] transition-all active:scale-95 flex items-center justify-center gap-2">
+                Savunma Talebi Başlat <ArrowUpRight size={16} />
+              </button>
             </div>
           </div>
         </div>
+      </section>
 
-        {/* 📩 Support Link */}
-        <div className="mt-16 text-center">
-          <p className="text-slate-500 dark:text-slate-400 text-sm mb-6 font-medium">
-            Sormak istediğiniz bir şey mi var?{" "}
-            <span className="text-red-600 dark:text-red-500 font-bold cursor-pointer hover:underline">
-              Güvenlik Merkezi
-            </span>{" "}
-            ile iletişime geçin.
+      {/* 🏆 Manifesto CTA */}
+      <section className="px-6 py-32">
+        <div className="max-w-4xl mx-auto text-center space-y-12">
+          <Flag className="w-16 h-16 text-red-600 mx-auto" />
+          <h2 className="text-4xl md:text-6xl font-black uppercase italic tracking-tighter leading-none">
+            Dürüstlük, <br /> En Değerli Portföydür.
+          </h2>
+          <p className="text-slate-500 text-lg font-light leading-relaxed max-w-2xl mx-auto italic">
+            ADSTOWIN, hile yaparak elde edilen kazançları hiçbir zaman tanımaz.
+            Dijital ekosistemimizi temiz tutmak, tüm dürüst üyelerimizin ortak
+            menfaatidir.
           </p>
-          <div className="flex justify-center gap-4">
+          <div className="flex flex-col sm:flex-row justify-center gap-8 pt-8 border-t border-white/5">
             <Link
-              href="/"
-              className="text-xs font-bold text-slate-400 hover:text-red-600 flex items-center gap-2 transition-colors"
+              href="/terms"
+              className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-500 hover:text-white transition-colors"
             >
-              <Info size={14} /> Kullanım Koşulları
+              Terms of Service
             </Link>
             <Link
-              href="/"
-              className="text-xs font-bold text-slate-400 hover:text-red-600 flex items-center gap-2 transition-colors"
+              href="/privacy"
+              className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-500 hover:text-white transition-colors"
             >
-              <CheckCircle size={14} /> Güvenli Ödeme
+              Security Protocols
             </Link>
           </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 };

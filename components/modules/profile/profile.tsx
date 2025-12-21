@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   User,
   Mail,
@@ -19,6 +19,10 @@ import {
   Globe,
   Moon,
   Sun,
+  Zap,
+  ChevronRight,
+  ArrowUpRight,
+  CreditCard,
 } from "lucide-react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -60,363 +64,372 @@ export default function ProfilePage() {
     try {
       const response = await fetch("/api/user/profile");
       if (!response.ok) throw new Error("Profil yüklenemedi");
-
       const data = await response.json();
-      if (data.user) {
-        setUserData(data.user);
-      }
+      if (data.user) setUserData(data.user);
     } catch (error) {
-      console.error("Profil hatası:", error);
       toast.error("Profil bilgileri yüklenemedi");
     } finally {
       setLoading(false);
     }
   };
 
-  const handleLogout = async () => {
-    // Implement logout logic
-    toast.success("Çıkış yapılıyor...");
+  const handleLogout = () => {
+    toast.success("Güvenli çıkış yapılıyor...");
     setTimeout(() => router.push("/login"), 1000);
-  };
-
-  const getRemainingPremiumDays = () => {
-    if (!userData?.premiumEndDate) return 0;
-    const end = new Date(userData.premiumEndDate);
-    const now = new Date();
-    const diff = end.getTime() - now.getTime();
-    return Math.max(0, Math.ceil(diff / (1000 * 60 * 60 * 24)));
-  };
-
-  const getMemberSince = () => {
-    if (!userData?.createdAt) return "";
-    const date = new Date(userData.createdAt);
-    return date.toLocaleDateString("tr-TR", { year: "numeric", month: "long" });
   };
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-[#020617]">
-        <Loader2 className="w-10 h-10 animate-spin text-indigo-500" />
+      <div className="min-h-screen flex items-center justify-center bg-[#020617]">
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+        >
+          <Loader2 className="w-12 h-12 text-indigo-500" />
+        </motion.div>
       </div>
     );
   }
 
-  if (!userData) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-[#020617]">
-        <div className="text-center">
-          <p className="text-slate-500 dark:text-slate-400">
-            Profil bulunamadı
-          </p>
-          <button
-            onClick={() => router.push("/")}
-            className="mt-4 px-6 py-2 bg-indigo-600 text-white rounded-xl"
-          >
-            Ana Sayfa
-          </button>
-        </div>
-      </div>
-    );
-  }
+  if (!userData) return null;
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#020617] pt-24 pb-12 px-6">
-      <div className="max-w-7xl mx-auto space-y-8">
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div>
-            <h1 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white">
-              Profilim
+    <div className="min-h-screen bg-[#020617] text-white py-30 px-4 md:px-8 relative overflow-hidden">
+      {/* Arka Plan Sanat Eseri */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-indigo-600/10 blur-[120px] rounded-full" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-600/10 blur-[120px] rounded-full" />
+      </div>
+
+      <div className="max-w-6xl mx-auto space-y-10">
+        {/* Üst Bar / Navigasyon Özeti */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+          >
+            <div className="flex items-center gap-2 mb-2">
+              <span className="h-[1px] w-6 bg-indigo-500"></span>
+              <span className="text-[10px] font-black tracking-[0.3em] uppercase text-indigo-400">
+                Executive Dashboard
+              </span>
+            </div>
+            <h1 className="text-4xl md:text-5xl font-black tracking-tight text-white italic">
+              Hoş Geldin,{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/40">
+                {userData.name}
+              </span>
             </h1>
-            <p className="text-slate-500 dark:text-slate-400 mt-1">
-              Hesap bilgilerinizi ve istatistiklerinizi görüntüleyin
-            </p>
-          </div>
-          <div className="flex gap-3">
+          </motion.div>
+
+          <div className="flex items-center gap-3">
             <button
               onClick={() => router.push("/settings")}
-              className="p-3 rounded-2xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 hover:border-indigo-500/50 transition-all"
+              className="p-4 rounded-2xl bg-white/[0.03] border border-white/10 hover:bg-white/[0.08] transition-all group"
             >
-              <Settings className="w-5 h-5 text-slate-600 dark:text-slate-300" />
+              <Settings className="w-5 h-5 text-slate-400 group-hover:rotate-90 transition-transform duration-500" />
             </button>
             <button
               onClick={handleLogout}
-              className="p-3 rounded-2xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 hover:border-red-500/50 transition-all"
+              className="p-4 rounded-2xl bg-red-500/5 border border-red-500/10 hover:bg-red-500/20 transition-all group"
             >
-              <LogOut className="w-5 h-5 text-slate-600 dark:text-slate-300" />
+              <LogOut className="w-5 h-5 text-red-400 group-hover:translate-x-1 transition-transform" />
             </button>
           </div>
         </div>
 
-        {/* Premium Banner */}
-        {!userData.isPremium && showRemoveAds && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-amber-500 via-orange-500 to-pink-500 p-[2px]"
-          >
-            <div className="bg-white dark:bg-slate-900 rounded-[22px] p-6 relative">
-              <button
-                onClick={() => setShowRemoveAds(false)}
-                className="absolute top-4 right-4 p-1 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
+        {/* Ana Grid Sistemi */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 italic">
+          {/* SOL TARAF: Kartlar ve Finans */}
+          <div className="lg:col-span-8 space-y-8">
+            {/* Varlık Kartları (Lüks Görünüm) */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Bakiye Kartı */}
+              <motion.div
+                whileHover={{ y: -5 }}
+                className="relative p-8 rounded-[2.5rem] bg-gradient-to-br from-indigo-600 to-indigo-900 overflow-hidden shadow-2xl group"
               >
-                <X className="w-4 h-4 text-slate-400" />
-              </button>
-              <div className="flex flex-col md:flex-row items-center gap-4">
-                <div className="p-4 bg-gradient-to-br from-amber-500/20 to-pink-500/20 rounded-2xl">
-                  <Crown className="w-8 h-8 text-amber-500" />
+                <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:scale-125 transition-transform duration-700">
+                  <CreditCard size={120} />
                 </div>
-                <div className="flex-1 text-center md:text-left">
-                  <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-1">
-                    Premium'a Yükselt
+                <div className="relative z-10 space-y-4">
+                  <div className="flex justify-between items-center">
+                    <p className="text-xs font-bold tracking-widest uppercase text-indigo-100/60">
+                      Toplam Kullanılabilir Bakiye
+                    </p>
+                    <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
+                      <ArrowUpRight size={16} className="text-white" />
+                    </div>
+                  </div>
+                  <h3 className="text-5xl font-black tracking-tighter text-white">
+                    $
+                    {userData.balance.toLocaleString("en-US", {
+                      minimumFractionDigits: 2,
+                    })}
                   </h3>
-                  <p className="text-slate-600 dark:text-slate-300 text-sm">
-                    Reklamları kaldır ve özel avantajlardan yararlan!
+                  <div className="pt-4 flex gap-3">
+                    <button className="px-5 py-2.5 bg-white text-indigo-900 rounded-xl font-black text-xs hover:bg-indigo-50 transition-colors">
+                      YATIRIM YAP
+                    </button>
+                    <button className="px-5 py-2.5 bg-white/10 text-white rounded-xl font-black text-xs hover:bg-white/20 transition-colors">
+                      TRANSFER
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* TKripto Kartı */}
+              <motion.div
+                whileHover={{ y: -5 }}
+                className="relative p-8 rounded-[2.5rem] bg-white/[0.03] border border-white/10 overflow-hidden shadow-xl group"
+              >
+                <div className="absolute -right-4 -bottom-4 opacity-5 group-hover:rotate-12 transition-transform duration-700 italic font-black text-9xl">
+                  TK
+                </div>
+                <div className="relative z-10 space-y-4">
+                  <div className="flex justify-between items-center">
+                    <p className="text-xs font-bold tracking-widest uppercase text-slate-500">
+                      Mevcut Kripto Varlığı
+                    </p>
+                    <Zap size={18} className="text-purple-500 animate-pulse" />
+                  </div>
+                  <h3 className="text-4xl font-black tracking-tighter text-white">
+                    {userData.tkripto.toFixed(4)}{" "}
+                    <span className="text-lg text-purple-500 italic">TK</span>
+                  </h3>
+                  <p className="text-[10px] text-slate-500 font-bold uppercase tracking-tight">
+                    Anlık Piyasa Değeri: $0.1245
                   </p>
                 </div>
-                <button className="px-6 py-3 bg-gradient-to-r from-amber-500 to-pink-500 text-white font-bold rounded-2xl hover:scale-105 active:scale-95 transition-all shadow-lg">
-                  Şimdi Yükselt
-                </button>
-              </div>
+              </motion.div>
             </div>
-          </motion.div>
-        )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Main Content */}
-          <div className="lg:col-span-2 space-y-8">
-            {/* Profile Card */}
-            <div className="bg-white dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 rounded-[2.5rem] p-8">
-              <div className="flex flex-col md:flex-row gap-6">
-                <div className="relative mx-auto md:mx-0">
-                  <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-4xl font-bold text-white shadow-xl">
-                    {userData.name.charAt(0)}
-                    {userData.surname.charAt(0)}
+            {/* Profil Detayları / Modern Bilgi Grid */}
+            <div className="bg-white/[0.02] border border-white/5 rounded-[3rem] p-10 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/5 blur-[80px] -z-10" />
+              <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
+                <div className="relative group">
+                  <div className="w-32 h-32 rounded-3xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 p-1 rotate-3 group-hover:rotate-0 transition-transform duration-500 shadow-2xl">
+                    <div className="w-full h-full bg-[#020617] rounded-[22px] flex items-center justify-center text-4xl font-black text-white italic">
+                      {userData.name.charAt(0)}
+                      {userData.surname.charAt(0)}
+                    </div>
                   </div>
                   {userData.isPremium && (
-                    <div className="absolute -top-2 -right-2 bg-amber-500 p-2 rounded-xl shadow-lg">
-                      <Crown className="w-4 h-4 text-white" />
+                    <div className="absolute -top-3 -right-3 bg-amber-500 p-2.5 rounded-2xl shadow-xl ring-4 ring-[#020617]">
+                      <Crown className="w-5 h-5 text-white" />
                     </div>
                   )}
                 </div>
-                <div className="flex-1 text-center md:text-left">
-                  <div className="flex flex-col md:flex-row items-center gap-3 mb-3">
-                    <h2 className="text-3xl font-bold text-slate-900 dark:text-white">
-                      {userData.name} {userData.surname}
-                    </h2>
-                    {userData.isPremium && (
-                      <span className="px-3 py-1 bg-gradient-to-r from-amber-500 to-amber-600 text-white text-xs font-bold rounded-full">
-                        PREMIUM
-                      </span>
-                    )}
+
+                <div className="flex-1 space-y-6 text-center md:text-left">
+                  <div>
+                    <div className="flex items-center justify-center md:justify-start gap-3 mb-1">
+                      <h2 className="text-3xl font-black tracking-tight">
+                        {userData.name} {userData.surname}
+                      </h2>
+                      {userData.isPremium && (
+                        <Badge variant="premium">ULTRA ELITE</Badge>
+                      )}
+                    </div>
+                    <p className="text-slate-400 font-medium tracking-wide">
+                      {userData.email}
+                    </p>
                   </div>
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2 text-slate-600 dark:text-slate-300 justify-center md:justify-start">
-                      <Mail className="w-4 h-4 text-indigo-500" />
-                      <span>{userData.email}</span>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-1">
+                      <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
+                        Rol
+                      </p>
+                      <p className="font-bold text-indigo-400">
+                        {userData.role.toUpperCase()}
+                      </p>
                     </div>
-                    <div className="flex items-center gap-2 text-slate-600 dark:text-slate-300 justify-center md:justify-start">
-                      <Shield className="w-4 h-4 text-purple-500" />
-                      <span className="font-medium">{userData.role}</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-slate-600 dark:text-slate-300 justify-center md:justify-start">
-                      <Calendar className="w-4 h-4 text-pink-500" />
-                      <span>Üye: {getMemberSince()}</span>
+                    <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-1">
+                      <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
+                        Üyelik Tarihi
+                      </p>
+                      <p className="font-bold text-white">
+                        {new Date(userData.createdAt).toLocaleDateString(
+                          "tr-TR"
+                        )}
+                      </p>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Balance Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="bg-gradient-to-br from-emerald-500/10 to-emerald-600/5 border border-emerald-500/20 rounded-[2.5rem] p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="p-3 bg-emerald-500/20 rounded-xl">
-                    <DollarSign className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
-                  </div>
-                  <TrendingUp className="w-5 h-5 text-emerald-500" />
-                </div>
-                <div className="text-sm text-slate-600 dark:text-slate-400 font-medium mb-1">
-                  Bakiye
-                </div>
-                <div className="text-3xl font-black text-slate-900 dark:text-white">
-                  ${userData.balance.toFixed(2)}
-                </div>
-              </div>
-
-              <div className="bg-gradient-to-br from-purple-500/10 to-purple-600/5 border border-purple-500/20 rounded-[2.5rem] p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="p-3 bg-purple-500/20 rounded-xl">
-                    <Sparkles className="w-6 h-6 text-purple-600 dark:text-purple-400" />
-                  </div>
-                  <TrendingUp className="w-5 h-5 text-purple-500" />
-                </div>
-                <div className="text-sm text-slate-600 dark:text-slate-400 font-medium mb-1">
-                  TKripto
-                </div>
-                <div className="text-3xl font-black text-slate-900 dark:text-white">
-                  {userData.tkripto.toFixed(4)}
-                </div>
-              </div>
-            </div>
-
-            {/* Stats Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              <div className="bg-white dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 rounded-2xl p-6 hover:border-indigo-500/50 transition-all">
-                <Sparkles className="w-6 h-6 text-indigo-500 mb-3" />
-                <div className="text-3xl font-black text-slate-900 dark:text-white mb-1">
-                  {userData.spinCount}
-                </div>
-                <div className="text-xs text-slate-500 font-medium">
-                  Toplam Çevirme
-                </div>
-              </div>
-
-              <div className="bg-white dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 rounded-2xl p-6 hover:border-amber-500/50 transition-all">
-                <Star className="w-6 h-6 text-amber-500 fill-amber-500 mb-3" />
-                <div className="text-3xl font-black text-slate-900 dark:text-white mb-1">
-                  {userData.premiumTickets}
-                </div>
-                <div className="text-xs text-slate-500 font-medium">
-                  Premium Bilet
-                </div>
-              </div>
-
-              <div className="bg-white dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 rounded-2xl p-6 hover:border-pink-500/50 transition-all">
-                <Ticket className="w-6 h-6 text-pink-500 mb-3" />
-                <div className="text-3xl font-black text-slate-900 dark:text-white mb-1">
-                  {userData.normalTickets}
-                </div>
-                <div className="text-xs text-slate-500 font-medium">
-                  Normal Bilet
-                </div>
-              </div>
-
-              <div className="bg-white dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 rounded-2xl p-6 hover:border-purple-500/50 transition-all">
-                <Calendar className="w-6 h-6 text-purple-500 mb-3" />
-                <div className="text-3xl font-black text-slate-900 dark:text-white mb-1">
-                  {userData.monthlySpinCount}
-                </div>
-                <div className="text-xs text-slate-500 font-medium">
-                  Aylık Çevirme
-                </div>
-              </div>
-
-              <div className="bg-white dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 rounded-2xl p-6 hover:border-emerald-500/50 transition-all">
-                <Globe className="w-6 h-6 text-emerald-500 mb-3" />
-                <div className="text-xl font-black text-slate-900 dark:text-white mb-1">
-                  {userData.language}
-                </div>
-                <div className="text-xs text-slate-500 font-medium">Dil</div>
-              </div>
-
-              <div className="bg-white dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 rounded-2xl p-6 hover:border-slate-500/50 transition-all">
-                {userData.darkMode ? (
-                  <Moon className="w-6 h-6 text-slate-500 mb-3" />
-                ) : (
-                  <Sun className="w-6 h-6 text-amber-500 mb-3" />
-                )}
-                <div className="text-xl font-black text-slate-900 dark:text-white mb-1">
-                  {userData.darkMode ? "Dark" : "Light"}
-                </div>
-                <div className="text-xs text-slate-500 font-medium">Tema</div>
-              </div>
+            {/* İstatistik Çubukları */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {[
+                {
+                  label: "Toplam Spin",
+                  value: userData.spinCount,
+                  icon: Sparkles,
+                  color: "text-indigo-400",
+                },
+                {
+                  label: "Elite Bilet",
+                  value: userData.premiumTickets,
+                  icon: Star,
+                  color: "text-amber-400",
+                },
+                {
+                  label: "Normal Bilet",
+                  value: userData.normalTickets,
+                  icon: Ticket,
+                  color: "text-pink-400",
+                },
+                {
+                  label: "Aylık Aktivite",
+                  value: userData.monthlySpinCount,
+                  icon: TrendingUp,
+                  color: "text-emerald-400",
+                },
+              ].map((stat, i) => (
+                <motion.div
+                  key={i}
+                  whileHover={{ scale: 1.02 }}
+                  className="p-5 rounded-[2rem] bg-white/[0.02] border border-white/5 hover:border-white/20 transition-all shadow-lg"
+                >
+                  <stat.icon className={`w-5 h-5 ${stat.color} mb-3`} />
+                  <p className="text-2xl font-black tracking-tighter">
+                    {stat.value}
+                  </p>
+                  <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest mt-1">
+                    {stat.label}
+                  </p>
+                </motion.div>
+              ))}
             </div>
           </div>
 
-          {/* Sidebar */}
-          <div className="space-y-6">
-            {/* Quick Actions */}
-            <div className="bg-white dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 rounded-[2.5rem] p-6">
-              <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4">
-                Hızlı İşlemler
+          {/* SAĞ TARAF: Sidebar ve Premium Aksiyonları */}
+          <div className="lg:col-span-4 space-y-8 italic">
+            {/* Hızlı Erişim Paneli */}
+            <div className="p-8 rounded-[2.5rem] bg-white/[0.02] border border-white/10 backdrop-blur-xl">
+              <h3 className="text-lg font-black mb-6 flex items-center gap-2 tracking-tight">
+                <Zap className="w-5 h-5 text-indigo-500" /> Hızlı Kontroller
               </h3>
-              <div className="space-y-3">
-                <button
-                  onClick={() => router.push("/wheel")}
-                  className="w-full p-4 bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-bold rounded-2xl hover:scale-105 active:scale-95 transition-all shadow-lg"
-                >
-                  Çark Çevir
-                </button>
-                <button
-                  onClick={() => router.push("/watch-ads")}
-                  className="w-full p-4 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white font-bold rounded-2xl hover:border-indigo-500/50 transition-all"
-                >
-                  Reklam İzle
-                </button>
-                <button
-                  onClick={() => router.push("/tickets")}
-                  className="w-full p-4 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white font-bold rounded-2xl hover:border-indigo-500/50 transition-all"
-                >
-                  Biletlerim
-                </button>
+              <div className="space-y-4">
+                <ActionBtn onClick={() => router.push("/wheel")} primary>
+                  Çarkı Çevir
+                </ActionBtn>
+                <ActionBtn onClick={() => router.push("/watch-ads")}>
+                  Gelir Elde Et
+                </ActionBtn>
+                <ActionBtn onClick={() => router.push("/tickets")}>
+                  Envanterim
+                </ActionBtn>
               </div>
             </div>
 
-            {/* Premium Status */}
-            {userData.isPremium ? (
-              <div className="bg-gradient-to-br from-amber-500/20 to-pink-500/20 border border-amber-500/30 rounded-[2.5rem] p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <Crown className="w-6 h-6 text-amber-500" />
-                  <h3 className="text-xl font-bold text-slate-900 dark:text-white">
-                    Premium Üye
-                  </h3>
+            {/* Premium Status Card */}
+            <div
+              className={`p-8 rounded-[2.5rem] relative overflow-hidden border transition-all ${
+                userData.isPremium
+                  ? "bg-gradient-to-br from-amber-500/10 to-transparent border-amber-500/20"
+                  : "bg-gradient-to-br from-slate-500/10 to-transparent border-white/10"
+              }`}
+            >
+              {userData.isPremium && (
+                <div className="absolute top-[-20%] right-[-20%] w-40 h-40 bg-amber-500/10 blur-[50px] rounded-full" />
+              )}
+
+              <div className="flex items-center gap-3 mb-6">
+                <div
+                  className={`p-3 rounded-2xl ${
+                    userData.isPremium ? "bg-amber-500/20" : "bg-white/5"
+                  }`}
+                >
+                  <Crown
+                    className={
+                      userData.isPremium ? "text-amber-500" : "text-slate-500"
+                    }
+                  />
                 </div>
-                <div className="space-y-3">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-slate-600 dark:text-slate-300">
-                      Kalan Gün
-                    </span>
-                    <span className="font-bold text-amber-600 dark:text-amber-400">
-                      {getRemainingPremiumDays()} gün
-                    </span>
+                <div>
+                  <p className="text-[10px] font-black uppercase text-slate-500 tracking-widest">
+                    Üyelik Durumu
+                  </p>
+                  <h4 className="font-black text-xl italic">
+                    {userData.isPremium ? "Elite Member" : "Standart"}
+                  </h4>
+                </div>
+              </div>
+
+              {userData.isPremium ? (
+                <div className="space-y-4">
+                  <div className="flex justify-between text-xs font-bold">
+                    <span className="text-slate-400">Üyelik Süresi</span>
+                    <span className="text-amber-400 italic">24 Gün Kaldı</span>
                   </div>
-                  <div className="h-2 bg-slate-200 dark:bg-white/10 rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-gradient-to-r from-amber-500 to-pink-500 rounded-full transition-all"
-                      style={{
-                        width: `${Math.min(
-                          (getRemainingPremiumDays() / 30) * 100,
-                          100
-                        )}%`,
-                      }}
+                  <div className="w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
+                    <motion.div
+                      initial={{ width: 0 }}
+                      animate={{ width: "75%" }}
+                      className="h-full bg-gradient-to-r from-amber-500 to-amber-200"
                     />
                   </div>
+                  <button className="w-full py-4 text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-colors">
+                    YÖNETİM PANELİ
+                  </button>
                 </div>
-              </div>
-            ) : (
-              <div className="bg-gradient-to-br from-amber-500/20 to-pink-500/20 border border-amber-500/30 rounded-[2.5rem] p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <Crown className="w-6 h-6 text-amber-500" />
-                  <h3 className="text-xl font-bold text-slate-900 dark:text-white">
-                    Premium Avantajları
-                  </h3>
+              ) : (
+                <div className="space-y-6">
+                  <p className="text-sm text-slate-400 font-medium leading-relaxed">
+                    Elite Üyeliğe geçerek kazancınızı %500 artırın ve reklamları
+                    kalıcı olarak kaldırın.
+                  </p>
+                  <button className="w-full py-4 bg-white text-[#020617] rounded-2xl font-black text-xs hover:bg-amber-500 transition-all transform active:scale-95 italic">
+                    PREMIUM PLANA GEÇİŞ YAP
+                  </button>
                 </div>
-                <ul className="space-y-3 mb-4">
-                  {[
-                    "Reklamsız deneyim",
-                    "5x daha fazla kazanç",
-                    "Ekstra günlük çevirme",
-                    "Özel premium biletler",
-                  ].map((benefit, index) => (
-                    <li
-                      key={index}
-                      className="flex items-center gap-2 text-slate-600 dark:text-slate-300 text-sm"
-                    >
-                      <div className="w-1.5 h-1.5 bg-amber-500 rounded-full" />
-                      <span>{benefit}</span>
-                    </li>
-                  ))}
-                </ul>
-                <button className="w-full p-3 bg-gradient-to-r from-amber-500 to-pink-500 text-white font-bold rounded-2xl hover:scale-105 active:scale-95 transition-all shadow-lg">
-                  Premium'a Geç
-                </button>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
       </div>
     </div>
   );
 }
+
+// YARDIMCI BİLEŞENLER
+const Badge = ({
+  children,
+  variant,
+}: {
+  children: React.ReactNode;
+  variant: "premium";
+}) => (
+  <span className="px-3 py-1 bg-amber-500 text-[#020617] text-[9px] font-black rounded-full italic tracking-tighter">
+    {children}
+  </span>
+);
+
+const ActionBtn = ({
+  children,
+  onClick,
+  primary = false,
+}: {
+  children: React.ReactNode;
+  onClick: () => void;
+  primary?: boolean;
+}) => (
+  <button
+    onClick={onClick}
+    className={`w-full py-4 rounded-2xl font-black text-xs tracking-[0.1em] uppercase transition-all flex items-center justify-between px-6 group italic ${
+      primary
+        ? "bg-indigo-600 text-white hover:bg-indigo-500 shadow-lg shadow-indigo-600/20"
+        : "bg-white/5 text-slate-300 hover:bg-white/10 border border-white/5"
+    }`}
+  >
+    {children}
+    <ChevronRight
+      size={14}
+      className="group-hover:translate-x-1 transition-transform"
+    />
+  </button>
+);

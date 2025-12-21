@@ -2,18 +2,21 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Cookie,
   Shield,
   Settings,
   BarChart,
   Target,
-  CheckCircle,
   Info,
   Home,
   ChevronRight,
   ArrowLeft,
   MousePointer2,
+  Lock,
+  Sparkles,
+  ToggleRight,
 } from "lucide-react";
 
 const CerezPolitikasi = () => {
@@ -27,50 +30,43 @@ const CerezPolitikasi = () => {
   const cookieTypes = [
     {
       id: "necessary",
-      title: "Zorunlu Çerezler",
+      title: "Essential Core",
       icon: Shield,
-      color: "emerald",
       required: true,
       description:
-        "Platformun temel işlevlerinin çalışması için kritik öneme sahiptir.",
-      duration: "Oturum süresi veya 1 yıl",
-      examples: ["Oturum yönetimi", "Güvenlik doğrulama", "Ödeme işlemleri"],
+        "Sistemin stabilitesi ve güvenliği için gereken temel altyapı çerezleri.",
+      duration: "Immutable",
+      examples: ["Security Tokens", "Session ID", "Auth State"],
     },
     {
       id: "functional",
-      title: "İşlevsellik Çerezleri",
+      title: "Experience Suite",
       icon: Settings,
-      color: "blue",
       required: false,
       description:
-        "Tema tercihleriniz ve dil ayarlarınız gibi kişiselleştirmeleri hatırlar.",
-      duration: "1 yıl",
-      examples: ["Karanlık mod tercihi", "Dil seçimi", "Video ayarları"],
+        "Tercih ettiğiniz arayüz ayarlarını ve kişisel konfigürasyonları saklar.",
+      duration: "365 Days",
+      examples: ["Dark Mode", "Language", "Layout Prefs"],
     },
     {
       id: "analytics",
-      title: "Analitik Çerezler",
+      title: "Intelligence",
       icon: BarChart,
-      color: "purple",
       required: false,
       description:
-        "Deneyiminizi iyileştirmek için anonim kullanım verileri toplar.",
-      duration: "2 yıl",
-      examples: ["Sayfa görüntüleme", "Tıklama analizi", "Hata raporları"],
+        "Deneyiminizi kusursuzlaştırmak için anonim kullanım metrikleri toplar.",
+      duration: "730 Days",
+      examples: ["Heatmaps", "Traffic Flow", "UX Metrics"],
     },
     {
       id: "advertising",
-      title: "Reklam Çerezleri",
+      title: "Targeted Ads",
       icon: Target,
-      color: "orange",
       required: false,
-      description: "İlgi alanlarınıza göre size daha alakalı reklamlar sunar.",
-      duration: "1 yıl",
-      examples: [
-        "Kişiselleştirilmiş reklamlar",
-        "Kampanya ölçümü",
-        "Yeniden hedefleme",
-      ],
+      description:
+        "İlgi alanlarınıza özel, yüksek kaliteli reklam içerikleri sunar.",
+      duration: "365 Days",
+      examples: ["Retargeting", "Interest Profiling"],
     },
   ];
 
@@ -83,213 +79,242 @@ const CerezPolitikasi = () => {
     }
   };
 
-  return ( 
-    <div className="min-h-screen bg-slate-50 dark:bg-[#020617] transition-colors duration-300 pt-20">
-      {/* 🍪 Sabit Bildirim Alanı */}
-      <div className="bg-white/50 dark:bg-white/5 border-b border-slate-200 dark:border-white/10 backdrop-blur-md sticky top-0 z-50">
-        <div className="max-w-6xl mx-auto px-4 py-3">
-          <div className="bg-orange-600/10 dark:bg-orange-500/10 rounded-2xl py-2 px-4 border border-orange-200/50 dark:border-orange-500/20 flex items-center justify-center gap-2">
-            <Cookie size={14} className="text-orange-600 animate-bounce" />
-            <p className="text-orange-700 dark:text-orange-300 text-[10px] md:text-xs font-black uppercase tracking-[0.2em] text-center">
-              Daha İyi Bir Deneyim İçin Çerezleri Kullanıyoruz
+  return (
+    <div className="min-h-screen bg-[#020617] text-white selection:bg-orange-500/30 selection:text-orange-200 pt-32 pb-20">
+      {/* 🌌 High-End Header */}
+      <section className="relative px-6 mb-20 overflow-hidden">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-gradient-to-b from-orange-500/10 to-transparent -z-10 blur-3xl opacity-50" />
+
+        <div className="max-w-7xl mx-auto">
+          <motion.nav
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex items-center gap-3 text-[10px] font-black tracking-[0.4em] uppercase text-slate-500 mb-12 italic"
+          >
+            <Link
+              href="/"
+              className="hover:text-orange-500 transition-colors flex items-center gap-1"
+            >
+              <Home size={12} /> Institutional
+            </Link>
+            <ChevronRight size={10} />
+            <span className="text-orange-500">Cookie Governance</span>
+          </motion.nav>
+
+          <div className="grid lg:grid-cols-2 gap-12 items-end">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+            >
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 mb-6">
+                <Lock size={12} className="text-orange-500" />
+                <span className="text-[10px] font-black tracking-[0.2em] uppercase text-orange-500">
+                  Data Sovereignty
+                </span>
+              </div>
+              <h1 className="text-6xl md:text-8xl font-black leading-[0.85] tracking-tighter italic uppercase mb-8">
+                Dijital <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-b from-white via-orange-200 to-orange-500">
+                  İzinleriniz.
+                </span>
+              </h1>
+              <p className="text-xl text-slate-400 max-w-lg font-light leading-relaxed italic">
+                Verileriniz, dijital dünyadaki parmak izinizdir. ADSTOWIN olarak
+                bu izlerin kontrolünü tamamen size bırakıyoruz.
+              </p>
+            </motion.div>
+
+            <div className="hidden lg:flex justify-end italic text-[10px] font-black uppercase tracking-[0.3em] text-slate-600">
+              Revision: 12.21.2025 // V2.0.4
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="max-w-7xl mx-auto px-6">
+        {/* 💎 Interactive Dashboard Container */}
+        <div className="grid lg:grid-cols-12 gap-8 mb-24">
+          {/* Main Controls */}
+          <div className="lg:col-span-8 space-y-4">
+            {cookieTypes.map((type) => (
+              <motion.div
+                key={type.id}
+                whileHover={{ scale: 0.995 }}
+                onClick={() => handleToggle(type.id)}
+                className={`
+                  relative cursor-pointer p-8 rounded-[2.5rem] border transition-all duration-500 flex items-center justify-between overflow-hidden group
+                  ${
+                    (cookiePreferences as any)[type.id]
+                      ? "bg-white/[0.03] border-orange-500/30 shadow-2xl shadow-orange-500/5"
+                      : "bg-white/[0.01] border-white/5 opacity-40 hover:opacity-80"
+                  }
+                `}
+              >
+                <div className="flex items-center gap-6 relative z-10">
+                  <div
+                    className={`p-4 rounded-2xl transition-colors duration-500 
+                    ${
+                      (cookiePreferences as any)[type.id]
+                        ? "bg-orange-600 text-white"
+                        : "bg-white/5 text-slate-500"
+                    }`}
+                  >
+                    <type.icon size={28} strokeWidth={1.5} />
+                  </div>
+                  <div>
+                    <h4 className="text-xl font-black uppercase italic tracking-tight">
+                      {type.title}
+                    </h4>
+                    <p className="text-sm text-slate-500 font-light mt-1 max-w-md">
+                      {type.description}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-4 relative z-10">
+                  {type.required ? (
+                    <span className="text-[9px] font-black tracking-widest uppercase px-3 py-1 rounded-full border border-white/10 bg-white/5">
+                      Mandatory
+                    </span>
+                  ) : (
+                    <div
+                      className={`w-14 h-8 rounded-full border transition-all flex items-center px-1 
+                      ${
+                        (cookiePreferences as any)[type.id]
+                          ? "bg-orange-600 border-orange-500"
+                          : "bg-white/5 border-white/10"
+                      }`}
+                    >
+                      <motion.div
+                        animate={{
+                          x: (cookiePreferences as any)[type.id] ? 24 : 0,
+                        }}
+                        className="w-6 h-6 bg-white rounded-full shadow-lg"
+                      />
+                    </div>
+                  )}
+                </div>
+
+                {/* Background Decor */}
+                <type.icon className="absolute -right-6 -bottom-6 w-32 h-32 opacity-[0.02] group-hover:scale-110 transition-transform duration-700" />
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Action Sidebar */}
+          <div className="lg:col-span-4">
+            <div className="sticky top-32 p-10 bg-orange-600 rounded-[3.5rem] shadow-2xl shadow-orange-600/20 text-center space-y-8 overflow-hidden relative">
+              <Sparkles className="absolute -top-10 -left-10 w-40 h-40 text-white/10 animate-pulse" />
+              <div className="relative z-10">
+                <MousePointer2 className="w-12 h-12 text-white mx-auto mb-6" />
+                <h3 className="text-3xl font-black uppercase italic leading-tight mb-4">
+                  Tercihleri <br />
+                  Onayla
+                </h3>
+                <p className="text-white/80 font-light text-sm mb-8 italic">
+                  Seçimleriniz şifreli olarak tarayıcınızda saklanır ve
+                  dilediğiniz zaman güncellenebilir.
+                </p>
+                <button className="w-full py-6 bg-white text-orange-600 font-black uppercase text-xs tracking-[0.3em] rounded-2xl hover:scale-105 active:scale-95 transition-all shadow-xl">
+                  Ayarları Kaydet
+                </button>
+                <div className="mt-6 flex items-center justify-center gap-2 text-[10px] font-black uppercase tracking-widest text-orange-200 opacity-70">
+                  <Shield size={12} /> Privacy Shield Active
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* 📚 Detailed Disclosure */}
+        <section className="py-24 border-t border-white/5">
+          <div className="flex flex-col md:flex-row gap-20">
+            <div className="md:w-1/3">
+              <h2 className="text-4xl font-black uppercase italic tracking-tighter sticky top-32">
+                Teknik <br />{" "}
+                <span className="text-orange-500 italic">Manifesto.</span>
+              </h2>
+            </div>
+            <div className="md:w-2/3 space-y-20">
+              {cookieTypes.map((type) => (
+                <div
+                  key={type.id}
+                  className="group border-b border-white/5 pb-12 last:border-0"
+                >
+                  <div className="flex items-center gap-4 mb-6">
+                    <span className="text-orange-500 font-black italic text-xl">
+                      /0{cookieTypes.indexOf(type) + 1}
+                    </span>
+                    <h3 className="text-2xl font-black uppercase italic tracking-tight">
+                      {type.title}
+                    </h3>
+                  </div>
+                  <div className="grid md:grid-cols-2 gap-8 italic">
+                    <p className="text-slate-400 font-light leading-relaxed">
+                      {type.description} Platformumuzun lüks ve akıcı deneyimini
+                      korumak için bu veri noktaları optimize edilmiştir.
+                    </p>
+                    <div className="space-y-4">
+                      <div className="text-[10px] font-black uppercase tracking-widest text-slate-500">
+                        Saklama Süresi:{" "}
+                        <span className="text-white">{type.duration}</span>
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        {type.examples.map((ex, i) => (
+                          <span
+                            key={i}
+                            className="text-[9px] font-black px-3 py-1 bg-white/5 border border-white/10 rounded text-slate-400 uppercase tracking-tighter"
+                          >
+                            {ex}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* 🛠️ External Management */}
+        <div className="p-12 bg-white/[0.02] border border-white/5 rounded-[4rem] flex flex-col md:flex-row items-center gap-10">
+          <div className="w-24 h-24 rounded-3xl bg-indigo-500/10 flex items-center justify-center text-indigo-400 shrink-0">
+            <Info size={40} strokeWidth={1} />
+          </div>
+          <div className="space-y-2">
+            <h4 className="text-xl font-black uppercase italic tracking-tight italic">
+              Manuel Denetim
+            </h4>
+            <p className="text-slate-500 font-light text-sm leading-relaxed italic">
+              Platformumuz dışındaki çerez kontrolü için tarayıcı ayarlarınızı
+              (Safari, Chrome, Brave) kullanabilirsiniz. Unutmayın, çerezleri
+              tamamen devre dışı bırakmak bu özel ekosistemin bazı
+              ayrıcalıklarını sınırlayabilir.
             </p>
           </div>
         </div>
-      </div>
 
-      <div className="max-w-5xl mx-auto px-6 py-12">
-        {/* 🧭 Navigasyon */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
-          <div>
-            <nav className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 mb-4 font-medium">
-              <Link
-                href="/"
-                className="hover:text-orange-600 transition-colors"
-              >
-                <Home size={16} />
-              </Link>
-              <ChevronRight size={14} />
-              <span className="text-slate-900 dark:text-white font-bold">
-                Çerez Politikası
-              </span>
-            </nav>
-            <h1 className="text-4xl md:text-6xl font-black text-slate-900 dark:text-white tracking-tight">
-              Çerez{" "}
-              <span className="text-orange-600 italic underline decoration-orange-600/30">
-                Tercihleriniz.
-              </span>
-            </h1>
-          </div>
-          <div className="text-xs font-bold text-slate-400 bg-slate-200/50 dark:bg-white/5 px-4 py-2 rounded-full border border-slate-200 dark:border-white/10">
-            Güncelleme: 18.12.2025
-          </div>
-        </div>
-
-        {/* 🌟 Intro & Preference Header */}
-        <div className="grid lg:grid-cols-3 gap-8 mb-12">
-          <div className="lg:col-span-2 p-8 rounded-[2.5rem] bg-orange-600 text-white shadow-2xl shadow-orange-600/20 relative overflow-hidden group">
-            <Cookie
-              size={200}
-              className="absolute -right-10 -bottom-10 opacity-10 -rotate-12 group-hover:rotate-0 transition-transform duration-700"
-            />
-            <div className="relative z-10">
-              <h2 className="text-3xl font-bold mb-4 italic">
-                Kişisel Deneyim Kontrolü
-              </h2>
-              <p className="text-orange-50 leading-relaxed text-lg opacity-95">
-                ADSTOWIN olarak şeffaflığa inanıyoruz. Hangi verilerin
-                cihazınızda saklanacağına siz karar verin. Zorunlu olmayan tüm
-                çerezleri istediğiniz zaman kapatabilirsiniz.
-              </p>
-            </div>
-          </div>
-
-          <div className="bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-[2.5rem] p-8 flex flex-col items-center justify-center text-center group">
-            <div className="w-16 h-16 bg-orange-100 dark:bg-orange-500/20 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-              <MousePointer2 className="text-orange-600" size={28} />
-            </div>
-            <h3 className="font-bold text-slate-900 dark:text-white mb-4">
-              Tercihleri Uygula
-            </h3>
-            <button className="w-full py-4 bg-slate-900 dark:bg-orange-600 text-white rounded-2xl font-black text-sm hover:scale-[1.02] active:scale-95 transition-all shadow-lg">
-              AYARLARI KAYDET
-            </button>
-          </div>
-        </div>
-
-        {/* 🔘 Switch List */}
-        <div className="grid md:grid-cols-2 gap-4 mb-16">
-          {cookieTypes.map((type) => (
-            <div
-              key={type.id}
-              onClick={() => handleToggle(type.id)}
-              className={`
-                cursor-pointer p-6 rounded-[2rem] border-2 transition-all duration-300 flex items-center justify-between
-                ${
-                  (cookiePreferences as any)[type.id]
-                    ? "bg-white dark:bg-white/5 border-orange-500/50 shadow-xl shadow-orange-500/5"
-                    : "bg-slate-100/50 dark:bg-white/[0.02] border-transparent opacity-60 hover:opacity-100"
-                }
-              `}
-            >
-              <div className="flex items-center gap-4">
-                <div
-                  className={`p-3 rounded-xl bg-${type.color}-500/10 text-${type.color}-600 dark:text-${type.color}-400`}
-                >
-                  <type.icon size={24} />
-                </div>
-                <div>
-                  <h4 className="font-bold text-slate-900 dark:text-white leading-tight">
-                    {type.title}
-                  </h4>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-1">
-                    {type.description}
-                  </p>
-                </div>
-              </div>
-
-              <div
-                className={`
-                w-12 h-6 rounded-full relative transition-colors duration-300
-                ${
-                  (cookiePreferences as any)[type.id]
-                    ? "bg-orange-600"
-                    : "bg-slate-300 dark:bg-slate-700"
-                }
-              `}
-              >
-                <div
-                  className={`
-                  absolute top-1 w-4 h-4 bg-white rounded-full transition-all duration-300
-                  ${(cookiePreferences as any)[type.id] ? "left-7" : "left-1"}
-                `}
-                />
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* 📖 Detailed Content */}
-        <div className="space-y-12">
-          <div className="flex items-center gap-4 border-b border-slate-200 dark:border-white/10 pb-4">
-            <Info className="text-orange-600" size={24} />
-            <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tight">
-              Detaylı Çerez Bilgileri
-            </h2>
-          </div>
-
-          <div className="grid gap-8">
-            {cookieTypes.map((type) => (
-              <div key={type.id} className="group relative">
-                <div className="absolute -left-4 top-0 bottom-0 w-1 bg-slate-200 dark:bg-white/10 group-hover:bg-orange-600 transition-colors rounded-full" />
-                <div className="flex flex-col md:flex-row gap-6">
-                  <div className="md:w-1/3">
-                    <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
-                      {type.title}
-                    </h3>
-                    <div className="text-xs font-black text-orange-600 uppercase tracking-widest">
-                      {type.duration}
-                    </div>
-                  </div>
-                  <div className="md:w-2/3 space-y-4">
-                    <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
-                      {type.description}
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {type.examples.map((ex, i) => (
-                        <span
-                          key={i}
-                          className="px-3 py-1 bg-slate-100 dark:bg-white/5 rounded-full text-[10px] font-bold text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-white/10 italic"
-                        >
-                          #{ex}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* 🛠️ External Control Notice */}
-        <div className="mt-20 p-8 rounded-[2.5rem] border border-dashed border-slate-300 dark:border-white/20 bg-slate-100/30 dark:bg-white/[0.01]">
-          <div className="flex flex-col md:flex-row items-center gap-6">
-            <div className="p-4 bg-white dark:bg-white/5 rounded-2xl shadow-sm text-blue-500">
-              <Info size={32} />
-            </div>
-            <div>
-              <h4 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
-                Tarayıcı Üzerinden Yönetim
-              </h4>
-              <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                Tercihlerinizi sitemizden yönetebileceğiniz gibi, tarayıcı
-                ayarlarınızdan (Chrome, Safari, Firefox vb.) tüm çerezleri
-                tamamen engelleyebilir veya silebilirsiniz. Ancak bu durum
-                platformun bazı özelliklerinin çalışmamasına neden olabilir.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* 🔚 Footer Link */}
-        <div className="mt-16 text-center space-y-6">
-          <p className="text-sm text-slate-500 dark:text-slate-400">
-            Daha fazla bilgi için{" "}
-            <Link
-              href="/privacy"
-              className="text-orange-600 font-bold hover:underline"
-            >
-              Gizlilik Politikamızı
-            </Link>{" "}
-            inceleyin.
-          </p>
+        {/* 🔚 Elite Footer Navigation */}
+        <div className="mt-32 pt-12 border-t border-white/5 text-center space-y-10">
           <Link
-            href="/"
-            className="inline-flex items-center gap-2 text-slate-400 hover:text-orange-600 transition-colors text-sm font-medium"
+            href="/privacy"
+            className="group inline-flex items-center gap-4 text-xs font-black uppercase tracking-[0.4em] text-slate-500 hover:text-white transition-all"
           >
-            <ArrowLeft size={16} /> Ana Sayfaya Dön
+            <ToggleRight
+              className="text-orange-500 group-hover:rotate-180 transition-transform duration-500"
+              size={20}
+            />
+            Gizlilik Dokümantasyonu
           </Link>
+          <div className="flex justify-center">
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 text-slate-600 hover:text-orange-500 transition-colors text-[10px] font-black uppercase tracking-widest italic"
+            >
+              <ArrowLeft size={14} /> Back to Terminal
+            </Link>
+          </div>
         </div>
       </div>
     </div>

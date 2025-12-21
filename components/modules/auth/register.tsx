@@ -14,9 +14,12 @@ import {
   UserPlus,
   Users,
   Briefcase,
+  ArrowRight,
+  ShieldCheck,
+  Sparkles,
 } from "lucide-react";
 import { toast } from "sonner";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 type UserRole = "USER" | "ADVERTISER";
 
@@ -39,12 +42,10 @@ export default function RegisterForm({ onLoginClick }: RegisterFormProps) {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  const isAdvertiser = formData.role === "ADVERTISER";
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
-  };
-
-  const handleRoleChange = (role: UserRole) => {
-    setFormData({ ...formData, role });
   };
 
   const handleRegister = async (e: FormEvent<HTMLFormElement>) => {
@@ -53,313 +54,297 @@ export default function RegisterForm({ onLoginClick }: RegisterFormProps) {
       toast.error("Şifreler birbiriyle eşleşmiyor!");
       return;
     }
-
     setIsLoading(true);
     try {
       const res = await fetch("/api/account/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: formData.name,
-          surname: formData.surname,
-          email: formData.email,
-          password: formData.password,
-          role: formData.role,
-        }),
+        body: JSON.stringify(formData),
       });
-
       const data = await res.json();
-
-      if (!res.ok) {
-        toast.error(data.error || "Kayıt işlemi başarısız oldu.");
-      } else {
-        toast.success("Hesabınız başarıyla oluşturuldu!");
-        if (onLoginClick) onLoginClick();
+      if (!res.ok) toast.error(data.error || "Kayıt işlemi başarısız.");
+      else {
+        toast.success("Başarıyla katıldınız!");
         router.push("/auth/login");
       }
     } catch (err) {
-      toast.error("Sunucuyla bağlantı kurulamadı.");
+      toast.error("Bağlantı hatası.");
     } finally {
       setIsLoading(false);
     }
   };
 
-  const isAdvertiser = formData.role === "ADVERTISER";
-
   return (
-    <div className="min-h-[calc(100vh-80px)] w-full flex items-center justify-center p-4 bg-slate-50 dark:bg-[#020617] transition-colors duration-500">
+    <div className="min-h-screen w-full py-30 flex items-center justify-center bg-[#020617] p-4 relative overflow-hidden font-sans">
+      {/* Arka Plan Glow Efektleri */}
+      <div
+        className={`absolute top-[-10%] left-[-10%] w-[50%] h-[50%] blur-[120px] rounded-full transition-colors duration-1000 ${
+          isAdvertiser ? "bg-orange-600/10" : "bg-indigo-600/10"
+        }`}
+      />
+
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        className="w-full max-w-[1100px] grid md:grid-cols-2 bg-white dark:bg-slate-900 rounded-[2.5rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-slate-100 dark:border-white/5"
+        className="w-full max-w-6xl grid md:grid-cols-12 bg-white/5 backdrop-blur-3xl rounded-[40px] shadow-[0_32px_64px_-16px_rgba(0,0,0,0.5)] overflow-hidden border border-white/10"
       >
-        {/* SOL TARAF: AVANTAJLAR */}
+        {/* SOL PANEL: AVANTAJLAR (5 Kolon) */}
         <div
-          className={`relative hidden md:flex flex-col justify-center p-16 text-white transition-all duration-700 ease-in-out bg-gradient-to-br ${
+          className={`md:col-span-5 relative hidden md:flex flex-col justify-between p-12 lg:p-16 text-white transition-all duration-1000 overflow-hidden ${
             isAdvertiser
-              ? "from-orange-500 to-amber-600 dark:from-orange-600 dark:to-amber-800"
-              : "from-indigo-600 to-violet-700 dark:from-indigo-800 dark:to-violet-950"
+              ? "bg-gradient-to-br from-orange-600 to-amber-900"
+              : "bg-gradient-to-br from-indigo-600 to-violet-900"
           }`}
         >
-          {/* Arka plan süsleme halkası */}
-          <div className="absolute top-0 left-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -ml-32 -mt-32" />
+          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10" />
 
           <div className="relative z-10">
             <motion.div
               key={formData.role}
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="flex items-center gap-2 mb-8 bg-white/10 w-fit px-4 py-1.5 rounded-full border border-white/10"
             >
-              <UserPlus className="w-12 h-12 mb-6 text-white/80" />
+              <Sparkles size={12} className="text-amber-300" />
+              <span className="text-[10px] font-black uppercase tracking-[0.2em]">
+                Özel Üyelik
+              </span>
             </motion.div>
 
-            <h2 className="text-4xl font-black mb-6 leading-tight">
+            <h2 className="text-4xl font-black leading-tight mb-8 tracking-tighter italic whitespace-pre-line">
               {isAdvertiser
-                ? "Markanızı\nBüyütmeye Başlayın"
-                : "Kazanmaya Bugün\nAdım Atın."}
+                ? "MARKANIZI\nZİRVEYE TAŞIYIN"
+                : "KAZANANLARIN\nARASINA KATILIN"}
             </h2>
 
-            <div className="space-y-6 mb-10">
+            <div className="space-y-6">
               {(isAdvertiser
                 ? [
-                    "Hedef kitlenize doğrudan ulaşın",
-                    "Düşük bütçelerle yüksek etkileşim",
-                    "Detaylı kampanya analizi",
-                    "Hızlı onaylanan reklam modelleri",
+                    "Global hedefleme seçenekleri",
+                    "Yüksek dönüşüm oranları",
+                    "7/24 Kampanya yönetimi",
+                    "Detaylı analitik raporlama",
                   ]
                 : [
-                    "Kayıt sonrası anında bakiye yönetimi",
-                    "Size özel görevler ve ödül havuzu",
-                    "Detaylı sipariş ve işlem geçmişi",
-                    "Güvenli ödeme sistemleri",
+                    "Anlık ödeme garantisi",
+                    "VIP görev havuzu",
+                    "Kişisel hesap danışmanı",
+                    "Yüksek referans kazancı",
                   ]
               ).map((text, i) => (
                 <motion.div
-                  initial={{ x: -20, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.1 }}
                   key={text}
-                  className="flex items-start gap-3 group"
+                  className="flex items-center gap-4 group"
                 >
-                  <div className="mt-1 bg-white/20 p-1 rounded-full group-hover:bg-white/40 transition-colors">
-                    <CheckCircle2 size={18} className="text-white" />
+                  <div className="bg-white/10 p-1.5 rounded-full border border-white/10">
+                    <CheckCircle2 size={16} className="text-white/80" />
                   </div>
-                  <p className="text-white/90 font-medium leading-relaxed">
+                  <span className="text-sm font-semibold text-white/90">
                     {text}
-                  </p>
+                  </span>
                 </motion.div>
               ))}
             </div>
+          </div>
 
-            <div className="p-6 bg-white/10 rounded-2xl border border-white/10 backdrop-blur-sm">
-              <p className="text-sm font-semibold mb-4 text-white/80">
-                Zaten üye misiniz?
+          <div className="relative z-10 pt-12">
+            <div className="p-6 bg-black/20 rounded-3xl border border-white/10 backdrop-blur-md">
+              <p className="text-xs font-medium text-white/70 mb-4 italic leading-relaxed">
+                "Hızlı aksiyon alabilen, güvenilir ve modern bir platform
+                arıyorsanız doğru yerdesiniz."
               </p>
-              <Link href="/auth/login">
-                <Button
-                  variant="secondary"
-                  className="w-full h-12 rounded-xl bg-white text-slate-900 hover:bg-slate-50 font-bold transition-all border-none"
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-black uppercase tracking-widest opacity-50">
+                  Community Feedback
+                </span>
+                <Link
+                  href="/auth/login"
+                  className="text-xs font-bold hover:text-indigo-200 transition-colors flex items-center gap-1"
                 >
-                  Giriş Yapın
-                </Button>
-              </Link>
+                  Giriş Yap <ArrowRight size={14} />
+                </Link>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* SAĞ TARAF: KAYIT FORMU */}
-        <div
-          className={`p-8 md:p-12 flex flex-col justify-center transition-all duration-700 ease-in-out ${
-            isAdvertiser
-              ? "bg-amber-50/30 dark:bg-amber-950/10"
-              : "bg-white dark:bg-slate-900"
-          }`}
-        >
-          <div className="mb-8">
-            <h2
-              className={`text-3xl font-black tracking-tight mb-2 transition-colors duration-500 ${
-                isAdvertiser
-                  ? "text-amber-700 dark:text-amber-400"
-                  : "text-slate-900 dark:text-white"
-              }`}
-            >
-              Hesap Oluştur
-            </h2>
-            <p className="text-slate-500 dark:text-slate-400 font-medium text-sm">
-              {isAdvertiser
-                ? "Kampanyalarınızı yönetmek için şirket hesabı açın."
-                : "Bireysel görevleri tamamlayarak kazanmaya başlayın."}
+        {/* SAĞ PANEL: FORM (7 Kolon) */}
+        <div className="md:col-span-7 p-8 md:p-16 lg:p-20 bg-white/5 flex flex-col justify-center">
+          <div className="mb-10 text-center md:text-left">
+            <h1 className="text-3xl font-black text-white tracking-tight mb-2">
+              Yeni Hesap Başvurusu
+            </h1>
+            <p className="text-slate-500 font-medium">
+              Platformun tüm avantajlarından yararlanmak için formu doldurun.
             </p>
           </div>
 
-          <form onSubmit={handleRegister} className="space-y-4">
-            <div className="space-y-2">
-              <Label className="text-[10px] font-black text-slate-400 dark:text-slate-500 tracking-widest uppercase ml-1">
-                Kullanıcı Türü
+          <form onSubmit={handleRegister} className="space-y-6">
+            {/* ROLE SELECTOR */}
+            <div className="space-y-3">
+              <Label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">
+                Üyelik Modeli
               </Label>
-              <div className="grid grid-cols-2 gap-3">
-                <button
-                  type="button"
-                  onClick={() => handleRoleChange("USER")}
-                  className={`flex items-center justify-center gap-2 p-3 rounded-xl border-2 transition-all ${
-                    formData.role === "USER"
-                      ? "border-indigo-600 bg-indigo-50/50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400"
-                      : "border-slate-100 dark:border-white/5 text-slate-400 hover:border-slate-200 dark:hover:border-white/10"
-                  }`}
-                >
-                  <Users size={18} />
-                  <span className="text-sm font-bold">Kazanan</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleRoleChange("ADVERTISER")}
-                  className={`flex items-center justify-center gap-2 p-3 rounded-xl border-2 transition-all ${
-                    formData.role === "ADVERTISER"
-                      ? "border-amber-600 bg-amber-50/50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400"
-                      : "border-slate-100 dark:border-white/5 text-slate-400 hover:border-slate-200 dark:hover:border-white/10"
-                  }`}
-                >
-                  <Briefcase size={18} />
-                  <span className="text-sm font-bold">Reklamveren</span>
-                </button>
+              <div className="grid grid-cols-2 gap-4">
+                <RoleButton
+                  active={!isAdvertiser}
+                  onClick={() => setFormData({ ...formData, role: "USER" })}
+                  icon={<Users size={18} />}
+                  label="Kazanan"
+                  color="indigo"
+                />
+                <RoleButton
+                  active={isAdvertiser}
+                  onClick={() =>
+                    setFormData({ ...formData, role: "ADVERTISER" })
+                  }
+                  icon={<Briefcase size={18} />}
+                  label="Reklamveren"
+                  color="orange"
+                />
               </div>
             </div>
 
+            {/* NAME & SURNAME */}
             <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-1.5">
-                <Label
-                  htmlFor="name"
-                  className="text-[10px] font-black text-slate-400 dark:text-slate-500 tracking-widest uppercase ml-1"
-                >
+              <div className="space-y-2">
+                <Label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">
                   İsim
                 </Label>
                 <Input
                   id="name"
-                  placeholder="Adınızı giriniz..."
-                  value={formData.name}
                   onChange={handleChange}
+                  className="h-12 rounded-2xl border-white/5 bg-white/[0.03] text-white focus:border-indigo-500/50 focus:ring-4 focus:ring-indigo-500/10 transition-all px-5"
                   required
-                  className={`h-11 rounded-xl bg-white dark:bg-slate-800 border-slate-200 dark:border-white/10 focus:ring-2 transition-all ${
-                    isAdvertiser
-                      ? "focus:ring-amber-500/20"
-                      : "focus:ring-indigo-500/20"
-                  }`}
                 />
               </div>
-              <div className="space-y-1.5">
-                <Label
-                  htmlFor="surname"
-                  className="text-[10px] font-black text-slate-400 dark:text-slate-500 tracking-widest uppercase ml-1"
-                >
+              <div className="space-y-2">
+                <Label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">
                   Soyad
                 </Label>
                 <Input
                   id="surname"
-                  placeholder="Soyadınızı giriniz..."
-                  value={formData.surname}
                   onChange={handleChange}
+                  className="h-12 rounded-2xl border-white/5 bg-white/[0.03] text-white focus:border-indigo-500/50 focus:ring-4 focus:ring-indigo-500/10 transition-all px-5"
                   required
-                  className={`h-11 rounded-xl bg-white dark:bg-slate-800 border-slate-200 dark:border-white/10 focus:ring-2 transition-all ${
-                    isAdvertiser
-                      ? "focus:ring-amber-500/20"
-                      : "focus:ring-indigo-500/20"
-                  }`}
                 />
               </div>
             </div>
 
-            <div className="space-y-1.5">
-              <Label
-                htmlFor="email"
-                className="text-[10px] font-black text-slate-400 dark:text-slate-500 tracking-widest uppercase ml-1"
-              >
-                E-Posta
+            {/* EMAIL */}
+            <div className="space-y-2">
+              <Label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">
+                E-Posta Adresi
               </Label>
               <Input
                 id="email"
                 type="email"
-                placeholder="isim@ornek.com"
-                value={formData.email}
                 onChange={handleChange}
+                placeholder="ornek@adstowin.com"
+                className="h-12 rounded-2xl border-white/5 bg-white/[0.03] text-white focus:border-indigo-500/50 focus:ring-4 focus:ring-indigo-500/10 transition-all px-5"
                 required
-                className={`h-11 rounded-xl bg-white dark:bg-slate-800 border-slate-200 dark:border-white/10 focus:ring-2 transition-all ${
-                  isAdvertiser
-                    ? "focus:ring-amber-500/20"
-                    : "focus:ring-indigo-500/20"
-                }`}
               />
             </div>
 
-            <div className="space-y-1.5 relative">
-              <Label
-                htmlFor="password"
-                className="text-[10px] font-black text-slate-400 dark:text-slate-500 tracking-widest uppercase ml-1"
-              >
-                Şifre
-              </Label>
-              <div className="relative">
-                <Input
-                  id="password"
-                  type={showPassword ? "text" : "password"}
-                  value={formData.password}
-                  onChange={handleChange}
-                  required
-                  className="h-11 rounded-xl bg-white dark:bg-slate-800 border-slate-200 dark:border-white/10 pr-10"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
-                >
-                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                </button>
+            {/* PASSWORDS */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">
+                  Şifre
+                </Label>
+                <div className="relative">
+                  <Input
+                    id="password"
+                    type={showPassword ? "text" : "password"}
+                    onChange={handleChange}
+                    className="h-12 rounded-2xl border-white/5 bg-white/[0.03] text-white focus:border-indigo-500/50 focus:ring-4 focus:ring-indigo-500/10 transition-all px-5"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-600 hover:text-white"
+                  >
+                    {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                  </button>
+                </div>
               </div>
-            </div>
-
-            <div className="space-y-1.5 relative">
-              <Label
-                htmlFor="confirmPassword"
-                className="text-[10px] font-black text-slate-400 dark:text-slate-500 tracking-widest uppercase ml-1"
-              >
-                Şifre Onay
-              </Label>
-              <div className="relative">
-                <Input
-                  id="confirmPassword"
-                  type={showConfirmPassword ? "text" : "password"}
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                  required
-                  className="h-11 rounded-xl bg-white dark:bg-slate-800 border-slate-200 dark:border-white/10 pr-10"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
-                >
-                  {showConfirmPassword ? (
-                    <EyeOff size={18} />
-                  ) : (
-                    <Eye size={18} />
-                  )}
-                </button>
+              <div className="space-y-2">
+                <Label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">
+                  Şifre Onay
+                </Label>
+                <div className="relative">
+                  <Input
+                    id="confirmPassword"
+                    type={showConfirmPassword ? "text" : "password"}
+                    onChange={handleChange}
+                    className="h-12 rounded-2xl border-white/5 bg-white/[0.03] text-white focus:border-indigo-500/50 focus:ring-4 focus:ring-indigo-500/10 transition-all px-5"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-600 hover:text-white"
+                  >
+                    {showConfirmPassword ? (
+                      <EyeOff size={16} />
+                    ) : (
+                      <Eye size={16} />
+                    )}
+                  </button>
+                </div>
               </div>
             </div>
 
             <Button
               type="submit"
               disabled={isLoading}
-              className={`w-full h-12 rounded-xl text-white text-md font-bold shadow-lg transition-all active:scale-[0.98] mt-4 border-none ${
+              className={`w-full h-14 rounded-[20px] text-white font-black text-sm uppercase tracking-widest shadow-2xl transition-all active:scale-[0.98] ${
                 isAdvertiser
-                  ? "bg-amber-600 hover:bg-amber-700 shadow-amber-500/20 dark:bg-amber-700 dark:hover:bg-amber-600"
-                  : "bg-indigo-600 hover:bg-indigo-700 shadow-indigo-500/20 dark:bg-indigo-700 dark:hover:bg-indigo-600"
+                  ? "bg-orange-600 hover:bg-orange-500 shadow-orange-500/20"
+                  : "bg-indigo-600 hover:bg-indigo-500 shadow-indigo-500/20"
               }`}
             >
-              {isLoading ? <Loader2 className="animate-spin" /> : "Kayıt Ol"}
+              {isLoading ? (
+                <Loader2 className="animate-spin" />
+              ) : (
+                <div className="flex items-center gap-2">
+                  Hesabı Oluştur <ArrowRight size={18} />
+                </div>
+              )}
             </Button>
           </form>
         </div>
       </motion.div>
     </div>
+  );
+}
+
+/* HELPER COMPONENTS */
+
+function RoleButton({ active, onClick, icon, label, color }: any) {
+  const activeStyles =
+    color === "orange"
+      ? "border-orange-500 bg-orange-500/10 text-orange-500 shadow-[0_0_20px_rgba(249,115,22,0.1)]"
+      : "border-indigo-500 bg-indigo-500/10 text-indigo-500 shadow-[0_0_20px_rgba(99,102,241,0.1)]";
+
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`flex flex-col items-center justify-center gap-2 p-4 rounded-2xl border transition-all duration-500 ${
+        active
+          ? activeStyles
+          : "border-white/5 bg-white/5 text-slate-500 hover:border-white/10"
+      }`}
+    >
+      {icon}
+      <span className="text-[11px] font-black uppercase tracking-widest">
+        {label}
+      </span>
+    </button>
   );
 }

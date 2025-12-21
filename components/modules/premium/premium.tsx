@@ -7,13 +7,13 @@ import {
   CreditCard,
   Wallet,
   Star,
-  Megaphone,
+  ShieldCheck,
+  Zap,
+  ArrowRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-
-// Sabit Reklam Bileşeni
-
+import { motion, AnimatePresence } from "framer-motion";
 
 interface PricingPlan {
   id: string;
@@ -23,40 +23,43 @@ interface PricingPlan {
   savings?: string;
   features: string[];
   popular?: boolean;
+  color: string;
 }
 
 const PremiumPricingPage: React.FC = () => {
-  const [selectedPlan, setSelectedPlan] = useState<string>("monthly");
+  const [selectedPlan, setSelectedPlan] = useState<string>("yearly");
   const [selectedPayment, setSelectedPayment] = useState<string>("");
 
   const plans: PricingPlan[] = [
     {
       id: "monthly",
-      name: "Aylık Premium",
+      name: "Standard Elite",
       price: 4.99,
       period: "ay",
+      color: "from-slate-400 to-slate-600",
       features: [
-        "Sınırsız mesajlaşma",
-        "Reklamsız deneyim",
-        "Özel profil rozetleri",
-        "Premium emoji paketi",
-        "Gelişmiş istatistikler",
+        "Sınırsız öncelikli mesajlaşma",
+        "Sıfır reklam deneyimi",
+        "Gümüş profil çerçevesi",
+        "Özel Premium emojiler",
+        "Aylık performans raporu",
       ],
     },
     {
       id: "yearly",
-      name: "Yıllık Premium",
+      name: "Ultimate VIP",
       price: 39.99,
       period: "yıl",
-      savings: "%33 tasarruf",
+      savings: "%33 Tasarruf Edin",
       popular: true,
+      color: "from-amber-400 via-yellow-600 to-amber-700",
       features: [
-        "Tüm aylık özellikler",
-        "2 ay ücretsiz kullanım",
-        "VIP destek önceliği",
-        "Özel yıllık VIP rozet",
-        "Yeni özelliklere erken erişim",
-        "2 adet hediye premium kodu",
+        "Tüm Standard özellikler",
+        "VIP destek hattı (7/24)",
+        "Altın 'Grandmaster' rozeti",
+        "Yeni araçlara erken erişim",
+        "Yıllık özel strateji toplantısı",
+        "2 Adet Premium hediye kartı",
       ],
     },
   ];
@@ -64,103 +67,127 @@ const PremiumPricingPage: React.FC = () => {
   const paymentMethods = [
     {
       id: "payoneer",
-      name: "Payoneer API",
-      icon: <CreditCard className="w-6 h-6" />,
-      description: "Kredi Kartı / Banka Kartı",
+      name: "Global Card Transfer",
+      icon: <CreditCard className="w-5 h-5" />,
+      description: "Payoneer Secure Infrastructure",
     },
     {
       id: "litecoin",
-      name: "Litecoin (LTC) API",
-      icon: <Wallet className="w-6 h-6" />,
-      description: "Kripto Para İle Ödeme",
+      name: "Digital Asset (LTC)",
+      icon: <Wallet className="w-5 h-5" />,
+      description: "Lightning Fast Crypto API",
     },
   ];
 
-  const handlePurchase = () => {
-    if (!selectedPayment) {
-      alert("Lütfen bir ödeme yöntemi seçin");
-      return;
-    }
-    const plan = plans.find((p) => p.id === selectedPlan);
-    alert(
-      `${
-        plan?.name
-      } için ${selectedPayment.toUpperCase()} API sistemi üzerinden ödeme başlatılıyor...`
-    );
-  };
-
   return (
-    <div className="min-h-screen w-full bg-slate-50 dark:bg-[#020617] transition-colors pb-24 pt-24">
-      {/* 5. GEREKSİNİM: SAYFANIN EN ÜSTÜNDE SABİT REKLAM ALANI */}
-      <div className="max-w-7xl mx-auto px-4">
-        {/* HERO SECTION */}
-        <div className="text-center mb-16 animate-in fade-in  duration-700">
-          <div className="flex justify-center mb-6">
-            <div className="p-4 rounded-3xl bg-gradient-to-br from-indigo-600 to-purple-600 shadow-xl shadow-indigo-500/20">
-              <Crown className="w-12 h-12 text-white" />
-            </div>
+    <div className="min-h-screen w-full bg-[#020617] text-white selection:bg-amber-500/30 py-24 relative overflow-hidden">
+      {/* Sanatsal Arka Plan Dokunuşları */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-gradient-to-b from-indigo-500/10 to-transparent blur-3xl opacity-50" />
+      <div className="absolute top-[20%] right-[-10%] w-96 h-96 bg-purple-600/10 blur-[120px] rounded-full" />
+
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        {/* Üst Reklam Alanı (Modern Banner) */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-16 p-[1px] rounded-3xl bg-gradient-to-r from-transparent via-white/10 to-transparent"
+        >
+          <div className="bg-white/[0.02] backdrop-blur-md rounded-3xl p-4 flex items-center justify-center gap-4 border border-white/5">
+            <Badge className="bg-amber-500 text-black font-black text-[10px]">
+              ÖZEL TEKLİF
+            </Badge>
+            <p className="text-xs md:text-sm font-medium text-slate-300 tracking-wide">
+              Bugün katılın ve ilk{" "}
+              <span className="text-amber-400 font-bold">24 saat</span> içinde
+              özel yatırımcı rozetini kazanın.
+            </p>
           </div>
-          <h1 className="text-4xl md:text-6xl font-black tracking-tight text-slate-900 dark:text-white">
-            Premium’a Yükselt
+        </motion.div>
+
+        {/* Hero Section */}
+        <div className="text-center mb-20">
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8"
+          >
+            <Sparkles className="w-4 h-4 text-amber-400" />
+            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-amber-200">
+              Exclusive Membership
+            </span>
+          </motion.div>
+
+          <h1 className="text-5xl md:text-7xl font-black tracking-tighter mb-6 bg-clip-text text-transparent bg-gradient-to-b from-white to-slate-500">
+            Sınırları <br /> Yeniden Tanımlayın
           </h1>
-          <p className="mt-4 text-slate-500 dark:text-slate-400 max-w-xl mx-auto font-medium">
-            Profesyonel araçlara erişin ve platformun tüm gücünü serbest
-            bırakın.
+          <p className="text-slate-400 max-w-2xl mx-auto text-lg font-medium leading-relaxed">
+            Sıradanlıktan kurtulun. En gelişmiş finansal araçlar ve öncelikli
+            erişim hakları ile platformun zirvesinde yerinizi alın.
           </p>
         </div>
 
-        {/* 40 & 41. GEREKSİNİMLER: PRICING (4.99 & 39.99) */}
-        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-16">
+        {/* Planlar */}
+        <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto mb-20">
           {plans.map((plan) => (
-            <div
+            <motion.div
               key={plan.id}
+              whileHover={{ y: -10 }}
               onClick={() => setSelectedPlan(plan.id)}
               className={`
-                relative cursor-pointer rounded-[2.5rem] p-8 border transition-all duration-500
+                relative cursor-pointer rounded-[3rem] p-10 transition-all duration-500 border
                 ${
                   selectedPlan === plan.id
-                    ? "bg-white dark:bg-slate-900 border-indigo-500 shadow-2xl shadow-indigo-500/10 scale-[1.02]"
-                    : "bg-white/50 dark:bg-slate-900/40 border-slate-200 dark:border-white/5 hover:border-indigo-300"
+                    ? "bg-white/[0.03] border-amber-500/50 shadow-[0_30px_60px_-15px_rgba(245,158,11,0.15)]"
+                    : "bg-transparent border-white/5 hover:border-white/20"
                 }
               `}
             >
               {plan.popular && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                  <Badge className="px-6 py-1.5 rounded-full bg-indigo-600 text-white border-none shadow-lg">
-                    <Star className="w-3 h-3 mr-2 fill-current" /> EN POPÜLER
-                  </Badge>
+                <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-amber-400 to-amber-600 px-8 py-2 rounded-full shadow-xl">
+                  <span className="text-[10px] font-black text-black uppercase tracking-widest flex items-center gap-2">
+                    <Crown className="w-3 h-3" /> Tavsiye Edilen
+                  </span>
                 </div>
               )}
 
-              <div className="mb-8">
-                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4 uppercase tracking-widest">
-                  {plan.name}
-                </h3>
-                <div className="flex items-baseline gap-1">
-                  <span className="text-5xl font-black text-slate-900 dark:text-white">
-                    ${plan.price}
-                  </span>
-                  <span className="text-slate-500 font-bold">
-                    /{plan.period}
-                  </span>
+              <div className="flex justify-between items-start mb-10">
+                <div>
+                  <h3 className="text-sm font-black uppercase tracking-[0.3em] text-slate-500 mb-2">
+                    {plan.name}
+                  </h3>
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-6xl font-black">${plan.price}</span>
+                    <span className="text-slate-500 font-bold tracking-tighter">
+                      /{plan.period}
+                    </span>
+                  </div>
                 </div>
                 {plan.savings && (
-                  <Badge
-                    variant="outline"
-                    className="mt-3 text-emerald-500 border-emerald-500/20 bg-emerald-500/5"
-                  >
+                  <div className="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-4 py-1.5 rounded-2xl text-[10px] font-black uppercase tracking-tighter">
                     {plan.savings}
-                  </Badge>
+                  </div>
                 )}
               </div>
 
-              <div className="space-y-4 mb-8">
+              <div className="space-y-5 mb-12">
                 {plan.features.map((feature, i) => (
-                  <div key={i} className="flex items-center gap-3">
-                    <div className="shrink-0 w-5 h-5 rounded-full bg-indigo-500/10 flex items-center justify-center">
-                      <Check className="w-3 h-3 text-indigo-600" />
+                  <div key={i} className="flex items-center gap-4 group">
+                    <div
+                      className={`shrink-0 w-6 h-6 rounded-full flex items-center justify-center border transition-all ${
+                        selectedPlan === plan.id
+                          ? "bg-amber-500/10 border-amber-500/20"
+                          : "bg-white/5 border-white/10"
+                      }`}
+                    >
+                      <Check
+                        className={`w-3.5 h-3.5 ${
+                          selectedPlan === plan.id
+                            ? "text-amber-500"
+                            : "text-slate-400"
+                        }`}
+                      />
                     </div>
-                    <span className="text-sm font-medium text-slate-600 dark:text-slate-300">
+                    <span className="text-sm font-semibold text-slate-300 group-hover:text-white transition-colors">
                       {feature}
                     </span>
                   </div>
@@ -168,85 +195,100 @@ const PremiumPricingPage: React.FC = () => {
               </div>
 
               <div
-                className={`w-full py-4 rounded-2xl flex items-center justify-center font-bold transition-all ${
+                className={`w-full h-16 rounded-2xl flex items-center justify-center font-black uppercase tracking-[0.2em] text-xs transition-all ${
                   selectedPlan === plan.id
-                    ? "bg-indigo-600 text-white"
-                    : "bg-slate-100 dark:bg-white/5 text-slate-400"
+                    ? "bg-white text-black"
+                    : "bg-white/5 text-slate-400 border border-white/10"
                 }`}
               >
-                {selectedPlan === plan.id ? "Seçili Plan" : "Planı Seç"}
+                {selectedPlan === plan.id
+                  ? "Şu Anki Seçiminiz"
+                  : "Bu Planı Keşfet"}
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 
-        {/* 42. GEREKSİNİM: ÖDEME SEÇENEKLERİ (API SİSTEMLERİ) */}
-        <div className="max-w-4xl mx-auto bg-white dark:bg-slate-900 rounded-[3rem] p-8 md:p-12 border dark:border-white/5 shadow-xl">
-          <div className="flex items-center gap-3 mb-8">
-            <div className="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center">
-              <Sparkles className="text-emerald-500" size={20} />
+        {/* Ödeme Alanı */}
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-white/[0.02] border border-white/5 backdrop-blur-2xl rounded-[4rem] p-10 md:p-16 shadow-2xl relative overflow-hidden">
+            <div className="absolute top-0 right-0 p-8 opacity-10">
+              <ShieldCheck size={120} />
             </div>
-            <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tight">
-              Güvenli Ödeme
-            </h2>
-          </div>
 
-          <div className="grid md:grid-cols-2 gap-4 mb-10">
-            {paymentMethods.map((method) => (
-              <div
-                key={method.id}
-                onClick={() => setSelectedPayment(method.id)}
-                className={`
-                  group cursor-pointer rounded-3xl p-6 border transition-all
-                  ${
-                    selectedPayment === method.id
-                      ? "bg-indigo-600 border-indigo-600 text-white shadow-lg shadow-indigo-600/20"
-                      : "bg-slate-50 dark:bg-white/5 border-transparent hover:border-indigo-500/30"
-                  }
-                `}
-              >
-                <div className="flex items-center gap-4">
-                  <div
-                    className={`p-3 rounded-2xl transition-colors ${
+            <div className="flex flex-col items-center text-center mb-12">
+              <div className="w-16 h-16 rounded-3xl bg-amber-500/10 flex items-center justify-center mb-6 border border-amber-500/20">
+                <Zap className="text-amber-500" size={32} />
+              </div>
+              <h2 className="text-3xl font-black uppercase tracking-tighter mb-2">
+                Güvenli Ödeme Protokolü
+              </h2>
+              <p className="text-slate-500 text-sm font-medium">
+                İşlemleriniz kurumsal düzeyde şifreleme ile korunmaktadır.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6 mb-12">
+              {paymentMethods.map((method) => (
+                <motion.div
+                  key={method.id}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => setSelectedPayment(method.id)}
+                  className={`
+                    relative cursor-pointer rounded-[2rem] p-8 transition-all border
+                    ${
                       selectedPayment === method.id
-                        ? "bg-white/20"
-                        : "bg-white dark:bg-slate-800 shadow-sm text-indigo-600"
-                    }`}
-                  >
-                    {method.icon}
-                  </div>
-                  <div>
-                    <p className="font-bold text-lg">{method.name}</p>
-                    <p
-                      className={`text-xs ${
+                        ? "bg-amber-500 border-amber-400 shadow-[0_20px_40px_-10px_rgba(245,158,11,0.3)] text-black"
+                        : "bg-white/5 border-white/5 hover:border-white/20 text-white"
+                    }
+                  `}
+                >
+                  <div className="flex items-center gap-5">
+                    <div
+                      className={`p-4 rounded-2xl ${
                         selectedPayment === method.id
-                          ? "text-indigo-100"
-                          : "text-slate-500"
+                          ? "bg-black/10"
+                          : "bg-white/5 shadow-inner"
                       }`}
                     >
-                      {method.description}
-                    </p>
+                      {method.icon}
+                    </div>
+                    <div>
+                      <p className="font-black text-sm uppercase tracking-wider">
+                        {method.name}
+                      </p>
+                      <p className={`text-[10px] font-bold opacity-60`}>
+                        {method.description}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </div>
-            ))}
+                </motion.div>
+              ))}
+            </div>
+
+            <Button
+              disabled={!selectedPayment}
+              className="w-full h-20 rounded-[2rem] bg-indigo-600 hover:bg-indigo-500 text-white shadow-[0_20px_40px_-10px_rgba(79,70,229,0.4)] transition-all active:scale-95 disabled:opacity-20 flex items-center justify-center gap-4 group"
+            >
+              <span className="text-lg font-black uppercase tracking-[0.2em]">
+                Üyeliği Başlat
+              </span>
+              <ArrowRight className="group-hover:translate-x-2 transition-transform" />
+            </Button>
+
+            <div className="mt-10 flex items-center justify-center gap-8 opacity-40 grayscale contrast-125">
+              {/* Buraya Payoneer veya LTC logoları gelebilir */}
+              <span className="text-[10px] font-black tracking-widest uppercase italic">
+                Verified by Payoneer
+              </span>
+              <div className="w-px h-4 bg-white/20" />
+              <span className="text-[10px] font-black tracking-widest uppercase italic">
+                Encrypted LTC Gateway
+              </span>
+            </div>
           </div>
-
-          <Button
-            onClick={handlePurchase}
-            disabled={!selectedPayment}
-            className="w-full py-8 rounded-[1.5rem] text-xs md:text-xl font-black uppercase tracking-widest bg-indigo-600 hover:bg-indigo-700 shadow-2xl shadow-indigo-600/30 transition-all active:scale-[0.98] disabled:opacity-30"
-          >
-            Ödemeyi Tamamla (${plans.find((p) => p.id === selectedPlan)?.price})
-          </Button>
-
-          <p className="text-center text-[10px] font-bold text-slate-400 mt-6 uppercase tracking-widest">
-            Payoneer ve Litecoin API sistemleri ile şifrelenmiş güvenli işlem.
-          </p>
         </div>
       </div>
-
-      {/* 43. GEREKSİNİM: TÜM SAYFALARDA GÖRÜNECEK SABİT REKLAM ALANI */}
     </div>
   );
 };

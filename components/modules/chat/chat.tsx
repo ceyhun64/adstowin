@@ -1,21 +1,24 @@
 "use client";
-import React, { useState, useEffect, useRef, FormEvent } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Send,
   User,
   Users,
   Loader2,
   X,
-  Megaphone,
   BadgeCheck,
   Coins,
   Briefcase,
   Menu,
   Smile,
+  Lock,
+  Crown,
+  Sparkles,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { motion, AnimatePresence } from "framer-motion";
 import EmojiPicker, { Theme } from "emoji-picker-react";
 
 // --- Tipler ---
@@ -25,7 +28,9 @@ interface UserInfo {
   name: string;
   avatarColor: string;
   role: UserRole;
+  isOnline?: boolean;
 }
+
 interface MessageType {
   id: number;
   sender: UserInfo;
@@ -33,106 +38,135 @@ interface MessageType {
   time: string;
 }
 
-const MAX_CHAR_LIMIT = 200; // Karakter sınırı
+const MAX_CHAR_LIMIT = 200;
 
 const ALL_USERS: UserInfo[] = [
-  { id: "admin", name: "Admin", avatarColor: "text-red-500", role: "ADMIN" },
+  {
+    id: "admin",
+    name: "Premium Destek",
+    avatarColor: "text-amber-500",
+    role: "ADMIN",
+    isOnline: true,
+  },
   {
     id: "ahmet",
     name: "Ahmet Reklam",
-    avatarColor: "text-blue-500",
+    avatarColor: "text-blue-400",
     role: "REKLAM_VEREN",
+    isOnline: true,
   },
   {
     id: "ayse",
-    name: "Ayşe Pro",
-    avatarColor: "text-pink-500",
+    name: "Ayşe VIP",
+    avatarColor: "text-indigo-400",
     role: "KAZANAN",
+    isOnline: true,
   },
   {
     id: "mehmet",
-    name: "Mehmet Can",
-    avatarColor: "text-green-500",
+    name: "Mehmet Elite",
+    avatarColor: "text-emerald-400",
     role: "KAZANAN",
-  },
-  {
-    id: "zeynep",
-    name: "Zeynep Media",
-    avatarColor: "text-purple-500",
-    role: "REKLAM_VEREN",
+    isOnline: false,
   },
 ];
 
 const CURRENT_USER: UserInfo = ALL_USERS[1];
 
+const getRoleStyle = (role: UserRole) => {
+  switch (role) {
+    case "REKLAM_VEREN":
+      return "bg-blue-500/10 text-blue-400 border-blue-500/20";
+    case "KAZANAN":
+      return "bg-emerald-500/10 text-emerald-400 border-emerald-500/20";
+    case "ADMIN":
+      return "bg-amber-500/10 text-amber-500 border-amber-500/20";
+  }
+};
+
+const getRoleLabel = (role: UserRole) => {
+  switch (role) {
+    case "REKLAM_VEREN":
+      return "Reklam Veren";
+    case "KAZANAN":
+      return "Kazanan";
+    case "ADMIN":
+      return "Yönetici";
+  }
+};
+
 const Message: React.FC<{ message: MessageType; isCurrentUser: boolean }> = ({
   message,
   isCurrentUser,
 }) => {
-  const align = isCurrentUser ? "justify-end" : "justify-start";
-  const getRoleBadge = (role: UserRole) => {
-    switch (role) {
-      case "REKLAM_VEREN":
-        return (
-          <Badge className="bg-blue-500/10 text-blue-500 border-none text-[9px] h-4 flex gap-0.5">
-            <Briefcase size={8} /> Reklam Veren
-          </Badge>
-        );
-      case "KAZANAN":
-        return (
-          <Badge className="bg-emerald-500/10 text-emerald-500 border-none text-[9px] h-4 flex gap-0.5">
-            <Coins size={8} /> Kazanan
-          </Badge>
-        );
-      case "ADMIN":
-        return (
-          <Badge className="bg-red-500/10 text-red-500 border-none text-[9px] h-4 flex gap-0.5">
-            <BadgeCheck size={8} /> Admin
-          </Badge>
-        );
-    }
-  };
-
   return (
-    <div
-      className={`flex ${align} mb-4 w-full animate-in fade-in slide-in-from-bottom-2`}
+    <motion.div
+      initial={{ opacity: 0, y: 10, scale: 0.95 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      className={`flex ${
+        isCurrentUser ? "justify-end" : "justify-start"
+      } mb-6 w-full px-4`}
     >
       <div
-        className={`flex items-start max-w-[85%] md:max-w-md gap-2 ${
+        className={`flex items-end max-w-[80%] gap-3 ${
           isCurrentUser ? "flex-row-reverse" : ""
         }`}
       >
-        <div className="flex-shrink-0 mt-1">
-          <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center border dark:border-slate-700 shadow-sm">
-            <User size={16} className={message.sender.avatarColor} />
+        <div className="flex-shrink-0 mb-1">
+          <div className="relative group">
+            <div
+              className={`absolute -inset-0.5 bg-gradient-to-tr ${
+                isCurrentUser
+                  ? "from-indigo-500 to-purple-600"
+                  : "from-slate-700 to-slate-800"
+              } rounded-full blur opacity-30 group-hover:opacity-60 transition duration-500`}
+            ></div>
+            <div className="relative w-10 h-10 rounded-full bg-[#0f172a] border border-white/10 flex items-center justify-center overflow-hidden">
+              <User size={18} className={message.sender.avatarColor} />
+            </div>
           </div>
         </div>
+
         <div
           className={`flex flex-col ${
             isCurrentUser ? "items-end" : "items-start"
           }`}
         >
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-[11px] font-bold dark:text-slate-300">
+          <div className="flex items-center gap-2 mb-1.5 px-1">
+            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
               {message.sender.name}
             </span>
-            {getRoleBadge(message.sender.role)}
+            <Badge
+              className={`text-[8px] px-1.5 h-4 border ${getRoleStyle(
+                message.sender.role
+              )}`}
+            >
+              {message.sender.role === "ADMIN" && (
+                <Crown size={8} className="mr-1" />
+              )}
+              {getRoleLabel(message.sender.role)}
+            </Badge>
           </div>
+
           <div
-            className={`px-4 py-2 rounded-2xl shadow-sm text-sm break-words ${
+            className={`relative px-5 py-3 rounded-[1.5rem] text-sm shadow-2xl backdrop-blur-md border ${
               isCurrentUser
-                ? "bg-indigo-600 text-white rounded-tr-none"
-                : "bg-white dark:bg-slate-800 border dark:border-slate-700 text-slate-800 dark:text-slate-200 rounded-tl-none"
+                ? "bg-gradient-to-br from-indigo-600 to-indigo-700 text-white border-indigo-400/30 rounded-br-none"
+                : "bg-white/[0.03] border-white/10 text-slate-200 rounded-bl-none"
             }`}
           >
             {message.text}
-            <span className="block text-[9px] mt-1 opacity-60 text-right">
+            <div
+              className={`text-[8px] mt-2 font-medium opacity-40 ${
+                isCurrentUser ? "text-right" : "text-left"
+              }`}
+            >
               {message.time}
-            </span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
@@ -141,52 +175,28 @@ const PlatformChat: React.FC = () => {
     {
       id: 1,
       sender: ALL_USERS[0],
-      text: "Merhaba! 👋 Reklam verenler ve kazananlar burada yardımlaşabilir.",
+      text: "Elite Lounge'a hoş geldiniz. En iyi kazananlarla bilgi alışverişi yapın ve bağlantı kurun. ✨",
       time: "12:00",
     },
   ]);
   const [inputMessage, setInputMessage] = useState("");
-  const [isTyping, setIsTyping] = useState(false);
   const [showUserList, setShowUserList] = useState(true);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const emojiPickerRef = useRef<HTMLDivElement>(null);
-
-  // Emoji dışına tıklandığında kapatma
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        emojiPickerRef.current &&
-        !emojiPickerRef.current.contains(event.target as Node)
-      ) {
-        setShowEmojiPicker(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, isTyping]);
+  }, [messages]);
 
-  const onEmojiClick = (emojiData: any) => {
-    if (inputMessage.length + emojiData.emoji.length <= MAX_CHAR_LIMIT) {
-      setInputMessage((prev) => prev + emojiData.emoji);
-    }
-    setShowEmojiPicker(false);
-  };
-
-  const handleSendMessage = (e: FormEvent) => {
-    e.preventDefault();
-    if (!inputMessage.trim() || inputMessage.length > MAX_CHAR_LIMIT) return;
+  const handleSendMessage = () => {
+    if (!inputMessage.trim()) return;
 
     const newMessage: MessageType = {
       id: Date.now(),
       sender: CURRENT_USER,
       text: inputMessage,
-      time: new Date().toLocaleTimeString([], {
+      time: new Date().toLocaleTimeString("tr-TR", {
         hour: "2-digit",
         minute: "2-digit",
       }),
@@ -197,51 +207,67 @@ const PlatformChat: React.FC = () => {
     setShowEmojiPicker(false);
   };
 
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSendMessage();
+    }
+  };
+
   return (
-    <div className="fixed inset-0 z-50 top-0 w-full bg-slate-50 dark:bg-[#020617] flex flex-col overflow-hidden transition-colors">
-      <div className="flex flex-1 overflow-hidden relative">
-        <div
-          className={`flex-1 flex flex-col transition-all duration-300 ${
-            showUserList ? "lg:mr-72" : "mr-0"
+    <div className="fixed inset-0 z-50 bg-[#020617] flex flex-col overflow-hidden font-sans selection:bg-indigo-500/30">
+      {/* Arka Plan Süslemeleri */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-indigo-600/10 blur-[120px] rounded-full" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-600/10 blur-[120px] rounded-full" />
+      </div>
+
+      <div className="flex flex-1 overflow-hidden relative z-10">
+        <main
+          className={`flex-1 flex flex-col transition-all duration-500 ease-in-out ${
+            showUserList ? "lg:mr-80" : "mr-0"
           }`}
         >
-          <header className="bg-white dark:bg-slate-900/50 border-b dark:border-white/5 p-4 shrink-0">
-            {/* Bu yeni div içeriği sınırlar ve ortalar */}
-            <div className="max-w-7xl mx-auto flex items-center justify-between w-full">
-              {/* Sol Kısım */}
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center text-white shadow-lg shadow-indigo-500/20">
-                  <Users size={18} />
-                </div>
-                <div>
-                  <h2 className="text-sm font-black dark:text-white uppercase tracking-tight">
-                    Canlı Chat
-                  </h2>
-                  <div className="flex items-center gap-1.5">
-                    <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                    <span className="text-[9px] text-slate-500 uppercase font-bold">
-                      {ALL_USERS.length} Aktif
-                    </span>
-                  </div>
+          {/* BAŞLIK */}
+          <header className="h-20 flex items-center justify-between px-8 bg-white/[0.01] border-b border-white/5 backdrop-blur-xl">
+            <div className="flex items-center gap-4">
+              <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+                <Sparkles size={20} className="text-white" />
+              </div>
+              <div>
+                <h2 className="text-sm font-black text-white uppercase tracking-[0.2em]">
+                  Canlı Sohbet
+                </h2>
+                <div className="flex items-center gap-2">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                  </span>
+                  <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">
+                    {ALL_USERS.filter((u) => u.isOnline).length} Çevrimiçi
+                  </span>
                 </div>
               </div>
-
-              {/* Sağ Kısım (Buton) */}
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setShowUserList(!showUserList)}
-                className="hover:bg-indigo-50 dark:hover:bg-white/5"
-              >
-                {showUserList ? <X size={20} /> : <Menu size={20} />}
-              </Button>
             </div>
+
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setShowUserList(!showUserList)}
+              className="rounded-xl hover:bg-white/5 text-slate-400 transition-all active:scale-90"
+            >
+              {showUserList ? <X size={20} /> : <Menu size={20} />}
+            </Button>
           </header>
 
-          {/* MESAJ ALANI */}
-          <div className="flex-1 overflow-y-auto p-4 lg:p-6 bg-transparent flex flex-col">
-            <div className="flex-1" />
-            <div className="max-w-7xl mx-auto w-full">
+          {/* SOHBET ALANI */}
+          <ScrollArea className="flex-1 p-4 lg:p-8">
+            <div className="max-w-4xl mx-auto space-y-2">
+              <div className="flex justify-center mb-8">
+                <div className="px-4 py-1.5 rounded-full bg-white/[0.03] border border-white/5 text-[9px] font-bold text-slate-500 uppercase tracking-[0.3em]">
+                  Güvenli şifreli kanal aktif
+                </div>
+              </div>
               {messages.map((m) => (
                 <Message
                   key={m.id}
@@ -249,139 +275,115 @@ const PlatformChat: React.FC = () => {
                   isCurrentUser={m.sender.id === CURRENT_USER.id}
                 />
               ))}
-              {isTyping && (
-                <div className="flex items-center gap-2 text-slate-400 animate-pulse ml-10 mb-1">
-                  <Loader2 size={10} className="animate-spin" />
-                  <span className="text-[9px] font-bold uppercase italic">
-                    Yazıyor...
-                  </span>
-                </div>
-              )}
               <div ref={messagesEndRef} />
             </div>
-          </div>
+          </ScrollArea>
 
-          {/* FOOTER - EMOJI VE KARAKTER SINIRI */}
-          {/* FOOTER - EMOJI VE KARAKTER SINIRI İÇ İÇE */}
-          <footer className="p-4 bg-white dark:bg-slate-900 border-t dark:border-white/5 shrink-0 relative">
-            {showEmojiPicker && (
-              <div
-                ref={emojiPickerRef}
-                className="absolute bottom-20 left-4 z-50 shadow-2xl animate-in zoom-in-95 duration-200"
-              >
-                <EmojiPicker
-                  theme={Theme.AUTO}
-                  onEmojiClick={onEmojiClick}
-                  autoFocusSearch={false}
-                  searchPlaceholder="Emoji ara..."
-                  width={300}
-                  height={400}
-                />
-              </div>
-            )}
-
-            <form
-              onSubmit={handleSendMessage}
-              className="max-w-7xl mx-auto flex items-center gap-2"
-            >
-              <div className="flex-1 relative group">
-                <input
-                  type="text"
-                  value={inputMessage}
-                  onChange={(e) =>
-                    setInputMessage(e.target.value.slice(0, MAX_CHAR_LIMIT))
-                  }
-                  placeholder="Mesaj gönder..."
-                  className="w-full h-12 bg-slate-100 dark:bg-white/5 border-none rounded-2xl pl-4 pr-24 text-sm focus:ring-2 focus:ring-indigo-500 dark:text-white outline-none transition-all"
-                />
-
-                {/* İÇ PANEL (Emoji ve Sayaç) */}
-                <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-2 bg-white/50 dark:bg-black/20 backdrop-blur-sm py-1 px-2 rounded-xl border border-white/20">
-                  {/* Karakter Sayacı */}
-                  <span
-                    className={`text-[10px] font-mono font-bold select-none ${
-                      inputMessage.length >= MAX_CHAR_LIMIT
-                        ? "text-red-500"
-                        : "text-slate-400"
-                    }`}
+          {/* MESAJ GİRİŞ ALANI */}
+          <footer className="p-6 lg:p-10">
+            <div className="max-w-7xl mx-auto relative">
+              <AnimatePresence>
+                {showEmojiPicker && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                    className="absolute bottom-24 left-0 z-50 shadow-2xl rounded-[2rem] overflow-hidden border border-white/10"
                   >
-                    {inputMessage.length}/{MAX_CHAR_LIMIT}
-                  </span>
+                    <EmojiPicker
+                      theme={Theme.DARK}
+                      onEmojiClick={(e) => setInputMessage((p) => p + e.emoji)}
+                      width={320}
+                      height={400}
+                    />
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
-                  {/* Ayırıcı Çizgi */}
-                  <div className="w-[1px] h-3 bg-slate-300 dark:bg-slate-700" />
+              <div className="relative group flex items-center gap-4">
+                <div className="relative flex-1">
+                  <div className="absolute inset-0 bg-indigo-500/5 blur-xl group-focus-within:bg-indigo-500/10 transition-all" />
+                  <input
+                    type="text"
+                    value={inputMessage}
+                    onChange={(e) =>
+                      setInputMessage(e.target.value.slice(0, MAX_CHAR_LIMIT))
+                    }
+                    onKeyPress={handleKeyPress}
+                    placeholder="Mesajınızı yazın..."
+                    className="relative w-full h-16 bg-white/[0.03] border border-white/10 rounded-[2rem] pl-8 pr-32 text-sm text-white outline-none focus:border-indigo-500/50 transition-all placeholder:text-slate-600"
+                  />
 
-                  {/* Emoji Butonu */}
-                  <button
-                    type="button"
-                    onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-                    className="text-slate-400 hover:text-indigo-500 transition-colors p-1"
-                  >
-                    <Smile size={18} />
-                  </button>
+                  <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-3 pr-2">
+                    <span
+                      className={`text-[10px] font-mono font-bold ${
+                        inputMessage.length >= MAX_CHAR_LIMIT
+                          ? "text-red-500"
+                          : "text-slate-600"
+                      }`}
+                    >
+                      {inputMessage.length}/{MAX_CHAR_LIMIT}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+                      className="text-slate-500 hover:text-indigo-400 transition-colors"
+                    >
+                      <Smile size={22} />
+                    </button>
+                  </div>
                 </div>
+
+                <Button
+                  onClick={handleSendMessage}
+                  disabled={!inputMessage.trim()}
+                  className="h-16 w-16 rounded-full bg-indigo-600 hover:bg-indigo-500 text-white shadow-[0_15px_30px_-10px_rgba(79,70,229,0.5)] transition-all active:scale-90 shrink-0 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <Send size={20} />
+                </Button>
               </div>
-
-              <Button
-                type="submit"
-                disabled={
-                  !inputMessage.trim() || inputMessage.length > MAX_CHAR_LIMIT
-                }
-                className="h-12 w-12 rounded-2xl bg-indigo-600 hover:bg-indigo-700 shrink-0 shadow-lg shadow-indigo-500/20 active:scale-95 transition-transform"
-              >
-                <Send size={18} />
-              </Button>
-            </form>
+            </div>
           </footer>
-        </div>
+        </main>
 
-        {/* SIDEBAR - ÜYE LİSTESİ */}
+        {/* YAN PANEL */}
         <aside
-          className={`absolute right-0 h-full w-72 bg-white dark:bg-slate-900 border-l dark:border-white/5 transition-transform duration-500 ease-in-out z-102 ${
+          className={`fixed lg:relative right-0 h-full w-80 bg-[#020617]/80 backdrop-blur-3xl border-l border-white/5 transition-all duration-500 ease-in-out z-50 ${
             showUserList ? "translate-x-0" : "translate-x-full"
           }`}
         >
-          <div className="p-5 border-b dark:border-white/5 flex items-center justify-between">
-            <h3 className="text-[10px] font-black uppercase tracking-widest text-slate-400">
-              Üye Listesi
+          <div className="p-8 border-b border-white/5">
+            <h3 className="text-xs font-black uppercase tracking-[0.3em] text-slate-500 flex items-center gap-2">
+              <Users size={14} /> Üyeler
             </h3>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="lg:hidden"
-              onClick={() => setShowUserList(false)}
-            >
-              <X size={16} />
-            </Button>
           </div>
-          <ScrollArea className="h-[calc(100%-65px)] p-4">
-            <div className="space-y-4">
+
+          <ScrollArea className="h-[calc(100%-80px)] p-6">
+            <div className="space-y-6">
               {ALL_USERS.map((user) => (
                 <div
                   key={user.id}
-                  className="flex items-center gap-3 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-white/5 transition-colors group"
+                  className="flex items-center gap-4 group cursor-pointer p-2 rounded-2xl hover:bg-white/[0.02] transition-all"
                 >
                   <div className="relative">
-                    <div className="w-9 h-9 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center border dark:border-slate-700">
-                      <User size={16} className={user.avatarColor} />
+                    <div className="w-11 h-11 rounded-full bg-slate-800/50 border border-white/10 flex items-center justify-center">
+                      <User size={20} className={user.avatarColor} />
                     </div>
-                    <div className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full border-2 border-white dark:border-slate-900 bg-emerald-500" />
+                    {user.isOnline && (
+                      <div className="absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-[#020617] bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
+                    )}
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-xs font-bold dark:text-white truncate">
+                  <div className="flex-1">
+                    <p className="text-xs font-bold text-slate-200 group-hover:text-indigo-400 transition-colors">
                       {user.name}
                     </p>
-                    <span
-                      className={`text-[8px] font-bold uppercase ${
-                        user.role === "REKLAM_VEREN"
-                          ? "text-blue-500"
-                          : user.role === "ADMIN"
-                          ? "text-red-500"
-                          : "text-emerald-500"
-                      }`}
+                    <Badge
+                      className={`mt-1 text-[7px] font-black uppercase tracking-tighter ${getRoleStyle(
+                        user.role
+                      )}`}
                     >
-                      {user.role.replace("_", " ")}
-                    </span>
+                      {getRoleLabel(user.role)}
+                    </Badge>
                   </div>
                 </div>
               ))}
@@ -389,9 +391,10 @@ const PlatformChat: React.FC = () => {
           </ScrollArea>
         </aside>
 
+        {/* MOBİL OVERLAY */}
         {showUserList && (
           <div
-            className="fixed inset-0 bg-black/20 backdrop-blur-sm z-30 lg:hidden"
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden"
             onClick={() => setShowUserList(false)}
           />
         )}
