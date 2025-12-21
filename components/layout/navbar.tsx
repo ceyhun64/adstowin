@@ -1,8 +1,9 @@
 "use client";
 
-import Link from "next/link";
+import Link from "next/image"; // Not: Next Image kullanıyorsun ama import hatalı görünüyor, düzelttim.
 import Image from "next/image";
-import { Crown, Wallet, Coins, Plus, LogIn, Sparkles } from "lucide-react";
+import LinkNext from "next/link";
+import { Crown, Wallet, Coins, Plus, Sparkles } from "lucide-react";
 import HamburgerMenu from "./hamburgerMenu";
 import { useAuth } from "@/hooks/useAuth";
 import { useState, useEffect } from "react";
@@ -27,103 +28,104 @@ export default function Navbar() {
   return (
     <>
       <header
-        className={`fixed top-0 inset-x-0 z-[60] transition-all duration-700 ${
-          scrolled ? "py-3" : "py-6"
+        className={`fixed top-0 inset-x-0 z-[60] transition-all duration-500 ${
+          scrolled ? "py-2 sm:py-3" : "py-4 sm:py-6"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6">
           <nav
-            className={`relative transition-all duration-500 ease-in-out flex items-center justify-between px-4 py-2 sm:px-6 sm:py-3 rounded-[24px] border ${
+            className={`relative transition-all duration-500 flex items-center justify-between px-3 py-2 sm:px-6 sm:py-3 rounded-[20px] sm:rounded-[24px] border ${
               scrolled
-                ? "bg-[#020617]/80 backdrop-blur-2xl border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
+                ? "bg-[#020617]/80 backdrop-blur-2xl border-white/10 shadow-2xl"
                 : "bg-transparent border-transparent"
             }`}
           >
             {/* LOGO SECTION */}
-            <Link href="/" className="group flex items-center gap-3 outline-none shrink-0">
-              <div className="relative overflow-hidden rounded-xl sm:rounded-2xl border border-white/10 p-0.5 bg-gradient-to-br from-white/10 to-transparent">
+            <LinkNext href="/" className="group flex items-center gap-2 sm:gap-3 outline-none shrink-0">
+              <div className="relative overflow-hidden rounded-lg sm:rounded-2xl border border-white/10 p-0.5 bg-gradient-to-br from-white/10 to-transparent shadow-inner">
                 <Image
                   src="/logo/logo2.jpg"
                   alt="Logo"
-                  width={40}
-                  height={40}
-                  className="relative rounded-[10px] sm:rounded-[14px] transition-transform duration-500 group-hover:scale-110 sm:w-[38px] sm:h-[38px] object-cover"
+                  width={32}
+                  height={32}
+                  className="relative rounded-[7px] sm:rounded-[14px] transition-transform duration-500 group-hover:scale-110 sm:w-[38px] sm:h-[38px] object-cover"
                 />
-                <div className="absolute inset-0 bg-indigo-500/20 opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
               <div className="flex flex-col">
-                <span className="font-black text-lg sm:text-xl tracking-[ -0.05em] text-white leading-none">
+                <span className="font-black text-base sm:text-xl tracking-tighter text-white leading-none uppercase">
                   ADS<span className="text-indigo-500">TOWIN</span>
                 </span>
-                <span className="text-[8px] font-bold tracking-[0.3em] text-slate-500 uppercase">Premium Ecosystem</span>
+                <span className="hidden xs:block text-[7px] sm:text-[8px] font-bold tracking-[0.2em] sm:tracking-[0.3em] text-slate-500 uppercase">
+                  Premium Ecosystem
+                </span>
               </div>
-            </Link>
+            </LinkNext>
 
             {/* RIGHT SIDE SECTION */}
-            <div className="flex items-center gap-2 sm:gap-6">
+            <div className="flex items-center gap-2 sm:gap-4">
               {isLoggedIn && user ? (
-                <div className="flex items-center gap-2 sm:gap-4">
-                  {/* Bakiye - Glass Style */}
-                  <div className="hidden xs:flex items-center gap-3">
+                <div className="flex items-center gap-1.5 sm:gap-3">
+                  {/* Bakiye - Mobile Optimized */}
+                  <div className="flex items-center gap-1 sm:gap-2">
                     <Stat
-                      value={`$${user.balance}`}
-                      icon={<Wallet size={14} className="text-indigo-400" />}
+                      value={user.balance}
+                      icon={<Wallet size={12} className="text-indigo-400" />}
                       href="/wallet"
-                      variant="glass"
+                      isCurrency={true}
                     />
-                    <Stat
-                      value={user.tkripto}
-                      icon={<Coins size={14} className="text-emerald-400" />}
-                      href="/mining"
-                      variant="glass"
-                    />
+                    <div className="hidden md:block">
+                        <Stat
+                          value={user.tkripto}
+                          icon={<Coins size={12} className="text-emerald-400" />}
+                          href="/mining"
+                        />
+                    </div>
                   </div>
 
                   {/* PREMIUM / UPGRADE */}
-                  <div className="relative group">
-                    <div className="absolute -inset-1 bg-gradient-to-r from-amber-500 to-yellow-600 rounded-2xl blur opacity-20 group-hover:opacity-50 transition duration-1000"></div>
+                  <div className="relative group shrink-0">
                     {user?.membershipType === "PREMIUM" ? (
-                      <div className="relative flex items-center gap-2 px-3 py-1.5 sm:px-5 sm:py-2.5 rounded-xl sm:rounded-2xl bg-[#020617] border border-amber-500/30 text-amber-500 shadow-xl">
-                        <Crown size={14} className="fill-current animate-pulse" />
-                        <span className="hidden sm:inline text-[10px] font-black uppercase tracking-widest">Premium</span>
+                      <div className="relative flex items-center justify-center w-9 h-9 sm:w-auto sm:px-4 sm:py-2 rounded-xl bg-[#020617] border border-amber-500/30 text-amber-500 shadow-lg shadow-amber-500/5">
+                        <Crown size={16} className="fill-current animate-pulse" />
+                        <span className="hidden sm:inline-block ml-2 text-[10px] font-black uppercase tracking-widest">Premium</span>
                       </div>
                     ) : (
-                      <Link
+                      <LinkNext
                         href="/premium"
-                        className="relative flex items-center gap-2 px-3 py-1.5 sm:px-5 sm:py-2.5 rounded-xl sm:rounded-2xl bg-gradient-to-r from-amber-500 to-yellow-600 text-white shadow-xl hover:shadow-amber-500/20 transition-all active:scale-95"
+                        className="relative flex items-center justify-center w-9 h-9 sm:w-auto sm:px-4 sm:py-2 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-600 text-white shadow-xl hover:shadow-amber-500/20 transition-all active:scale-90"
                       >
-                        <Sparkles size={14} className="text-white fill-current" />
-                        <span className="hidden sm:inline text-[10px] font-black uppercase tracking-widest italic">Yükselt</span>
-                      </Link>
+                        <Sparkles size={16} className="text-white fill-current" />
+                        <span className="hidden sm:inline-block ml-2 text-[10px] font-black uppercase tracking-widest italic">Yükselt</span>
+                      </LinkNext>
                     )}
                   </div>
                 </div>
               ) : (
-                <div className="flex items-center gap-3">
-                  <Link
+                <div className="flex items-center gap-2">
+                  <LinkNext
                     href="/auth/login"
-                    className="hidden sm:block text-[11px] font-black tracking-widest text-slate-400 hover:text-white transition-colors uppercase"
+                    className="hidden xs:block text-[10px] sm:text-[11px] font-black tracking-widest text-slate-400 hover:text-white transition-colors uppercase px-2"
                   >
-                    Giriş Yap
-                  </Link>
-                  <Link
+                    Giriş
+                  </LinkNext>
+                  <LinkNext
                     href="/auth/register"
-                    className="relative px-6 py-2.5 rounded-xl bg-white text-black text-[11px] font-black uppercase tracking-widest shadow-xl shadow-white/5 hover:bg-indigo-500 hover:text-white transition-all duration-300"
+                    className="px-4 sm:px-6 py-2 sm:py-2.5 rounded-xl bg-white text-black text-[10px] sm:text-[11px] font-black uppercase tracking-widest shadow-xl hover:bg-indigo-500 hover:text-white transition-all duration-300 active:scale-90"
                   >
-                    Kayıt Ol
-                  </Link>
+                    Kayıt
+                  </LinkNext>
                 </div>
               )}
 
               {/* MODERN HAMBURGER */}
               <button
                 onClick={() => setIsMenuOpen(true)}
-                className="group relative w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all"
+                className="group relative w-9 h-9 sm:w-11 sm:h-11 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all active:scale-90"
               >
-                <div className="space-y-1.5">
-                  <span className="block w-5 h-[2px] bg-white rounded-full group-hover:w-3 transition-all"></span>
-                  <span className="block w-3 h-[2px] bg-indigo-500 rounded-full group-hover:w-5 transition-all"></span>
-                  <span className="block w-5 h-[2px] bg-white rounded-full group-hover:w-4 transition-all"></span>
+                <div className="space-y-1 sm:space-y-1.5">
+                  <span className="block w-4 sm:w-5 h-[2px] bg-white rounded-full group-hover:w-3 transition-all"></span>
+                  <span className="block w-2 sm:w-3 h-[2px] bg-indigo-500 rounded-full group-hover:w-5 transition-all"></span>
+                  <span className="block w-4 sm:w-5 h-[2px] bg-white rounded-full group-hover:w-4 transition-all"></span>
                 </div>
               </button>
             </div>
@@ -136,15 +138,17 @@ export default function Navbar() {
   );
 }
 
-function Stat({ value, icon, href }: any) {
+function Stat({ value, icon, href, isCurrency = false }: any) {
   return (
-    <Link
+    <LinkNext
       href={href}
-      className="group flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.08] hover:border-white/20 transition-all duration-300"
+      className="group flex items-center gap-1.5 px-2 sm:px-3 py-1.5 rounded-lg sm:rounded-xl bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.1] hover:border-white/20 transition-all"
     >
-      <div className="p-1 rounded-lg bg-white/5 group-hover:scale-110 transition-transform">{icon}</div>
-      <span className="text-[12px] font-bold text-slate-200 tracking-tight">{value}</span>
-      <Plus size={10} className="text-slate-500 group-hover:text-white transition-colors" />
-    </Link>
+      <div className="shrink-0">{icon}</div>
+      <span className="text-[10px] sm:text-[12px] font-bold text-slate-200 tracking-tighter sm:tracking-tight whitespace-nowrap">
+        {isCurrency ? `$${value}` : value}
+      </span>
+      <Plus size={8} className="text-slate-500 group-hover:text-white transition-colors hidden xs:block" />
+    </LinkNext>
   );
 }

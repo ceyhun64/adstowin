@@ -23,7 +23,7 @@ export default function UserTypeCards() {
       {/* --- PREMIUM ARKA PLAN EFEKTLERİ --- */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-[120px] animate-pulse" />
-        <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-emerald-600/10 rounded-full blur-[120px] animate-pulse" />
+        <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-amber-600/10 rounded-full blur-[120px] animate-pulse" />
 
         {/* İnce Grid Yapısı */}
         <div
@@ -51,7 +51,7 @@ export default function UserTypeCards() {
 
           <h1 className="text-5xl md:text-6xl font-black text-white tracking-tighter">
             Rolünüzü{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-emerald-400">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-amber-400">
               Belirleyin
             </span>
           </h1>
@@ -135,23 +135,23 @@ export default function UserTypeCards() {
             </div>
           </motion.div>
 
-          {/* --- KULLANICI KARTI (LÜKS EMERALD) --- */}
+          {/* --- KULLANICI KARTI (LÜKS amber) --- */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             whileHover={{ y: -10 }}
-            className="group relative p-[1px] rounded-[32px] bg-gradient-to-b from-emerald-500/20 to-transparent overflow-hidden"
+            className="group relative p-[1px] rounded-[32px] bg-gradient-to-b from-amber-500/20 to-transparent overflow-hidden"
           >
             <div className="relative h-full p-10 md:p-14 rounded-[31px] bg-[#020617]/90 backdrop-blur-xl flex flex-col justify-between border border-white/5">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 blur-3xl rounded-full group-hover:bg-emerald-500/20 transition-all duration-700" />
+              <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 blur-3xl rounded-full group-hover:bg-amber-500/20 transition-all duration-700" />
 
               <div className="relative space-y-10">
                 <div className="flex items-center justify-between">
-                  <div className="w-16 h-16 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 border border-emerald-500/20 group-hover:shadow-[0_0_20px_rgba(16,185,129,0.3)] transition-all duration-500">
+                  <div className="w-16 h-16 rounded-2xl bg-amber-500/10 flex items-center justify-center text-amber-400 border border-amber-500/20 group-hover:shadow-[0_0_20px_rgba(16,185,129,0.3)] transition-all duration-500">
                     <Crown size={32} />
                   </div>
-                  <span className="text-[10px] font-black text-emerald-400 uppercase tracking-[0.3em] bg-emerald-500/5 px-4 py-2 rounded-lg border border-emerald-500/10">
+                  <span className="text-[10px] font-black text-amber-400 uppercase tracking-[0.3em] bg-amber-500/5 px-4 py-2 rounded-lg border border-amber-500/10">
                     Publisher
                   </span>
                 </div>
@@ -159,7 +159,7 @@ export default function UserTypeCards() {
                 <div className="space-y-4">
                   <h2 className="text-4xl font-bold text-white tracking-tight">
                     Dijital <br />{" "}
-                    <span className="text-emerald-400 font-light italic text-5xl">
+                    <span className="text-amber-400 font-light italic text-5xl">
                       Prestij
                     </span>
                   </h2>
@@ -184,7 +184,7 @@ export default function UserTypeCards() {
                       key={idx}
                       className="flex items-center gap-4 text-sm text-slate-300 group/item"
                     >
-                      <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 group-hover/item:scale-150 transition-transform" />
+                      <div className="w-1.5 h-1.5 rounded-full bg-amber-500 group-hover/item:scale-150 transition-transform" />
                       {item.text}
                     </div>
                   ))}

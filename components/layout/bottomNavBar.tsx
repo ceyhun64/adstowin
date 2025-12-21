@@ -26,7 +26,6 @@ export default function BottomNavigation() {
   const [isVisible, setIsVisible] = useState(true);
 
   const validRoutes = ["/", "/wheel", "/extra", "/chat", "/premium", "/profile", "/wallet"];
-
   const isNotFound = !validRoutes.some((route) =>
     route === "/" ? pathname === "/" : pathname.startsWith(route)
   );
@@ -34,35 +33,26 @@ export default function BottomNavigation() {
   if (isNotFound) return null;
 
   const navItems: NavItem[] = [
-    { id: "home", icon: Megaphone, label: "Reklamlar", link: "/", color: "from-blue-500 to-cyan-400" },
-    { id: "wheel", icon: LoaderPinwheel, label: "Çark", link: "/wheel", color: "from-amber-500 to-orange-400" },
-    { id: "extra", icon: Coins, label: "Ek Kazanç", link: "/extra", color: "from-emerald-500 to-teal-400" },
-    { id: "chat", icon: MessageCircle, label: "Sohbet", link: "/chat", color: "from-indigo-500 to-purple-400" },
+    { id: "home", icon: Megaphone, label: "Reklam", link: "/", color: "from-blue-600 to-cyan-500" },
+    { id: "wheel", icon: LoaderPinwheel, label: "Çark", link: "/wheel", color: "from-amber-600 to-orange-500" },
+    { id: "extra", icon: Coins, label: "Görev", link: "/extra", color: "from-emerald-600 to-teal-500" },
+    { id: "chat", icon: MessageCircle, label: "Chat", link: "/chat", color: "from-indigo-600 to-purple-500" },
     { id: "premium", icon: Crown, label: "VIP", link: "/premium", color: "from-fuchsia-600 to-pink-500" },
   ];
 
   return (
-    // Genişliği %92'den %96'ya çıkardım ve max-w-md yerine max-w-lg kullanarak daha fazla alan sağladım.
-    <nav className="fixed bottom-1 left-1/2 -translate-x-1/2 z-[100] w-[96%] max-w-lg pointer-events-none">
-      <div className="flex flex-col items-center gap-2 pointer-events-auto">
+    <nav className="fixed bottom-1 left-1/2 -translate-x-1/2 z-[100] w-[94%] max-w-[440px] pointer-events-none">
+      <div className="flex flex-col items-center gap-1 pointer-events-auto">
         
         <AnimatePresence>
           {isVisible && (
             <motion.div
-              initial={{ y: 80, opacity: 0, scale: 0.95 }}
-              animate={{ y: 0, opacity: 1, scale: 1 }}
-              exit={{ y: 80, opacity: 0, scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 350, damping: 25 }}
-              // p-2 yerine px-3 py-2 yaparak yanlardan genişlettim. rounded miktarını dengeledim.
-              className="relative w-full px-3 py-2 rounded-[2.2rem] bg-zinc-950/80 dark:bg-black/85 backdrop-blur-3xl border border-white/10 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.9)] overflow-hidden"
+              initial={{ y: 100, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 100, opacity: 0 }}
+              className="relative w-full p-1.5 rounded-[2.5rem] bg-black/80 backdrop-blur-2xl border border-white/10 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)]"
             >
-              {/* Lüks Arka Plan Efekti */}
-              <div className="absolute inset-0 overflow-hidden opacity-10 pointer-events-none">
-                <div className="absolute top-[-20%] left-[-10%] w-40 h-40 bg-indigo-600 rounded-full blur-[60px]" />
-                <div className="absolute bottom-[-20%] right-[-10%] w-40 h-40 bg-fuchsia-600 rounded-full blur-[60px]" />
-              </div>
-
-              <div className="relative flex justify-between items-center gap-1">
+              <div className="relative flex justify-between items-center px-1">
                 {navItems.map((item) => {
                   const Icon = item.icon;
                   const isActive = item.link === pathname || (item.link !== "/" && pathname.startsWith(item.link));
@@ -71,37 +61,47 @@ export default function BottomNavigation() {
                     <Link
                       key={item.id}
                       href={item.link}
-                      // py-3.5 yerine flex-grow kullanarak içeriğin genişliğine göre yayılmasını sağladım.
-                      className="relative flex flex-1 flex-col items-center justify-center py-4 outline-none group min-w-0"
+                      className={`relative flex items-center justify-center transition-all duration-500 ease-in-out h-14
+                        ${isActive ? "flex-[2] sm:flex-[1.5]" : "flex-1"}`}
                     >
-                      {/* Aktif Pill (Vurgu) - Yazıları tam kaplaması için inset-x değerini 0.5 yaptım */}
+                      {/* Aktif Arka Plan */}
                       {isActive && (
                         <motion.div
-                          layoutId="nav-active-pill"
-                          className={`absolute inset-x-0.5 inset-y-1.5 rounded-[1.8rem] bg-gradient-to-br ${item.color} shadow-lg`}
-                          transition={{ type: "spring", bounce: 0.15, duration: 0.5 }}
+                          layoutId="nav-pill"
+                          className={`absolute inset-0 rounded-[2rem] bg-gradient-to-r ${item.color} shadow-lg shadow-black/20`}
+                          transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                         />
                       )}
 
-                      <div className={`relative z-10 flex flex-col items-center transition-all duration-300 ${
-                        isActive ? "scale-105 text-white" : "text-zinc-500 group-hover:text-zinc-300"
-                      }`}>
-                        <div className={`p-1 rounded-xl transition-all duration-500 ${isActive ? "bg-black/20" : ""}`}>
-                          <Icon size={18} strokeWidth={isActive ? 2.5 : 2} />
-                        </div>
-                        {/* whitespace-nowrap ve text-[8px] ile taşmayı engelledim, tracking'i hafifçe kıstım */}
-                        <span className={`text-[8px] md:text-[9px] font-black mt-1 uppercase tracking-[0.1em] whitespace-nowrap transition-all duration-300 ${
-                          isActive ? "opacity-100" : "opacity-70"
-                        }`}>
-                          {item.label}
-                        </span>
+                      <div className={`relative z-10 flex items-center justify-center gap-2 px-2 
+                        ${isActive ? "text-white" : "text-zinc-500"}`}>
+                        
+                        <Icon 
+                          size={20} 
+                          strokeWidth={isActive ? 2.5 : 2}
+                          className={`transition-transform duration-300 ${isActive ? "scale-110" : "scale-100"}`}
+                        />
+
+                        {/* Yazı Sadece Aktifken Mobilde Görünür */}
+                        <AnimatePresence mode="wait">
+                          {isActive && (
+                            <motion.span
+                              initial={{ opacity: 0, width: 0 }}
+                              animate={{ opacity: 1, width: "auto" }}
+                              className="text-[10px] font-black uppercase tracking-tighter overflow-hidden whitespace-nowrap"
+                            >
+                              {item.label}
+                            </motion.span>
+                          )}
+                        </AnimatePresence>
                       </div>
 
                       {/* Bildirim Pulse */}
                       {item.id === "chat" && !isActive && (
-                        <div className="absolute top-4 right-1/4 w-1.5 h-1.5 bg-indigo-500 rounded-full">
-                           <div className="w-full h-full bg-indigo-500 rounded-full animate-ping opacity-75" />
-                        </div>
+                        <span className="absolute top-3 right-1/3 flex h-2 w-2">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                          <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+                        </span>
                       )}
                     </Link>
                   );
@@ -111,18 +111,14 @@ export default function BottomNavigation() {
           )}
         </AnimatePresence>
 
-        {/* KONTROL DÜĞMESİ */}
+        {/* Kontrol Düğmesi - Daha Minimal */}
         <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
           onClick={() => setIsVisible(!isVisible)}
-          className="group flex items-center justify-center w-16 h-7 bg-zinc-950/90 backdrop-blur-2xl border border-white/5 rounded-full shadow-2xl transition-all"
+          className="w-12 h-6 flex items-center justify-center bg-black/40 backdrop-blur-md border border-white/5 rounded-full hover:bg-black/60 transition-colors shadow-lg"
         >
           <ChevronDown
             size={14}
-            className={`text-zinc-500 group-hover:text-white transition-transform duration-500 ${
-              isVisible ? "rotate-0" : "rotate-180"
-            }`}
+            className={`text-zinc-500 transition-transform duration-500 ${isVisible ? "rotate-0" : "rotate-180"}`}
           />
         </motion.button>
       </div>
