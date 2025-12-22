@@ -18,6 +18,19 @@ import {
   Zap,
   Star,
   Globe,
+  AppWindow,
+  Cookie,
+  ShieldCheck,
+  EyeOff,
+  Gavel,
+  Power,
+  LifeBuoy,
+  MessageSquareText,
+  Fingerprint,
+  UserCircle,
+  Sparkles,
+  SunMedium,
+  MoonIcon,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "next-themes";
@@ -169,31 +182,32 @@ export default function HamburgerMenu({
                 </div>
 
                 {/* MENÜ GRUPLARI */}
+                {/* MENÜ GRUPLARI */}
                 <div className="space-y-10">
                   <Section title="Yönetim & Profil">
                     <MenuLink
-                      icon={User}
+                      icon={UserCircle} // Daha modern bir profil ikonu
                       label="Hesap Bilgileri"
                       href="/profile"
                       onClick={onClose}
                     />
 
                     <MenuLink
-                      icon={Shield}
+                      icon={Fingerprint} // Güvenlik için Shield yerine daha teknolojik bir alternatif
                       label="Güvenlik & Gizlilik"
                       href="/account/security_settings"
                       onClick={onClose}
                     />
 
                     <MenuLink
-                      icon={Shield}
+                      icon={MessageSquareText} // Yardım ve SSS için konuşma balonu
                       label="Yardım & SSS"
                       href="/account/help_faq"
                       onClick={onClose}
                     />
 
                     <MenuLink
-                      icon={HelpCircle}
+                      icon={LifeBuoy} // Destek merkezi için can simidi ikonu (klasik destek sembolü)
                       label="Destek Merkezi"
                       href="/account/support_requests"
                       onClick={onClose}
@@ -202,13 +216,12 @@ export default function HamburgerMenu({
                     {/* ÇIKIŞ BUTONU */}
                     <button
                       onClick={handleLogout}
-                      className="mt-4 w-full group flex items-center justify-center gap-3 p-4 rounded-[20px] bg-red-50 dark:bg-red-500/5 border border-red-200 dark:border-red-500/10 hover:bg-red-500 hover:text-white transition-all duration-300"
+                      className="mt-4 w-full group flex items-center justify-center gap-3 p-4 rounded-[20px] bg-red-50 dark:bg-red-500/5 border border-red-200 dark:border-red-500/10 hover:bg-red-600 transition-all duration-300"
                     >
-                      <LogOut
+                      <Power // LogOut yerine sistem kapatma/çıkış hissi için Power daha keskin durabilir
                         size={18}
                         className="text-red-500 group-hover:text-white transition-colors"
                       />
-
                       <span className="text-sm font-black uppercase tracking-[0.2em] text-red-600 group-hover:text-white">
                         Güvenli Çıkış
                       </span>
@@ -217,35 +230,35 @@ export default function HamburgerMenu({
 
                   <Section title="Ekosistem">
                     <MenuLink
-                      icon={Info}
+                      icon={Gavel} // Kullanım koşulları/Hukuki metinler için tokmak ikonu
                       label="Kullanım Koşulları"
                       href="/info/terms_of_use"
                       onClick={onClose}
                     />
 
                     <MenuLink
-                      icon={FileText}
+                      icon={EyeOff} // Gizlilik politikası (görünmezlik/gizlilik vurgusu)
                       label="Gizlilik Politikası"
                       href="/info/privacy_policy"
                       onClick={onClose}
                     />
 
                     <MenuLink
-                      icon={ShieldAlert}
+                      icon={ShieldCheck} // Hile karşıtı sistem (onaylanmış güvenlik)
                       label="Hile Karşıtı Sistem"
                       href="/info/anti_cheat_policy"
                       onClick={onClose}
                     />
 
                     <MenuLink
-                      icon={FileText}
+                      icon={Cookie} // Çerez politikası için doğrudan kurabiye ikonu
                       label="Çerez Politikası"
                       href="/info/cookie_policy"
                       onClick={onClose}
                     />
 
                     <MenuLink
-                      icon={FileText}
+                      icon={AppWindow} // Hakkımızda/Platform tanıtımı için uygulama penceresi
                       label="Hakkımızda"
                       href="/info/about"
                       onClick={onClose}
@@ -270,7 +283,6 @@ export default function HamburgerMenu({
                       ))}
                     </div>
 
-                    {/* TEMA DEĞİŞTİR */}
                     <button
                       onClick={() =>
                         setTheme(theme === "dark" ? "light" : "dark")
@@ -279,19 +291,14 @@ export default function HamburgerMenu({
                     >
                       <div className="flex items-center gap-3">
                         {theme === "dark" ? (
-                          <Moon
-                            size={18}
-                            className="text-indigo-500 dark:text-indigo-400"
-                          />
+                          <MoonIcon size={18} className="text-indigo-400" /> // Moon yerine "büyülü/premium" bir hava için Sparkles
                         ) : (
-                          <Sun size={18} className="text-amber-500" />
+                          <SunMedium size={18} className="text-amber-500" />
                         )}
-
                         <span className="text-sm font-bold text-slate-700 dark:text-slate-200">
                           Görünüm
                         </span>
                       </div>
-
                       <span className="text-[10px] font-black text-slate-400 dark:text-slate-500 group-hover:text-slate-700 dark:group-hover:text-white uppercase tracking-tighter">
                         {theme === "dark" ? "Karanlık" : "Aydınlık"}
                       </span>
