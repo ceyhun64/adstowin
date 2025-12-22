@@ -118,7 +118,7 @@ export default function Heroes({ onScrollToForm, onLearnMore }: HeroesProps) {
 
             <button
               onClick={onLearnMore}
-              className="flex items-center justify-center gap-2 px-8 md:px-10 py-4 md:py-5 bg-transparent text-slate-700 dark:text-white font-semibold text-base md:text-lg rounded-full border border-slate-200 dark:border-white/20 hover:bg-slate-100 dark:hover:bg-white/5 transition-all w-full sm:w-auto"
+              className="flex items-center justify-center gap-2 px-8 md:px-10 py-4 md:py-5 bg-black/10 dark:bg-transparent text-slate-700 dark:text-white font-semibold text-base md:text-lg rounded-full border border-slate-200 dark:border-white/20 hover:bg-slate-100 dark:hover:bg-white/5 transition-all w-full sm:w-auto"
             >
               Sistemi İncele
             </button>
