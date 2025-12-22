@@ -29,39 +29,39 @@ const CerezPolitikasi = () => {
   const cookieTypes = [
     {
       id: "necessary",
-      title: "Essential Core",
+      title: "Temel Çekirdek",
       icon: Shield,
       required: true,
       description: "Sistemin stabilitesi ve güvenliği için gereken temel altyapı çerezleri.",
-      duration: "Immutable",
-      examples: ["Security Tokens", "Session ID", "Auth State"],
+      duration: "Kalıcı",
+      examples: ["Güvenlik Jetonları", "Oturum Kimliği", "Yetkilendirme Durumu"],
     },
     {
       id: "functional",
-      title: "Experience Suite",
+      title: "Deneyim Seti",
       icon: Settings,
       required: false,
       description: "Tercih ettiğiniz arayüz ayarlarını ve kişisel konfigürasyonları saklar.",
-      duration: "365 Days",
-      examples: ["Dark Mode", "Language", "Layout Prefs"],
+      duration: "365 Gün",
+      examples: ["Karanlık Mod", "Dil Seçimi", "Yerleşim Tercihleri"],
     },
     {
       id: "analytics",
-      title: "Intelligence",
+      title: "Veri Zekası",
       icon: BarChart,
       required: false,
       description: "Deneyiminizi kusursuzlaştırmak için anonim kullanım metrikleri toplar.",
-      duration: "730 Days",
-      examples: ["Heatmaps", "Traffic Flow", "UX Metrics"],
+      duration: "730 Gün",
+      examples: ["Isı Haritaları", "Trafik Akışı", "Kullanıcı Deneyimi Metrikleri"],
     },
     {
       id: "advertising",
-      title: "Targeted Ads",
+      title: "Hedefli Reklam",
       icon: Target,
       required: false,
       description: "İlgi alanlarınıza özel, yüksek kaliteli reklam içerikleri sunar.",
-      duration: "365 Days",
-      examples: ["Retargeting", "Interest Profiling"],
+      duration: "365 Gün",
+      examples: ["Yeniden Pazarlama", "İlgi Alanı Profilleme"],
     },
   ];
 
@@ -77,7 +77,7 @@ const CerezPolitikasi = () => {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-[#020617] text-slate-900 dark:text-white transition-colors duration-500 selection:bg-orange-500/30 selection:text-orange-900 dark:selection:text-orange-200 pt-24 md:pt-32 pb-10 overflow-x-hidden italic">
       
-      {/* 🌌 High-End Header */}
+      {/* 🌌 Üst Bilgi Alanı */}
       <section className="relative px-5 md:px-10 mb-16 md:mb-24 overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[400px] bg-gradient-to-b from-orange-500/5 dark:from-orange-500/10 to-transparent blur-[100px] -z-10" />
 
@@ -100,7 +100,7 @@ const CerezPolitikasi = () => {
                 <Lock size={12} className="text-orange-600 dark:text-orange-500" />
                 <span className="text-[10px] font-black tracking-widest uppercase text-orange-600 dark:text-orange-500">VERİ EGEMENLİĞİ</span>
               </div>
-              <h1 className="text-6xl md:text-[110px] font-black leading-[0.85] tracking-tighter uppercase mb-8">
+              <h1 className="text-5xl md:text-[110px] font-black leading-[0.85] tracking-tighter uppercase mb-8">
                 DİJİTAL <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-b from-slate-900 via-orange-600 to-orange-800 dark:from-white dark:via-orange-200 dark:to-orange-500">
                   İZİNLERİNİZ.
@@ -112,7 +112,7 @@ const CerezPolitikasi = () => {
             </motion.div>
 
             <div className="hidden lg:flex justify-end text-[10px] font-black uppercase tracking-[0.4em] text-slate-400 dark:text-slate-600">
-              REVISION: 12.22.2025 // V2.1.0
+              REVİZYON: 22.12.2025 // V2.1.0
             </div>
           </div>
         </div>
@@ -121,7 +121,7 @@ const CerezPolitikasi = () => {
       <div className="max-w-7xl mx-auto px-5 md:px-10">
         <div className="flex flex-col lg:grid lg:grid-cols-12 gap-8 mb-24 md:mb-40">
           
-          {/* Main Controls */}
+          {/* Ana Kontroller */}
           <div className="lg:col-span-8 space-y-4">
             {cookieTypes.map((type) => (
               <motion.div
@@ -179,7 +179,7 @@ const CerezPolitikasi = () => {
             ))}
           </div>
 
-          {/* Action Sidebar */}
+          {/* Aksiyon Paneli */}
           <div className="lg:col-span-4">
             <div className="sticky top-32 p-10 md:p-12 bg-slate-900 dark:bg-orange-600 text-white rounded-[3.5rem] shadow-2xl shadow-orange-600/10 dark:shadow-orange-600/20 text-center space-y-8 overflow-hidden relative group">
               <Sparkles className="absolute -top-10 -left-10 w-40 h-40 text-white/10 animate-pulse pointer-events-none" />
@@ -195,20 +195,20 @@ const CerezPolitikasi = () => {
                   AYARLARI KAYDET
                 </button>
                 <div className="mt-8 flex items-center justify-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-orange-200 opacity-60">
-                  <Shield size={12} /> PRIVACY SHIELD ACTIVE
+                  <Shield size={12} /> GİZLİLİK KALKANI AKTİF
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* 📚 Detailed Disclosure */}
+        {/* 📚 Teknik Detaylar */}
         <section className="py-24 border-t border-slate-200 dark:border-white/5">
           <div className="flex flex-col lg:flex-row gap-20">
             <div className="lg:w-1/3">
               <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter lg:sticky lg:top-32 leading-[0.9]">
                 TEKNİK <br />
-                <span className="text-orange-600 dark:text-orange-500">MANIFESTO.</span>
+                <span className="text-orange-600 dark:text-orange-500">MANİFESTO.</span>
               </h2>
             </div>
             <div className="lg:w-2/3 space-y-20">
@@ -241,7 +241,7 @@ const CerezPolitikasi = () => {
           </div>
         </section>
 
-        {/* 🛠️ External Management */}
+        {/* 🛠️ Harici Denetim */}
         <div className="p-10 md:p-16 bg-white dark:bg-white/[0.01] border border-slate-200 dark:border-white/5 rounded-[3rem] md:rounded-[5rem] flex flex-col sm:flex-row items-center gap-10 shadow-sm dark:shadow-none mb-24">
           <div className="w-20 h-20 md:w-28 md:h-28 rounded-[2rem] bg-indigo-100 dark:bg-indigo-500/10 flex items-center justify-center text-indigo-600 dark:text-indigo-400 shrink-0">
             <Info size={40} strokeWidth={1} />
@@ -254,7 +254,7 @@ const CerezPolitikasi = () => {
           </div>
         </div>
 
-        {/* 🔚 Footer Navigation */}
+        {/* 🔚 Alt Gezinme */}
         <div className="mt-20 md:mt-40 pt-16 border-t border-slate-200 dark:border-white/5 text-center space-y-12">
           <Link
             href="/privacy"
@@ -265,7 +265,7 @@ const CerezPolitikasi = () => {
           </Link>
           <div className="pb-16">
             <Link href="/" className="inline-flex items-center gap-2 text-slate-400 hover:text-orange-600 transition-colors text-[10px] font-black uppercase tracking-[0.3em] italic">
-              <ArrowLeft size={14} /> BACK TO TERMINAL
+              <ArrowLeft size={14} /> TERMİNALE DÖN
             </Link>
           </div>
         </div>
