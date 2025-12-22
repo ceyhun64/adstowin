@@ -45,7 +45,8 @@ export default function Heroes({ onScrollToForm, onLearnMore }: HeroesProps) {
 
   const floatY = Math.sin(floatOffset * 0.05) * 20;
 
-  if (!mounted) return <div className="min-h-screen bg-slate-50 dark:bg-[#020617]" />;
+  if (!mounted)
+    return <div className="min-h-screen bg-slate-50 dark:bg-[#020617]" />;
 
   return (
     <div className="relative min-h-screen flex items-center justify-center py-20 md:py-30 overflow-hidden bg-slate-50 dark:bg-[#020617] transition-colors duration-500">
@@ -86,20 +87,20 @@ export default function Heroes({ onScrollToForm, onLearnMore }: HeroesProps) {
 
           {/* Headline */}
           <div className="space-y-4">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-slate-900 dark:text-white leading-tight">
-              İzle, <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-blue-600 to-emerald-600 dark:from-indigo-400 dark:via-blue-400 dark:to-emerald-400">
-                Değer Kat,
+            <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tighter text-slate-900 dark:text-white leading-[0.9] italic uppercase">
+              İZLE, <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-violet-600 to-cyan-500 dark:from-indigo-400 dark:via-purple-400 dark:to-cyan-400 drop-shadow-sm">
+                DEĞER KAT,
               </span>{" "}
               <br />
-              Kazan.
+              KAZAN.
             </h1>
-            <p className="text-sm md:text-base lg:text-lg text-slate-600 dark:text-slate-400 font-light max-w-lg leading-relaxed mx-auto lg:mx-0">
-              Vaktinizi nakde dönüştüren en prestijli platform. Reklam
-              dünyasının parçası olun,
-              <span className="text-slate-900 dark:text-white font-medium">
+            <p className="text-base md:text-lg text-slate-500 dark:text-slate-400 font-medium max-w-lg leading-relaxed">
+              Vaktinizi dijital varlığa dönüştüren yüksek frekanslı bir
+              platform.
+              <span className="text-indigo-600 dark:text-indigo-400 font-bold">
                 {" "}
-                her saniyenizi ödüle dönüştürün.
+                Saniyeleri dolara çevirin.
               </span>
             </p>
           </div>
@@ -112,7 +113,10 @@ export default function Heroes({ onScrollToForm, onLearnMore }: HeroesProps) {
             >
               <span className="relative z-10 flex items-center gap-2">
                 Hemen Başla
-                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                <ArrowRight
+                  size={18}
+                  className="group-hover:translate-x-1 transition-transform"
+                />
               </span>
             </button>
 
@@ -126,18 +130,24 @@ export default function Heroes({ onScrollToForm, onLearnMore }: HeroesProps) {
 
           {/* Trust Marks */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-8 pt-8 md:pt-10 border-t border-slate-200 dark:border-white/5 w-full">
-            <TrustItem 
-              icon={<Wallet className="text-indigo-600 dark:text-indigo-400 w-5 h-5" />}
+            <TrustItem
+              icon={
+                <Wallet className="text-indigo-600 dark:text-indigo-400 w-5 h-5" />
+              }
               title="Anında Çekim"
               desc="Kazancını anında cüzdanına aktar."
             />
-            <TrustItem 
-              icon={<MonitorPlay className="text-blue-600 dark:text-blue-400 w-5 h-5" />}
+            <TrustItem
+              icon={
+                <MonitorPlay className="text-blue-600 dark:text-blue-400 w-5 h-5" />
+              }
               title="Yüksek Oranlar"
               desc="Sektörün en yüksek izleme başı ücreti."
             />
-            <TrustItem 
-              icon={<Clock className="text-emerald-600 dark:text-emerald-400 w-5 h-5" />}
+            <TrustItem
+              icon={
+                <Clock className="text-emerald-600 dark:text-emerald-400 w-5 h-5" />
+              }
               title="7/24 Erişim"
               desc="Dilediğin zaman, dilediğin yerden izle."
             />
@@ -157,7 +167,9 @@ export default function Heroes({ onScrollToForm, onLearnMore }: HeroesProps) {
                 <div
                   className="absolute top-6 md:top-10 left-6 md:left-10 text-emerald-600 dark:text-emerald-500/40 hidden sm:block"
                   style={{
-                    transform: `translateY(${Math.sin(floatOffset * 0.05) * -20}px)`,
+                    transform: `translateY(${
+                      Math.sin(floatOffset * 0.05) * -20
+                    }px)`,
                     opacity: theme === "dark" ? 0.4 : 0.6,
                   }}
                 >
@@ -199,14 +211,18 @@ export default function Heroes({ onScrollToForm, onLearnMore }: HeroesProps) {
                 {/* Progress Bar */}
                 <div className="absolute bottom-0 left-0 w-full p-3 md:p-6 bg-gradient-to-t from-slate-200/80 dark:from-black/80 to-transparent">
                   <div className="flex items-center gap-2 md:gap-3">
-                    <span className="text-[9px] font-mono text-slate-600 dark:text-white/50">00:42</span>
+                    <span className="text-[9px] font-mono text-slate-600 dark:text-white/50">
+                      00:42
+                    </span>
                     <div className="flex-1 h-1 bg-slate-300 dark:bg-white/10 rounded-full overflow-hidden">
                       <div
                         className="h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-emerald-500"
                         style={{ width: `${progressWidth}%` }}
                       />
                     </div>
-                    <span className="text-[9px] font-mono text-slate-600 dark:text-white/50">01:00</span>
+                    <span className="text-[9px] font-mono text-slate-600 dark:text-white/50">
+                      01:00
+                    </span>
                   </div>
                 </div>
               </div>
@@ -232,22 +248,52 @@ export default function Heroes({ onScrollToForm, onLearnMore }: HeroesProps) {
 
 /* Yardımcı Küçük Bileşenler */
 
-function TrustItem({ icon, title, desc }: { icon: any, title: string, desc: string }) {
+function TrustItem({
+  icon,
+  title,
+  desc,
+}: {
+  icon: any;
+  title: string;
+  desc: string;
+}) {
   return (
     <div className="flex flex-col gap-2 items-center lg:items-start transition-transform hover:scale-105">
       {icon}
-      <span className="text-slate-900 dark:text-white text-sm font-bold text-center lg:text-left">{title}</span>
-      <p className="text-slate-500 dark:text-slate-400 text-xs text-center lg:text-left font-light">{desc}</p>
+      <span className="text-slate-900 dark:text-white text-sm font-bold text-center lg:text-left">
+        {title}
+      </span>
+      <p className="text-slate-500 dark:text-slate-400 text-xs text-center lg:text-left font-light">
+        {desc}
+      </p>
     </div>
   );
 }
 
 function StatBox({ label, val, sub, highlight = false, isBadge = false }: any) {
   return (
-    <div className={`flex flex-col gap-1 ${label === "Bonus" ? "border-x border-slate-200 dark:border-white/10 px-2 md:px-6" : ""}`}>
-      <span className="text-slate-400 dark:text-slate-500 text-[8px] md:text-[10px] uppercase tracking-widest font-black">{label}</span>
-      <span className={`text-sm md:text-xl font-bold ${highlight ? "text-indigo-600 dark:text-indigo-400 font-mono" : "text-slate-900 dark:text-white"}`}>{val}</span>
-      <span className="text-[8px] md:text-[9px] text-emerald-600 dark:text-indigo-400 font-bold uppercase">{sub}</span>
+    <div
+      className={`flex flex-col gap-1 ${
+        label === "Bonus"
+          ? "border-x border-slate-200 dark:border-white/10 px-2 md:px-6"
+          : ""
+      }`}
+    >
+      <span className="text-slate-400 dark:text-slate-500 text-[8px] md:text-[10px] uppercase tracking-widest font-black">
+        {label}
+      </span>
+      <span
+        className={`text-sm md:text-xl font-bold ${
+          highlight
+            ? "text-indigo-600 dark:text-indigo-400 font-mono"
+            : "text-slate-900 dark:text-white"
+        }`}
+      >
+        {val}
+      </span>
+      <span className="text-[8px] md:text-[9px] text-emerald-600 dark:text-indigo-400 font-bold uppercase">
+        {sub}
+      </span>
     </div>
   );
 }
