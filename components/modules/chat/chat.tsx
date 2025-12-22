@@ -4,14 +4,9 @@ import {
   Send,
   User,
   Users,
-  Loader2,
   X,
-  BadgeCheck,
-  Coins,
-  Briefcase,
   Menu,
   Smile,
-  Lock,
   Crown,
   Sparkles,
 } from "lucide-react";
@@ -108,22 +103,13 @@ const Message: React.FC<{ message: MessageType; isCurrentUser: boolean }> = ({
       } mb-6 w-full px-4`}
     >
       <div
-        className={`flex items-end max-w-[80%] gap-3 ${
+        className={`flex items-end max-w-[85%] md:max-w-[70%] gap-3 ${
           isCurrentUser ? "flex-row-reverse" : ""
         }`}
       >
         <div className="flex-shrink-0 mb-1">
-          <div className="relative group">
-            <div
-              className={`absolute -inset-0.5 bg-gradient-to-tr ${
-                isCurrentUser
-                  ? "from-indigo-500 to-purple-600"
-                  : "from-slate-700 to-slate-800"
-              } rounded-full blur opacity-30 group-hover:opacity-60 transition duration-500`}
-            ></div>
-            <div className="relative w-10 h-10 rounded-full bg-[#0f172a] border border-white/10 flex items-center justify-center overflow-hidden">
-              <User size={18} className={message.sender.avatarColor} />
-            </div>
+          <div className="relative w-8 h-8 md:w-10 md:h-10 rounded-full bg-[#0f172a] border border-white/10 flex items-center justify-center overflow-hidden">
+            <User size={16} className={message.sender.avatarColor} />
           </div>
         </div>
 
@@ -132,7 +118,7 @@ const Message: React.FC<{ message: MessageType; isCurrentUser: boolean }> = ({
             isCurrentUser ? "items-end" : "items-start"
           }`}
         >
-          <div className="flex items-center gap-2 mb-1.5 px-1">
+          <div className="flex items-center gap-2 mb-1 px-1">
             <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
               {message.sender.name}
             </span>
@@ -149,7 +135,7 @@ const Message: React.FC<{ message: MessageType; isCurrentUser: boolean }> = ({
           </div>
 
           <div
-            className={`relative px-5 py-3 rounded-[1.5rem] text-sm shadow-2xl backdrop-blur-md border ${
+            className={`relative px-4 py-2.5 rounded-[1.2rem] text-sm shadow-xl backdrop-blur-md border ${
               isCurrentUser
                 ? "bg-gradient-to-br from-indigo-600 to-indigo-700 text-white border-indigo-400/30 rounded-br-none"
                 : "bg-white/[0.03] border-white/10 text-slate-200 rounded-bl-none"
@@ -157,7 +143,7 @@ const Message: React.FC<{ message: MessageType; isCurrentUser: boolean }> = ({
           >
             {message.text}
             <div
-              className={`text-[8px] mt-2 font-medium opacity-40 ${
+              className={`text-[8px] mt-1.5 font-medium opacity-40 ${
                 isCurrentUser ? "text-right" : "text-left"
               }`}
             >
@@ -191,7 +177,6 @@ const PlatformChat: React.FC = () => {
 
   const handleSendMessage = () => {
     if (!inputMessage.trim()) return;
-
     const newMessage: MessageType = {
       id: Date.now(),
       sender: CURRENT_USER,
@@ -201,7 +186,6 @@ const PlatformChat: React.FC = () => {
         minute: "2-digit",
       }),
     };
-
     setMessages((prev) => [...prev, newMessage]);
     setInputMessage("");
     setShowEmojiPicker(false);
@@ -215,27 +199,28 @@ const PlatformChat: React.FC = () => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-[#020617] flex flex-col overflow-hidden font-sans selection:bg-indigo-500/30">
-      {/* Arka Plan Süslemeleri */}
+    <div className="fixed inset-0 z-50 bg-[#020617] flex flex-col overflow-hidden font-sans">
+      {/* Glow Background */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-indigo-600/10 blur-[120px] rounded-full" />
         <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-600/10 blur-[120px] rounded-full" />
       </div>
 
       <div className="flex flex-1 overflow-hidden relative z-10">
+        {/* MAIN CHAT AREA */}
         <main
           className={`flex-1 flex flex-col transition-all duration-500 ease-in-out ${
             showUserList ? "lg:mr-80" : "mr-0"
           }`}
         >
-          {/* BAŞLIK */}
-          <header className="h-20 flex items-center justify-between px-8 bg-white/[0.01] border-b border-white/5 backdrop-blur-xl">
+          {/* HEADER */}
+          <header className="h-16 md:h-20 flex items-center justify-between px-6 bg-white/[0.01] border-b border-white/5 backdrop-blur-xl">
             <div className="flex items-center gap-4">
-              <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/20">
-                <Sparkles size={20} className="text-white" />
+              <div className="w-8 h-8 md:w-10 md:h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+                <Sparkles size={18} className="text-white" />
               </div>
               <div>
-                <h2 className="text-sm font-black text-white uppercase tracking-[0.2em]">
+                <h2 className="text-xs font-black text-white uppercase tracking-[0.2em]">
                   Canlı Sohbet
                 </h2>
                 <div className="flex items-center gap-2">
@@ -243,7 +228,7 @@ const PlatformChat: React.FC = () => {
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                   </span>
-                  <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">
+                  <span className="text-[9px] text-slate-500 font-bold uppercase tracking-widest">
                     {ALL_USERS.filter((u) => u.isOnline).length} Çevrimiçi
                   </span>
                 </div>
@@ -256,13 +241,13 @@ const PlatformChat: React.FC = () => {
               onClick={() => setShowUserList(!showUserList)}
               className="rounded-xl hover:bg-white/5 text-slate-400 transition-all active:scale-90"
             >
-              {showUserList ? <X size={20} /> : <Menu size={20} />}
+              {showUserList ? <Menu size={20} /> : <Users size={20} />}
             </Button>
           </header>
 
-          {/* SOHBET ALANI */}
-          <ScrollArea className="flex-1 p-4 lg:p-8">
-            <div className="max-w-4xl mx-auto space-y-2">
+          {/* CHAT CONTENT */}
+          <ScrollArea className="flex-1 p-4">
+            <div className="max-w-4xl mx-auto py-4">
               <div className="flex justify-center mb-8">
                 <div className="px-4 py-1.5 rounded-full bg-white/[0.03] border border-white/5 text-[9px] font-bold text-slate-500 uppercase tracking-[0.3em]">
                   Güvenli şifreli kanal aktif
@@ -279,30 +264,29 @@ const PlatformChat: React.FC = () => {
             </div>
           </ScrollArea>
 
-          {/* MESAJ GİRİŞ ALANI */}
-          <footer className="p-6 lg:p-10">
-            <div className="max-w-7xl mx-auto relative">
+          {/* INPUT AREA */}
+          <footer className="p-4 md:p-8">
+            <div className="max-w-4xl mx-auto relative">
               <AnimatePresence>
                 {showEmojiPicker && (
                   <motion.div
                     initial={{ opacity: 0, scale: 0.9, y: 20 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                    className="absolute bottom-24 left-0 z-50 shadow-2xl rounded-[2rem] overflow-hidden border border-white/10"
+                    className="absolute bottom-20 left-0 z-50 shadow-2xl rounded-2xl overflow-hidden border border-white/10"
                   >
                     <EmojiPicker
                       theme={Theme.DARK}
                       onEmojiClick={(e) => setInputMessage((p) => p + e.emoji)}
-                      width={320}
+                      width={300}
                       height={400}
                     />
                   </motion.div>
                 )}
               </AnimatePresence>
 
-              <div className="relative group flex items-center gap-4">
+              <div className="relative group flex items-center gap-3">
                 <div className="relative flex-1">
-                  <div className="absolute inset-0 bg-indigo-500/5 blur-xl group-focus-within:bg-indigo-500/10 transition-all" />
                   <input
                     type="text"
                     value={inputMessage}
@@ -311,12 +295,11 @@ const PlatformChat: React.FC = () => {
                     }
                     onKeyPress={handleKeyPress}
                     placeholder="Mesajınızı yazın..."
-                    className="relative w-full h-16 bg-white/[0.03] border border-white/10 rounded-[2rem] pl-8 pr-32 text-sm text-white outline-none focus:border-indigo-500/50 transition-all placeholder:text-slate-600"
+                    className="w-full h-14 bg-white/[0.03] border border-white/10 rounded-2xl pl-6 pr-24 text-sm text-white outline-none focus:border-indigo-500/50 transition-all"
                   />
-
-                  <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-3 pr-2">
+                  <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2">
                     <span
-                      className={`text-[10px] font-mono font-bold ${
+                      className={`text-[9px] font-mono font-bold ${
                         inputMessage.length >= MAX_CHAR_LIMIT
                           ? "text-red-500"
                           : "text-slate-600"
@@ -325,52 +308,59 @@ const PlatformChat: React.FC = () => {
                       {inputMessage.length}/{MAX_CHAR_LIMIT}
                     </span>
                     <button
-                      type="button"
                       onClick={() => setShowEmojiPicker(!showEmojiPicker)}
                       className="text-slate-500 hover:text-indigo-400 transition-colors"
                     >
-                      <Smile size={22} />
+                      <Smile size={20} />
                     </button>
                   </div>
                 </div>
-
                 <Button
                   onClick={handleSendMessage}
                   disabled={!inputMessage.trim()}
-                  className="h-16 w-16 rounded-full bg-indigo-600 hover:bg-indigo-500 text-white shadow-[0_15px_30px_-10px_rgba(79,70,229,0.5)] transition-all active:scale-90 shrink-0 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="h-14 w-14 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-500/20 shrink-0"
                 >
-                  <Send size={20} />
+                  <Send size={18} />
                 </Button>
               </div>
             </div>
           </footer>
         </main>
 
-        {/* YAN PANEL */}
+        {/* SIDEBAR */}
         <aside
-          className={`fixed lg:relative right-0 h-full w-80 bg-[#020617]/80 backdrop-blur-3xl border-l border-white/5 transition-all duration-500 ease-in-out z-50 ${
+          className={`fixed lg:absolute right-0 h-full w-80 bg-[#020617]/95 backdrop-blur-3xl border-l border-white/5 transition-all duration-500 ease-in-out z-50 shadow-[-10px_0_30px_rgba(0,0,0,0.5)] ${
             showUserList ? "translate-x-0" : "translate-x-full"
           }`}
         >
-          <div className="p-8 border-b border-white/5">
+          {/* SIDEBAR HEADER with CLOSE BUTTON */}
+          <div className="p-6 h-20 flex items-center justify-between border-b border-white/5">
             <h3 className="text-xs font-black uppercase tracking-[0.3em] text-slate-500 flex items-center gap-2">
               <Users size={14} /> Üyeler
             </h3>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setShowUserList(false)}
+              className="rounded-full h-8 w-8 hover:bg-white/10 text-slate-500 hover:text-white"
+            >
+              <X size={18} />
+            </Button>
           </div>
 
           <ScrollArea className="h-[calc(100%-80px)] p-6">
-            <div className="space-y-6">
+            <div className="space-y-5">
               {ALL_USERS.map((user) => (
                 <div
                   key={user.id}
-                  className="flex items-center gap-4 group cursor-pointer p-2 rounded-2xl hover:bg-white/[0.02] transition-all"
+                  className="flex items-center gap-4 group cursor-pointer p-2 rounded-xl hover:bg-white/[0.02] transition-all"
                 >
                   <div className="relative">
-                    <div className="w-11 h-11 rounded-full bg-slate-800/50 border border-white/10 flex items-center justify-center">
-                      <User size={20} className={user.avatarColor} />
+                    <div className="w-10 h-10 rounded-full bg-slate-800/50 border border-white/10 flex items-center justify-center">
+                      <User size={18} className={user.avatarColor} />
                     </div>
                     {user.isOnline && (
-                      <div className="absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-[#020617] bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
+                      <div className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full border-2 border-[#020617] bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
                     )}
                   </div>
                   <div className="flex-1">
@@ -378,7 +368,7 @@ const PlatformChat: React.FC = () => {
                       {user.name}
                     </p>
                     <Badge
-                      className={`mt-1 text-[7px] font-black uppercase tracking-tighter ${getRoleStyle(
+                      className={`mt-0.5 text-[7px] font-black uppercase tracking-tighter ${getRoleStyle(
                         user.role
                       )}`}
                     >
@@ -391,13 +381,18 @@ const PlatformChat: React.FC = () => {
           </ScrollArea>
         </aside>
 
-        {/* MOBİL OVERLAY */}
-        {showUserList && (
-          <div
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden"
-            onClick={() => setShowUserList(false)}
-          />
-        )}
+        {/* MOBILE OVERLAY */}
+        <AnimatePresence>
+          {showUserList && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden"
+              onClick={() => setShowUserList(false)}
+            />
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );
