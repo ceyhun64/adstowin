@@ -12,6 +12,7 @@ import {
   Zap,
 } from "lucide-react";
 import { useTheme } from "next-themes";
+import Link from "next/link";
 
 interface HeroesProps {
   onScrollToForm?: () => void;
@@ -111,21 +112,24 @@ export default function Heroes({ onScrollToForm, onLearnMore }: HeroesProps) {
               onClick={onScrollToForm}
               className="group relative flex items-center justify-center gap-2 md:gap-3 px-8 md:px-10 py-4 md:py-5 bg-slate-900 dark:bg-white text-white dark:text-slate-950 font-bold text-base md:text-lg rounded-full transition-all duration-300 hover:scale-105 hover:bg-indigo-600 dark:hover:bg-indigo-50 w-full sm:w-auto overflow-hidden shadow-xl"
             >
-              <span className="relative z-10 flex items-center gap-2">
+              <Link
+                className="relative z-10 flex items-center gap-2"
+                href="/auth/register"
+              >
                 Hemen Başla
                 <ArrowRight
                   size={18}
                   className="group-hover:translate-x-1 transition-transform"
                 />
-              </span>
+              </Link>
             </button>
 
-            <button
-              onClick={onLearnMore}
+            <Link
+              href="/info/terms_of_use"
               className="flex items-center justify-center gap-2 px-8 md:px-10 py-4 md:py-5 bg-black/10 dark:bg-transparent text-slate-700 dark:text-white font-semibold text-base md:text-lg rounded-full border border-slate-200 dark:border-white/20 hover:bg-slate-100 dark:hover:bg-white/5 transition-all w-full sm:w-auto"
             >
               Sistemi İncele
-            </button>
+            </Link>
           </div>
 
           {/* Trust Marks */}
