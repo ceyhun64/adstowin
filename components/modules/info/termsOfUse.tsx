@@ -1,8 +1,6 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
-import { motion } from "framer-motion";
 import {
   Shield,
   CheckCircle2,
@@ -23,7 +21,7 @@ const KullanimKosullari = () => {
   const sections = [
     {
       id: "I",
-      title: "Foundational Terms",
+      title: "Temel Şartlar",
       subtitle: "Genel Hükümler",
       icon: FileText,
       content: [
@@ -35,78 +33,75 @@ const KullanimKosullari = () => {
     },
     {
       id: "II",
-      title: "Operational Framework",
+      title: "Operasyonel Çerçeve",
       subtitle: "Platform Kullanımı",
       icon: CheckCircle2,
       content: [
         "Kazanç döngüsü; reklam etkileşimleri ve mikro görevler üzerine inşa edilmiştir.",
         "Normal statüdeki üyeler saatlik 1, Premium üyeler 2 çark çevirme hakkına sahiptir.",
         "Reklam etkileşimleri 15 saniyelik doğrulama periyoduna tabidir.",
-        "Premium üyeler, interaktif kod sistemiyle kazanç katsayılarını 2x artırabilir.",
-        "Likidite çıkışları Payoneer ve Litecoin ağları üzerinden asimetrik şifreleme ile yapılır.",
+        "Premium üyeler, interaktif kod sistemiyle kazanç katsayılarını 2 kat artırabilir.",
       ],
     },
     {
       id: "III",
-      title: "Advertising Protocol",
+      title: "Reklam Protokolü",
       subtitle: "Reklam Verme Kuralları",
       icon: Gavel,
       content: [
         "Kampanyalar minimum 1.000 gösterimlik paketler halinde stabilize edilmiştir.",
-        "Premium Reklam: Yüksek etkileşimli trafik için 1.000 gösterim / 20 USD.",
-        "Standart Reklam: Geniş erişimli trafik için 1.000 gösterim / 5 USD.",
+        "Premium Reklam: Yüksek etkileşimli trafik için 1.000 gösterim / 80 TL.",
+        "Standart Reklam: Geniş erişimli trafik için 1.000 gösterim / 20 TL.",
         "Reklam içerikleri evrensel etik değerlere ve yerel yasalara tam uyumlu olmalıdır.",
       ],
     },
     {
       id: "IV",
-      title: "Premium Elite Suite",
+      title: "Premium Elit Paketi",
       subtitle: "Premium Üyelik",
       icon: Crown,
       content: [
-        "Aylık abonelik 4.99 USD, yıllık elit paket 39.99 USD olarak fiyatlandırılmıştır.",
+        "Aylık abonelik 170 TL, yıllık elit paket 1.350 TL olarak fiyatlandırılmıştır.",
         "Premium üyeler, platform genelindeki statik reklamlardan tamamen muaftır.",
         "Yüksek frekanslı çark çevirme ve çift katmanlı kazanç çarpanları aktiftir.",
       ],
     },
     {
       id: "V",
-      title: "TKripto Asset System",
+      title: "TKripto Varlık Sistemi",
       subtitle: "TKripto Token Sistemi",
       icon: Coins,
       content: [
         "TKripto, platformun yerel varlığıdır; 07/07/2027 borsa listelenmesi hedeflenmektedir.",
         "Arz kıtlığı esastır: Toplam 6 adet üretilmiş, 5 adedi ekosisteme ayrılmıştır.",
         "Aylık performans liderleri TKripto ödülleri ile taltif edilir.",
-        "Yıl sonunda en yüksek TKripto hacmine sahip kullanıcı AKripto statüsüne yükselir.",
       ],
     },
     {
       id: "VI",
-      title: "Restricted Actions",
+      title: "Kısıtlı Eylemler",
       subtitle: "Yasaklı Davranışlar",
       icon: AlertTriangle,
       content: [
-        "Otomatize sistemler, botlar ve script kullanımı ekosistemden men edilme sebebidir.",
-        "VPN ve Proxy gibi anonimleştirme araçları sistem güvenliği gereği kısıtlanmıştır.",
+        "Otomatize sistemler, botlar ve betik kullanımı ekosistemden men edilme sebebidir.",
+        "Gizli ağ ve vekil sunucu gibi anonimleştirme araçları sistem güvenliği gereği kısıtlanmıştır.",
         "Hileli etkileşimler yapay zeka tarafından anlık olarak denetlenir.",
-        "Platform içi iletişimde kurumsal nezaket dışı davranışlara izin verilmez.",
       ],
     },
     {
       id: "VII",
-      title: "Liquidity & Payouts",
+      title: "Likidite & Ödemeler",
       subtitle: "Ödeme ve Çekim Koşulları",
       icon: Scale,
       content: [
-        "Minimum çekim eşiği 10 USD olarak belirlenmiştir.",
-        "Talepler, finans departmanı onayından sonra 1-7 iş günü içinde realize edilir.",
+        "Minimum çekim eşiği 350 TL olarak belirlenmiştir.",
+        "Talepler, finans departmanı onayından sonra 1-7 iş günü içinde gerçekleştirilir.",
         "Kullanıcı profil verileri ile ödeme kanalı verileri tam eşleşme sağlamalıdır.",
       ],
     },
     {
       id: "VIII",
-      title: "Liability Disclaimer",
+      title: "Sorumluluk Reddi",
       subtitle: "Sorumluluk Reddi",
       icon: Shield,
       content: [
@@ -118,132 +113,126 @@ const KullanimKosullari = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#020617] text-white selection:bg-orange-500/30 pt-32 pb-20 italic overflow-x-hidden">
-      {/* 🌌 Atmospheric Background */}
-      <div className="absolute top-0 left-0 w-full h-[800px] bg-gradient-to-b from-indigo-600/10 via-transparent to-transparent -z-10 blur-[120px]" />
+    <div className="min-h-screen bg-slate-50 dark:bg-[#020617] text-slate-900 dark:text-white transition-colors duration-500 selection:bg-indigo-500/30 pt-20 md:pt-32 pb-20 italic overflow-x-hidden">
+      {/* 🌌 Atmosferik Arka Plan - Light/Dark uyumlu gradyan */}
+      <div className="absolute top-0 left-0 w-full h-[500px] md:h-[800px] bg-gradient-to-b from-indigo-500/10 dark:from-indigo-600/10 via-transparent to-transparent -z-10 blur-[80px] md:blur-[120px]" />
 
-      <div className="max-w-7xl mx-auto px-6">
-        {/* 🧭 Elite Navigation */}
-        <motion.nav
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="flex items-center gap-3 text-[10px] font-black tracking-[0.4em] uppercase text-slate-500 mb-16"
-        >
-          <Link
+      <div className="max-w-7xl mx-auto px-5 md:px-10">
+        {/* 🧭 Navigasyon */}
+        <nav className="flex items-center gap-2 md:gap-3 text-[10px] font-black tracking-[0.3em] uppercase text-slate-400 dark:text-slate-500 mb-10 md:mb-16">
+          <a
             href="/"
-            className="hover:text-indigo-400 transition-colors flex items-center gap-1"
+            className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-1"
           >
-            <Home size={12} /> Index
-          </Link>
-          <ChevronRight size={10} />
-          <span className="text-white">Legal Agreements</span>
-        </motion.nav>
+            <Home size={12} /> İndeks
+          </a>
+          <ChevronRight size={10} className="opacity-30" />
+          <span className="text-slate-900 dark:text-white">
+            Yasal Anlaşmalar
+          </span>
+        </nav>
 
-        {/* 🖋️ Section: Header */}
-        <header className="max-w-4xl mb-32">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-          >
-            <div className="flex items-center gap-4 mb-8">
-              <div className="h-[1px] w-12 bg-indigo-500" />
-              <span className="text-[10px] font-black tracking-[0.5em] uppercase text-indigo-500">
-                Legal Governance
-              </span>
-            </div>
-            <h1 className="text-6xl md:text-8xl font-black tracking-tighter uppercase leading-[0.85] mb-10">
-              Kullanım <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-indigo-700">
-                Koşulları.
-              </span>
-            </h1>
-            <p className="text-xl text-slate-400 font-light max-w-2xl leading-relaxed">
-              Bu belge, ADSTOWIN dijital ekosistemindeki varlığınızı ve
-              etkileşimlerinizi düzenleyen en üst düzey protokol metnidir.
-            </p>
-          </motion.div>
+        {/* 🖋️ Header */}
+        <header className="max-w-4xl mb-16 md:mb-32">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="h-[2px] w-12 bg-indigo-600 dark:bg-indigo-500" />
+            <span className="text-[10px] font-black tracking-[0.4em] uppercase text-indigo-600 dark:text-indigo-500">
+              Yasal Yönetişim
+            </span>
+          </div>
+          <h1 className="text-5xl md:text-8xl font-black tracking-tighter uppercase leading-[0.9] mb-8">
+            Kullanım <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-slate-400 dark:from-indigo-400 dark:to-indigo-800">
+              Koşulları.
+            </span>
+          </h1>
+          <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 font-light max-w-2xl leading-relaxed italic border-l-2 border-slate-200 dark:border-indigo-500/20 pl-6">
+            Bu belge, ADSTOWIN dijital ekosistemindeki varlığınızı düzenleyen
+            <span className="font-bold text-slate-900 dark:text-white mx-1">
+              en üst düzey
+            </span>{" "}
+            protokol metnidir.
+          </p>
         </header>
 
-        {/* 🏛️ The Constitution Grid */}
-        <div className="grid lg:grid-cols-12 gap-12 items-start mb-40">
-          {/* Left Side: Sidebar Info */}
-          <aside className="lg:col-span-4 sticky top-32 space-y-8">
-            <div className="p-8 bg-white/[0.02] border border-white/5 rounded-[2rem] backdrop-blur-md">
-              <History className="text-indigo-500 mb-6" size={32} />
-              <h4 className="text-xs font-black uppercase tracking-widest text-slate-500 mb-2">
+        {/* 🏛️ Layout */}
+        <div className="flex flex-col lg:grid lg:grid-cols-12 gap-10 md:gap-16 items-start mb-20 md:mb-40">
+          {/* Sidebar */}
+          <aside className="w-full lg:col-span-4 lg:sticky lg:top-32 space-y-8 order-2 lg:order-1">
+            <div className="p-8 bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 rounded-[2.5rem] backdrop-blur-md shadow-xl shadow-slate-200/50 dark:shadow-none">
+              <History
+                className="text-indigo-600 dark:text-indigo-500 mb-6"
+                size={32}
+              />
+              <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-1">
                 Son Revizyon
               </h4>
-              <p className="text-2xl font-bold tracking-tight">
-                18 Aralık, 2025
+              <p className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+                22 Aralık, 2025
               </p>
-              <div className="mt-6 pt-6 border-t border-white/5 space-y-4">
-                <div className="flex justify-between text-[10px] font-black uppercase tracking-widest">
-                  <span className="text-slate-500">Versiyon</span>
-                  <span className="text-indigo-400 text-sm">v2.1.0</span>
-                </div>
-                <div className="flex justify-between text-[10px] font-black uppercase tracking-widest">
-                  <span className="text-slate-500">Durum</span>
-                  <span className="text-emerald-500 text-sm">Aktif</span>
-                </div>
+              <div className="mt-8 pt-6 border-t border-slate-100 dark:border-white/5 flex justify-between items-center">
+                <span className="text-[10px] font-black uppercase text-slate-400 tracking-widest font-mono">
+                  v2.1.0-STABLE
+                </span>
+                <span className="flex items-center gap-2 px-4 py-1.5 bg-emerald-500/10 text-emerald-600 dark:text-emerald-500 rounded-full text-[10px] font-black uppercase">
+                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  Yürürlükte
+                </span>
               </div>
             </div>
 
-            <div className="p-8 bg-indigo-600 rounded-[2.5rem] shadow-2xl shadow-indigo-600/20 group overflow-hidden relative">
+            <div className="p-10 bg-indigo-600 dark:bg-indigo-700 rounded-[3rem] shadow-2xl shadow-indigo-600/30 group overflow-hidden relative">
               <div className="relative z-10">
-                <h3 className="text-2xl font-black uppercase tracking-tight mb-4 leading-none">
-                  Yardıma mı <br />
-                  İhtiyacınız Var?
+                <h3 className="text-2xl font-black uppercase tracking-tight mb-4 leading-tight text-white">
+                  Hukuki Bir <br /> Soru mu Var?
                 </h3>
-                <p className="text-indigo-100 text-xs font-medium mb-8 leading-relaxed opacity-80">
-                  Hukuki terimler veya kurallar hakkında netlik mi arıyorsunuz?
-                  Destek ekibimiz 7/24 yanınızda.
+                <p className="text-indigo-100 text-xs font-medium mb-8 leading-relaxed opacity-90 italic">
+                  Şartlarımızı anlamak platform güvenliğimiz için kritiktir.
+                  Hukuk departmanımız size yardımcı olmaya hazır.
                 </p>
-                <Link
+                <a
                   href="/contact"
-                  className="inline-flex items-center gap-3 px-6 py-4 bg-white text-indigo-600 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:scale-105 transition-transform"
+                  className="inline-flex items-center gap-3 px-8 py-4 bg-white text-indigo-700 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-slate-50 transition-all hover:shadow-lg active:scale-95"
                 >
-                  <MessageCircle size={14} /> İletişime Geç
-                </Link>
+                  <MessageCircle size={16} /> DEPARTMANA YAZIN
+                </a>
               </div>
               <Shield
-                size={150}
-                className="absolute -right-10 -bottom-10 opacity-10 group-hover:rotate-12 transition-transform duration-700"
+                size={140}
+                className="absolute -right-8 -bottom-8 text-white opacity-10 group-hover:rotate-12 transition-transform duration-700 pointer-events-none"
               />
             </div>
           </aside>
 
-          {/* Right Side: Constitutional Articles */}
-          <main className="lg:col-span-8 space-y-6">
+          {/* Main Content */}
+          <main className="w-full lg:col-span-8 space-y-8 order-1 lg:order-2">
             {sections.map((section) => (
-              <motion.section
+              <section
                 key={section.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="group p-10 md:p-14 bg-white/[0.01] border border-white/5 rounded-[3.5rem] hover:bg-white/[0.02] hover:border-indigo-500/20 transition-all duration-500"
+                className="group p-8 md:p-14 bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 rounded-[3rem] md:rounded-[4rem] hover:border-indigo-500/30 dark:hover:border-indigo-500/20 transition-all duration-500 shadow-sm hover:shadow-2xl dark:shadow-none"
               >
-                <div className="flex flex-col md:flex-row gap-12">
-                  <div className="shrink-0 flex flex-col items-center">
-                    <span className="text-4xl font-black text-indigo-500/20 mb-4 font-serif">
+                <div className="flex flex-col sm:flex-row gap-8 md:gap-12">
+                  <div className="shrink-0 flex sm:flex-col items-center gap-6">
+                    <span className="text-4xl md:text-5xl font-black text-slate-100 dark:text-indigo-500/10 font-serif group-hover:text-indigo-500/20 transition-colors">
                       {section.id}
                     </span>
-                    <div className="w-14 h-14 rounded-2xl bg-indigo-600/10 flex items-center justify-center text-indigo-500">
+                    <div className="w-16 h-16 rounded-[1.5rem] bg-indigo-50 dark:bg-indigo-600/10 flex items-center justify-center text-indigo-600 dark:text-indigo-500 border border-indigo-100 dark:border-indigo-500/10 shadow-inner group-hover:scale-110 transition-transform duration-500">
                       <section.icon size={28} strokeWidth={1.5} />
                     </div>
                   </div>
 
                   <div className="flex-1">
-                    <div className="text-[10px] font-black uppercase tracking-[0.4em] text-indigo-500 mb-2">
+                    <div className="text-[10px] font-black uppercase tracking-[0.4em] text-indigo-600 dark:text-indigo-500 mb-3 italic">
                       {section.title}
                     </div>
-                    <h2 className="text-3xl font-black uppercase tracking-tighter mb-8 italic">
+                    <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tighter mb-8 italic text-slate-800 dark:text-slate-100">
                       {section.subtitle}
                     </h2>
-                    <ul className="grid gap-6">
+                    <ul className="space-y-6">
                       {section.content.map((item, idx) => (
-                        <li key={idx} className="flex gap-4 group/item">
-                          <span className="mt-2 w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0 opacity-40 group-hover/item:opacity-100 transition-opacity" />
-                          <p className="text-slate-400 group-hover/item:text-slate-200 transition-colors text-sm md:text-base leading-relaxed font-light">
+                        <li key={idx} className="flex gap-5 group/item">
+                          <div className="mt-2.5 w-2 h-2 rounded-full bg-indigo-600 dark:bg-indigo-500 shrink-0 opacity-20 group-hover/item:opacity-100 group-hover/item:scale-125 transition-all" />
+                          <p className="text-slate-600 dark:text-slate-400 group-hover/item:text-slate-900 dark:group-hover/item:text-slate-100 transition-colors text-base md:text-lg leading-relaxed font-light italic">
                             {item}
                           </p>
                         </li>
@@ -251,37 +240,44 @@ const KullanimKosullari = () => {
                     </ul>
                   </div>
                 </div>
-              </motion.section>
+              </section>
             ))}
           </main>
         </div>
 
-        {/* 🏁 Footer Navigation */}
-        <footer className="pt-20 border-t border-white/5 flex flex-col items-center gap-12">
-          <div className="flex flex-wrap justify-center gap-8">
-            <Link
+        {/* 🏁 Footer */}
+        <footer className="pt-16 border-t border-slate-200 dark:border-white/5 flex flex-col items-center gap-12">
+          <div className="flex flex-wrap justify-center gap-8 md:gap-16">
+            <a
               href="/privacy"
-              className="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-colors"
+              className="text-[11px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500 hover:text-indigo-600 dark:hover:text-white transition-colors"
             >
-              Privacy Policy
-            </Link>
-            <Link
+              Gizlilik Politikası
+            </a>
+            <a
               href="/cookies"
-              className="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-colors"
+              className="text-[11px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500 hover:text-indigo-600 dark:hover:text-white transition-colors"
             >
-              Cookie Governance
-            </Link>
+              Çerez Yönetimi
+            </a>
+            <a
+              href="/security"
+              className="text-[11px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500 hover:text-indigo-600 dark:hover:text-white transition-colors"
+            >
+              Güvenlik Raporu
+            </a>
           </div>
-          <Link
+
+          <a
             href="/"
-            className="inline-flex items-center gap-3 text-slate-600 hover:text-indigo-400 transition-all group font-black uppercase tracking-[0.3em] text-[10px]"
+            className="inline-flex items-center gap-4 text-slate-400 dark:text-slate-600 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all group font-black uppercase tracking-[0.5em] text-[10px] mb-12"
           >
             <ArrowLeft
               size={14}
-              className="group-hover:-translate-x-2 transition-transform"
+              className="group-hover:-translate-x-3 transition-transform"
             />
-            Terminal ana menüsüne dön
-          </Link>
+            Terminal Ana Menü
+          </a>
         </footer>
       </div>
     </div>

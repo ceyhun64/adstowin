@@ -14,6 +14,7 @@ import {
   ArrowRight,
   LifeBuoy,
 } from "lucide-react";
+
 interface FAQItem {
   question: string;
   answer: string;
@@ -21,102 +22,30 @@ interface FAQItem {
 }
 
 const faqData: FAQItem[] = [
-  // Platform Kullanımı
   {
     category: "Platform Kullanımı",
     question: "Çark nasıl çevirilir?",
-    answer:
-      "Ana sayfada bulunan 'Çarkı Çevir' butonuna tıklayarak çarkı çevirebilirsiniz. Her kullanıcı günde 3 kez ücretsiz çevirme hakkına sahiptir. Premium üyeler ek çevirme hakkı kazanır.",
+    answer: "Ana sayfada bulunan 'Çarkı Çevir' butonuna tıklayarak çarkı çevirebilirsiniz. Her kullanıcı günde 3 kez ücretsiz çevirme hakkına sahiptir. Premium üyeler ek çevirme hakkı kazanır.",
   },
   {
     category: "Platform Kullanımı",
     question: "Reklam izleyerek nasıl para kazanabilirim?",
-    answer:
-      "'Reklam İzle' bölümünden 15 saniyelik reklamları izleyerek para kazanabilirsiniz. Normal reklamlar için 0.001$, Premium reklamlar için 0.01$ kazanırsınız. Premium üyeler normal reklamlardan 5x daha fazla kazanır.",
+    answer: "'Reklam İzle' bölümünden 15 saniyelik reklamları izleyerek para kazanabilirsiniz. Normal reklamlar için 0.001$, Premium reklamlar için 0.01$ kazanırsınız.",
   },
-  {
-    category: "Platform Kullanımı",
-    question: "Biletler nasıl kullanılır?",
-    answer:
-      "Normal ve Premium biletler aylık çekilişlerde kullanılır. Premium biletler daha yüksek ödül havuzuna katılır. Biletlerinizi 'Biletlerim' sayfasından görüntüleyebilirsiniz.",
-  },
-  {
-    category: "Platform Kullanımı",
-    question: "TKripto nedir?",
-    answer:
-      "TKripto platformumuzun özel kripto parasıdır. Çeşitli ödüllerden kazanabilir ve yakında gerçek paraya dönüştürebileceksiniz.",
-  },
-
-  // Ödeme Süreçleri
   {
     category: "Ödeme Süreçleri",
     question: "Minimum çekim limiti nedir?",
-    answer:
-      "Minimum çekim limiti 10$ olarak belirlenmiştir. Bakiyeniz bu miktara ulaştığında çekim talebinde bulunabilirsiniz.",
-  },
-  {
-    category: "Ödeme Süreçleri",
-    question: "Para çekme işlemi ne kadar sürer?",
-    answer:
-      "Para çekme talepleri 1-3 iş günü içinde işleme alınır. Payoneer üzerinden yapılan ödemeler genellikle 24 saat içinde hesabınıza ulaşır.",
-  },
-  {
-    category: "Ödeme Süreçleri",
-    question: "Hangi ödeme yöntemleri destekleniyor?",
-    answer:
-      "Şu anda Payoneer ödeme yöntemini destekliyoruz. Yakında daha fazla ödeme seçeneği eklenecektir.",
-  },
-  {
-    category: "Ödeme Süreçleri",
-    question: "Ödeme komisyonu var mı?",
-    answer:
-      "Platform komisyonu bulunmamaktadır. Sadece ödeme sağlayıcısının (Payoneer) standart transfer ücretleri geçerlidir.",
-  },
-
-  // Güvenlik ve Hile Karşıtı
-  {
-    category: "Güvenlik ve Hile Karşıtı",
-    question: "Hesabım nasıl korunuyor?",
-    answer:
-      "Tüm hesaplar şifreli bağlantı ile korunmaktadır. İki faktörlü doğrulama (2FA) aktif ederek ek güvenlik sağlayabilirsiniz.",
-  },
-  {
-    category: "Güvenlik ve Hile Karşıtı",
-    question: "Hile yaparsam ne olur?",
-    answer:
-      "Hile, bot kullanımı veya çoklu hesap tespiti durumunda hesabınız kalıcı olarak askıya alınır ve kazançlarınız iptal edilir. Detaylar için Hile Karşıtı Politikamızı okuyun.",
+    answer: "Minimum çekim limiti 10$ olarak belirlenmiştir. Bakiyeniz bu miktara ulaştığında çekim talebinde bulunabilirsiniz.",
   },
   {
     category: "Güvenlik ve Hile Karşıtı",
     question: "VPN kullanabilir miyim?",
-    answer:
-      "VPN kullanımı şüpheli aktivite olarak değerlendirilebilir. Hesap güvenliği için gerçek konumunuzdan giriş yapmanızı öneririz.",
+    answer: "VPN kullanımı şüpheli aktivite olarak değerlendirilebilir. Hesap güvenliği için gerçek konumunuzdan giriş yapmanızı öneririz.",
   },
-  {
-    category: "Güvenlik ve Hile Karşıtı",
-    question: "Şifremi unuttum, ne yapmalıyım?",
-    answer:
-      "Giriş sayfasındaki 'Şifremi Unuttum' linkine tıklayarak email adresinize şifre sıfırlama linki gönderebilirsiniz.",
-  },
-
-  // Premium Üyelik
   {
     category: "Premium Üyelik",
     question: "Premium üyelik avantajları nelerdir?",
-    answer:
-      "Premium üyeler reklamsız deneyim, 5x kazanç artışı, ekstra günlük çevirme hakkı, özel premium biletler ve öncelikli destek hizmetlerinden yararlanır.",
-  },
-  {
-    category: "Premium Üyelik",
-    question: "Premium üyelik ne kadar?",
-    answer:
-      "Aylık Premium üyelik 9.99$, yıllık üyelik ise 99.99$ (2 ay bedava) olarak belirlenmiştir.",
-  },
-  {
-    category: "Premium Üyelik",
-    question: "Premium üyeliğimi iptal edebilir miyim?",
-    answer:
-      "Evet, istediğiniz zaman premium üyeliğinizi iptal edebilirsiniz. İptal sonrası mevcut periyodunuz sonuna kadar premium avantajlardan yararlanmaya devam edersiniz.",
+    answer: "Premium üyeler reklamsız deneyim, 5x kazanç artışı, ekstra günlük çevirme hakkı ve öncelikli destek hizmetlerinden yararlanır.",
   },
 ];
 
@@ -145,127 +74,108 @@ export default function HelpFAQPage() {
   }, [searchQuery, selectedCategory]);
 
   return (
-    <div className="min-h-screen bg-[#020617] text-white pt-32 pb-20 px-4 md:px-8 relative overflow-hidden">
-      {/* Arka Plan Işık Oyunları */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-gradient-to-b from-indigo-500/10 to-transparent blur-[120px] -z-10 pointer-events-none" />
+    <div className="min-h-screen bg-slate-50 dark:bg-[#020617] text-slate-900 dark:text-white pt-24 md:pt-32 pb-16 px-4 transition-colors duration-500 relative overflow-hidden">
+      
+      {/* Background Decorative Elements */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[600px] bg-gradient-to-b from-indigo-500/5 dark:from-indigo-500/10 to-transparent blur-[120px] -z-10" />
 
-      <div className="max-w-5xl mx-auto space-y-16">
-        {/* Header Bölümü */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
+      <div className="max-w-5xl mx-auto space-y-12 md:space-y-20">
+        
+        {/* Header Section */}
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }} 
           animate={{ opacity: 1, y: 0 }}
-          className="text-center space-y-4"
+          className="text-center space-y-6"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/10 backdrop-blur-md mb-4">
-            <Sparkles size={14} className="text-indigo-400" />
-            <span className="text-[10px] font-black tracking-[0.3em] uppercase text-slate-400">
-              Destek Merkezi
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 shadow-sm backdrop-blur-md">
+            <Sparkles size={14} className="text-indigo-600 dark:text-indigo-400" />
+            <span className="text-[10px] font-black tracking-[0.3em] uppercase text-slate-500 dark:text-slate-400">
+              DESTEK MERKEZİ & REHBER
             </span>
           </div>
-          <h1 className="text-5xl md:text-7xl font-black tracking-tighter italic italic uppercase">
-            Nasıl{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">
-              Yardımcı
+          <h1 className="text-5xl md:text-8xl font-black tracking-tighter uppercase leading-[0.9]">
+            Nasıl <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400">
+              YARDIMCI
             </span>{" "}
             Olabiliriz?
           </h1>
-          <p className="text-slate-500 font-medium max-w-xl mx-auto text-lg">
-            Platform kullanımı, ödemeler ve güvenlik hakkında merak ettiğiniz
-            her şey burada.
+          <p className="text-slate-500 dark:text-slate-400 font-medium max-w-xl mx-auto text-sm md:text-lg italic px-4 leading-relaxed">
+            Sistem kullanımı, finansal süreçler ve güvenlik protokolleri hakkında merak ettiğiniz her detaya buradan ulaşabilirsiniz.
           </p>
         </motion.div>
 
-        {/* Arama Barı - Modern Glassmorphism */}
-        <div className="relative group max-w-2xl mx-auto">
-          <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-[2rem] blur opacity-25 group-focus-within:opacity-100 transition duration-500" />
-          <div className="relative flex items-center bg-[#0a0f1e]/80 border border-white/10 backdrop-blur-xl rounded-[1.8rem] overflow-hidden transition-all duration-300 group-focus-within:border-indigo-500/50">
-            <Search
-              className="ml-6 text-slate-500 group-focus-within:text-indigo-400 transition-colors"
-              size={20}
-            />
+        {/* Search Bar */}
+        <div className="relative group max-w-3xl mx-auto px-2">
+          <div className="absolute -inset-1.5 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-[2.5rem] blur opacity-0 group-focus-within:opacity-100 transition duration-700" />
+          <div className="relative flex items-center bg-white dark:bg-[#0a0f1e]/80 border border-slate-200 dark:border-white/10 backdrop-blur-2xl rounded-[2rem] overflow-hidden shadow-xl shadow-slate-200/50 dark:shadow-none transition-all duration-300 group-focus-within:border-indigo-500">
+            <Search className="ml-6 text-slate-400 group-focus-within:text-indigo-500 transition-colors" size={20} />
             <input
               type="text"
-              placeholder="Bir konu veya soru arayın..."
+              placeholder="Hangi konuda yardıma ihtiyacınız var?"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full px-4 py-6 bg-transparent outline-none text-white placeholder:text-slate-600 font-medium"
+              className="w-full px-6 py-5 md:py-7 bg-transparent outline-none text-slate-900 dark:text-white placeholder:text-slate-400 font-semibold text-base md:text-lg"
             />
           </div>
         </div>
 
-        {/* Kategoriler - Minimalist Şerit */}
-        <div className="flex justify-center gap-3 overflow-x-auto pb-4 no-scrollbar">
+        {/* Categories */}
+        <div className="flex justify-start md:justify-center gap-3 overflow-x-auto pb-6 px-4 no-scrollbar">
           {categories.map((cat) => {
             const Icon = cat.icon;
             const isActive = selectedCategory === cat.name;
             return (
               <button
                 key={cat.name}
-                onClick={() => setSelectedCategory(cat.name)}
-                className={`flex items-center gap-2 px-6 py-3 rounded-2xl font-black text-[11px] uppercase tracking-widest transition-all duration-500 whitespace-nowrap border italic ${
+                onClick={() => { setSelectedCategory(cat.name); setExpandedIndex(null); }}
+                className={`flex items-center gap-3 px-6 py-3.5 rounded-2xl font-black text-[11px] uppercase tracking-widest transition-all duration-500 whitespace-nowrap border italic shrink-0 shadow-sm ${
                   isActive
-                    ? "bg-white text-[#020617] border-white shadow-[0_0_30px_rgba(255,255,255,0.1)]"
-                    : "bg-white/[0.03] text-slate-500 border-white/5 hover:border-white/20 hover:text-white"
+                    ? "bg-slate-900 dark:bg-white text-white dark:text-[#020617] border-slate-900 dark:border-white scale-105"
+                    : "bg-white dark:bg-white/[0.03] text-slate-500 dark:text-slate-500 border-slate-200 dark:border-white/5 hover:border-indigo-500/50 hover:text-indigo-600 dark:hover:text-white"
                 }`}
               >
-                <Icon
-                  size={14}
-                  className={isActive ? "text-[#020617]" : "text-indigo-500"}
-                />
+                <Icon size={14} className={isActive ? "text-indigo-400" : "text-indigo-500"} />
                 {cat.name}
               </button>
             );
           })}
         </div>
 
-        {/* FAQ Listesi - Akordiyon Tasarımı */}
-        <div className="space-y-6">
+        {/* FAQ List */}
+        <div className="space-y-4 md:space-y-6 max-w-4xl mx-auto px-4">
           <AnimatePresence mode="popLayout">
             {filteredFAQs.length === 0 ? (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="text-center py-20 bg-white/[0.02] border border-dashed border-white/10 rounded-[3rem]"
-              >
-                <LifeBuoy size={48} className="text-slate-700 mx-auto mb-4" />
-                <p className="text-slate-500 font-black uppercase tracking-[0.2em] text-sm">
-                  Eşleşen bir sonuç bulunamadı
-                </p>
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-24 bg-white dark:bg-white/[0.01] border border-dashed border-slate-200 dark:border-white/5 rounded-[3rem]">
+                <LifeBuoy size={48} className="text-slate-300 dark:text-slate-800 mx-auto mb-6" />
+                <p className="text-slate-400 dark:text-slate-600 font-black uppercase tracking-[0.3em] text-xs">Aramanızla eşleşen sonuç bulunamadı</p>
               </motion.div>
             ) : (
               filteredFAQs.map((faq, index) => (
                 <motion.div
                   key={faq.question}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.05 }}
-                  className={`group rounded-[2rem] border transition-all duration-500 overflow-hidden ${
+                  layout
+                  className={`group rounded-[2.5rem] border transition-all duration-500 overflow-hidden ${
                     expandedIndex === index
-                      ? "bg-white/[0.04] border-indigo-500/30 shadow-2xl shadow-indigo-500/5"
-                      : "bg-transparent border-white/5 hover:border-white/10 hover:bg-white/[0.02]"
+                      ? "bg-white dark:bg-white/[0.04] border-indigo-500/40 shadow-2xl shadow-indigo-500/5"
+                      : "bg-white dark:bg-transparent border-slate-200 dark:border-white/5 hover:border-slate-300 dark:hover:border-white/10"
                   }`}
                 >
                   <button
-                    onClick={() =>
-                      setExpandedIndex(expandedIndex === index ? null : index)
-                    }
-                    className="w-full flex items-center justify-between p-8 text-left"
+                    onClick={() => setExpandedIndex(expandedIndex === index ? null : index)}
+                    className="w-full flex items-center justify-between p-7 md:p-10 text-left"
                   >
-                    <div className="space-y-2">
-                      <span className="text-[10px] font-black text-indigo-400 uppercase tracking-[0.3em] opacity-80 italic">
+                    <div className="space-y-2 pr-6">
+                      <span className="text-[10px] font-black text-indigo-600 dark:text-indigo-400 uppercase tracking-[0.2em] italic">
                         {faq.category}
                       </span>
-                      <h3 className="text-xl font-bold tracking-tight text-slate-200 group-hover:text-white transition-colors">
+                      <h3 className="text-lg md:text-2xl font-bold tracking-tight text-slate-800 dark:text-slate-100 leading-tight">
                         {faq.question}
                       </h3>
                     </div>
-                    <div
-                      className={`p-3 rounded-xl transition-all duration-500 ${
-                        expandedIndex === index
-                          ? "bg-indigo-500 text-white rotate-180"
-                          : "bg-white/5 text-slate-500"
-                      }`}
-                    >
+                    <div className={`p-3 rounded-2xl transition-all duration-500 shrink-0 ${
+                      expandedIndex === index ? "bg-indigo-600 text-white rotate-180 shadow-lg shadow-indigo-600/30" : "bg-slate-100 dark:bg-white/5 text-slate-400"
+                    }`}>
                       <ChevronDown size={20} />
                     </div>
                   </button>
@@ -273,12 +183,9 @@ export default function HelpFAQPage() {
                   <AnimatePresence>
                     {expandedIndex === index && (
                       <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                        initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }}
                       >
-                        <div className="px-8 pb-8 text-slate-400 leading-relaxed font-medium text-lg border-t border-white/5 pt-4 italic">
+                        <div className="px-7 pb-10 md:px-10 md:pb-12 text-slate-600 dark:text-slate-400 leading-relaxed font-medium text-sm md:text-xl border-t border-slate-100 dark:border-white/5 pt-6 italic">
                           {faq.answer}
                         </div>
                       </motion.div>
@@ -290,41 +197,30 @@ export default function HelpFAQPage() {
           </AnimatePresence>
         </div>
 
-        {/* İletişim Kartı - Ultra Modern Call-to-Action */}
-        <motion.div whileHover={{ y: -5 }} className="relative mt-24 group p-1">
-          <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-[3rem] blur-xl opacity-20 group-hover:opacity-40 transition duration-700" />
-          <div className="relative bg-[#0a0f1e] border border-white/10 rounded-[2.8rem] p-10 md:p-16 overflow-hidden">
-            {/* Arka plan deseni */}
-            <div className="absolute top-0 right-0 p-8 opacity-5">
-              <MessageCircle size={200} />
+        {/* Contact CTA */}
+        <motion.div className="relative mt-24 px-4">
+          <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-[3rem] blur-2xl opacity-5 dark:opacity-10" />
+          <div className="relative bg-white dark:bg-[#0a0f1e] border border-slate-200 dark:border-white/10 rounded-[3.5rem] p-10 md:p-20 overflow-hidden shadow-xl dark:shadow-none">
+            <div className="absolute top-0 right-0 p-10 opacity-[0.03] text-indigo-500 pointer-events-none hidden lg:block">
+              <MessageCircle size={320} />
             </div>
 
             <div className="relative z-10 flex flex-col items-center text-center space-y-8">
-              <div className="w-20 h-20 bg-indigo-500/10 rounded-3xl flex items-center justify-center border border-indigo-500/20">
-                <MessageCircle className="w-10 h-10 text-indigo-400" />
+              <div className="w-20 h-20 bg-indigo-50 dark:bg-indigo-500/10 rounded-[2rem] flex items-center justify-center border border-indigo-100 dark:border-indigo-500/20 shadow-inner">
+                <MessageCircle className="w-10 h-10 text-indigo-600 dark:text-indigo-400" />
               </div>
               <div className="space-y-4">
-                <h2 className="text-3xl md:text-5xl font-black italic uppercase tracking-tighter">
-                  Özel Bir <span className="text-indigo-400">Desteğe</span> mi
-                  İhtiyacınız Var?
+                <h2 className="text-3xl md:text-6xl font-black italic uppercase tracking-tighter leading-none">
+                  Kişisel <span className="text-indigo-600 dark:text-indigo-400">Desteğe</span> mi <br /> İhtiyacınız Var?
                 </h2>
-                <p className="text-slate-400 font-medium max-w-lg mx-auto italic">
-                  Sorunuzun yanıtını bulamadıysanız, 7/24 hizmet veren uzman
-                  destek ekibimizle bir oturum başlatın.
+                <p className="text-sm md:text-lg text-slate-500 dark:text-slate-400 font-medium max-w-xl mx-auto italic leading-relaxed">
+                  Aradığınız yanıtı bulamadınız mı? Alanında uzman destek ekibimiz size yardımcı olmak için hazır bekliyor.
                 </p>
               </div>
 
-              <button
-                onClick={() =>
-                  (window.location.href = "/account/support_requests")
-                }
-                className="flex items-center gap-3 px-10 py-5 bg-white text-[#020617] rounded-2xl font-black text-xs uppercase tracking-[0.2em] hover:bg-indigo-500 hover:text-white transition-all transform active:scale-95 group/btn italic"
-              >
+              <button className="group/btn flex items-center gap-4 px-10 py-6 bg-slate-900 dark:bg-white text-white dark:text-[#020617] rounded-[2rem] font-black text-xs md:text-sm uppercase tracking-[0.2em] hover:bg-indigo-600 dark:hover:bg-indigo-500 hover:text-white transition-all transform active:scale-95 italic shadow-2xl">
                 DESTEK TALEBİ OLUŞTUR
-                <ArrowRight
-                  size={16}
-                  className="group-hover/btn:translate-x-1 transition-transform"
-                />
+                <ArrowRight size={18} className="group-hover/btn:translate-x-2 transition-transform" />
               </button>
             </div>
           </div>
