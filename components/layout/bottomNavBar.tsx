@@ -91,8 +91,8 @@ export default function BottomNavigation() {
   ];
 
   return (
-    <nav className="fixed bottom-3 left-1/2 -translate-x-1/2 z-[100] w-[94%] max-w-[440px] pointer-events-none">
-      <div className="flex flex-col items-center gap-2 pointer-events-auto">
+    <nav className="fixed bottom-1 left-1/2 -translate-x-1/2 z-[100] w-[94%] max-w-[440px] pointer-events-none">
+      <div className="flex flex-col items-center gap-1 pointer-events-auto">
         <AnimatePresence>
           {isVisible && (
             <motion.div

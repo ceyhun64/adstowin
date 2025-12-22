@@ -93,20 +93,6 @@ const PremiumPricingPage: React.FC = () => {
   return (
     <div className="min-h-screen w-full bg-slate-50 dark:bg-[#020617] text-slate-900 dark:text-white transition-colors duration-500 selection:bg-amber-500/30 py-24 relative overflow-hidden">
       {/* Tema Değiştirici */}
-      <div className="absolute top-8 right-8 z-50">
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-          className="rounded-full bg-white/10 backdrop-blur-md border-slate-200 dark:border-white/10"
-        >
-          {theme === "dark" ? (
-            <Sun className="w-5 h-5 text-amber-400" />
-          ) : (
-            <Moon className="w-5 h-5 text-indigo-600" />
-          )}
-        </Button>
-      </div>
 
       {/* Sanatsal Arka Plan Dokunuşları */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-gradient-to-b from-indigo-500/10 dark:from-indigo-500/5 to-transparent blur-3xl opacity-50" />
